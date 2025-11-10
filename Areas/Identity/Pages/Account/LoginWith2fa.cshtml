@@ -1,0 +1,64 @@
+﻿@page
+@model LoginWith2faModel
+
+@{
+    ViewData["Title"] = "Autenticação de dois fatores";
+}
+
+<div class="d-flex justify-content-center align-items-center min-vh-100" style="background: linear-gradient(135deg, #f0f2f5, #d9e2ec);">
+    <div class="card shadow-lg p-5 rounded-4" style="width: 420px; max-width: 95%;">
+        <div class="text-center mb-4">
+            <h2 style="font-weight: 700; color: #343a40;">@ViewData["Title"]</h2>
+            <hr />
+            <p class="text-muted mb-3">
+                Seu login está protegido com um aplicativo autenticador. Insira o código do autenticador abaixo.
+            </p>
+        </div>
+
+        <form method="post" asp-route-returnUrl="@Model.ReturnUrl">
+            <input asp-for="RememberMe" type="hidden" />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.TwoFactorCode" class="form-control" autocomplete="off" placeholder="Código do autenticador" />
+                <label asp-for="Input.TwoFactorCode">Código do autenticador</label>
+                <span asp-validation-for="Input.TwoFactorCode" class="text-danger"></span>
+            </div>
+
+            <div class="form-check mb-3">
+                <input class="form-check-input" asp-for="Input.RememberMachine" />
+                <label class="form-check-label" asp-for="Input.RememberMachine">
+                    Lembrar deste dispositivo
+                </label>
+            </div>
+
+            <button type="submit" class="w-100 btn btn-lg btn-primary mb-3" style="font-weight: 500;">
+                Entrar
+            </button>
+        </form>
+
+        <p class="text-center text-muted mt-3">
+            Não tem acesso ao seu dispositivo autenticador? Você pode
+            <a id="recovery-code-login" asp-page="./LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl">
+                entrar com um código de recuperação
+            </a>.
+        </p>
+    </div>
+
+</div>
+
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+
+    a:hover, button:hover {
+        text-decoration: none;
+    }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

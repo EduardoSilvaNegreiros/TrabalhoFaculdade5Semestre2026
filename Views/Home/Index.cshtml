@@ -1,0 +1,135 @@
+﻿@{
+    ViewData["Title"] = "Beauty Marketplace";
+}
+
+<div class="container min-vh-100 d-flex flex-column justify-content-center align-items-center">
+    <header class="text-center mb-5">
+        <h1 class="display-4">Bem-vindo ao Beauty Marketplace</h1>
+        <p class="lead text-muted">
+            Descubra os melhores produtos de beleza e cuidados pessoais.
+        </p>
+        <a class="btn btn-primary btn-lg mt-3" asp-controller="Produto" asp-action="Index">
+            Comece a Comprar
+        </a>
+    </header>
+
+    <section class="row justify-content-center mb-5 g-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100 text-center">
+                <img src="/images/home/CuidadosComAPele.png.png" class="card-img-top rounded" alt="Cuidados com a Pele">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Cuidados com a Pele</h5>
+                    <p class="card-text text-muted flex-grow-1">Produtos selecionados para deixar sua pele radiante.</p>
+                    <a class="btn btn-outline-primary mt-auto" asp-controller="Produto" asp-action="Index" asp-route-category="Cuidado com a pele">
+                        Ver Produtos
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100 text-center">
+                <img src="/images/home/Maquiagem.jpeg.jpeg" class="card-img-top rounded" alt="Maquiagem">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Maquiagem</h5>
+                    <p class="card-text text-muted flex-grow-1">Explore nossas últimas tendências em maquiagem.</p>
+                    <a class="btn btn-outline-primary mt-auto" asp-controller="Produto" asp-action="Index" asp-route-category="Maquiagem">
+                        Ver Produtos
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100 text-center">
+                <img src="/images/home/CuidadosComOCabelo.png.png" class="card-img-top rounded" alt="Cuidados com o Cabelo">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Cuidados com o Cabelo</h5>
+                    <p class="card-text text-muted flex-grow-1">Produtos para manter seus cabelos fortes e brilhantes.</p>
+                    <a class="btn btn-outline-primary mt-auto" asp-controller="Produto" asp-action="Index" asp-route-category="Cabelo">
+                        Ver Produtos
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #fdf6f0, #ffeef0);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    header h1 {
+        animation: fadeInDown 0.8s ease forwards;
+    }
+
+    header p, header a.btn {
+        animation: fadeInUp 0.8s ease forwards;
+        animation-delay: 0.3s;
+        opacity: 0;
+    }
+
+    .card {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+    .card-img-top {
+        height: 220px;
+        object-fit: cover;
+    }
+
+    .card-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .card-body .mt-auto {
+            margin-top: auto;
+        }
+
+    .card-title {
+        font-weight: 600;
+    }
+
+    .card-text {
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
+    }
+
+    @@keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>

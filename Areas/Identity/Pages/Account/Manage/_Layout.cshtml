@@ -1,0 +1,74 @@
+﻿@{
+    Layout = ViewData["ParentLayout"]?.ToString() ?? "/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <h1 class="mb-4" style="font-weight:700; color:#343a40;">Gerenciar sua Conta</h1>
+    <p class="text-muted mb-4">Aqui você pode alterar suas informações, senha e configurações da sua conta.</p>
+
+    <div class="row">
+        <!-- Navegação lateral -->
+        <div class="col-md-3 mb-4">
+            <div class="card shadow-sm p-3 rounded-3">
+                <h5 class="mb-3" style="font-weight:600;">Menu da Conta</h5>
+                <partial name="_ManageNav" />
+            </div>
+        </div>
+
+        <!-- Conteúdo principal -->
+        <div class="col-md-9">
+            <div class="card shadow-sm p-4 rounded-3 animate__animated animate__fadeIn">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="mt-5 text-center text-muted" style="font-size:0.85rem;">
+    &copy; @DateTime.Now.Year - SeuApp
+</footer>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #fef6f9, #f9f0fc);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h1, h5 {
+        color: #343a40;
+    }
+
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    /* Animação fade-in para o conteúdo */
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate__fadeIn {
+        animation: fadeIn 0.5s ease-in-out;
+    }
+</style>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

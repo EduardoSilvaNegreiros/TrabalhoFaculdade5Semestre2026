@@ -1,0 +1,76 @@
+﻿@page
+@model RegisterModel
+
+@{
+    ViewData["Title"] = "Registrar";
+}
+
+<div class="container min-vh-100 d-flex flex-column justify-content-center align-items-center">
+    <div class="card shadow-lg p-4 p-md-5" style="max-width: 500px; width: 100%; border-radius: 1rem; background: #ffffff;">
+        <div class="text-center">
+            <h1 class="mb-4" style="font-weight: 700; color: #343a40;">@ViewData["Title"]</h1>
+            <hr class="mb-4" />
+
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <h5 class="mb-3 text-muted">Preencha os campos para criar sua conta</h5>
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="email@exemplo.com" />
+                    <label asp-for="Input.Email" class="form-label">Email</label>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Password" type="password" class="form-control" autocomplete="new-password" placeholder="Senha" />
+                    <label asp-for="Input.Password" class="form-label">Senha</label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-4">
+                    <input asp-for="Input.ConfirmPassword" type="password" class="form-control" autocomplete="new-password" placeholder="Confirme a senha" />
+                    <label asp-for="Input.ConfirmPassword" class="form-label">Confirme a senha</label>
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="w-100 btn btn-lg btn-primary mb-3" style="font-weight: 500;">
+                    Registrar
+                </button>
+
+                <div class="text-center">
+                    <p>Já tem uma conta? <a asp-area="Identity" asp-page="/Account/Login" class="fw-bold">Faça login</a></p>
+                </div>
+            </form>
+
+            @if ((Model.ExternalLogins?.Count ?? 0) > 0)
+            {
+                <hr class="my-4" />
+                <h5 class="mb-3 text-muted">Ou registre-se usando outro serviço</h5>
+
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="text-center">
+                    @foreach (var provider in Model.ExternalLogins!)
+                    {
+                        <button type="submit" class="btn btn-outline-primary mb-2 w-100" name="provider" value="@provider.Name" title="Registrar usando a conta @provider.DisplayName">
+                            @provider.DisplayName
+                        </button>
+                    }
+                </form>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #f0f2f5, #d9e2ec);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

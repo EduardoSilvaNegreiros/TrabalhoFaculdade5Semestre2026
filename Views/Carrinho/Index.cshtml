@@ -1,0 +1,117 @@
+﻿@model List<WebApplication1.Models.Produto>
+
+@{
+    ViewData["Title"] = "Carrinho de Compras";
+}
+
+<div class="container my-5">
+    <h2 class="mb-4 fw-bold text-dark">Meu Carrinho</h2>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-info text-center fs-5">
+            Seu carrinho está vazio. <a href="/Produto" class="fw-bold text-decoration-underline">Continue comprando</a>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            <div class="col-lg-8">
+                @foreach (var produto in Model)
+                {
+                    <div class="card mb-3 shadow-sm border-0 cart-item">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-md-3">
+                                <img src="@(produto.ImagemUrl ?? "/images/produto-placeholder.png")"
+                                     class="img-fluid rounded-start"
+                                     style="height:120px; object-fit:cover;"
+                                     alt="@produto.Nome" />
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card-body">
+                                    <h5 class="card-title">@produto.Nome</h5>
+                                    <p class="card-text text-muted mb-1">@produto.Descricao</p>
+                                    <p class="fw-bold text-primary mb-0">@produto.Preco.ToString("C")</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 text-center">
+                                <form method="post" action="/Carrinho/Remover/@produto.Id">
+                                    <button type="submit" class="btn btn-danger btn-sm mb-2">
+                                        Remover
+                                    </button>
+                                </form>
+                                <p class="mb-0">Quantidade: @produto.Quantidade</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card shadow-sm border-0 p-3">
+                    <h5 class="mb-3">Resumo do Pedido</h5>
+                    <ul class="list-group list-group-flush mb-3">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Total de Itens
+                            <span>@Model.Sum(p => p.Quantidade)</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center fw-bold text-primary">
+                            Total
+                            <span>@Model.Sum(p => p.Preco * p.Quantidade).ToString("C")</span>
+                        </li>
+                    </ul>
+                    <a href="/Carrinho/EscolherPagamento" class="btn btn-success btn-lg w-100 mt-3">
+                        Finalizar Compra
+                    </a>
+                    <a href="/Produto" class="btn btn-outline-secondary btn-lg w-100 mt-2">
+                        Continuar Comprando
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .cart-item {
+        transition: transform 0.3s, box-shadow 0.3s;
+        border-radius: 0.5rem;
+    }
+
+        .cart-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+        }
+
+    .card-title {
+        font-weight: 600;
+        font-size: 1.05rem;
+    }
+
+    .card-text {
+        font-size: 0.9rem;
+    }
+
+    .btn-success {
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: transform 0.2s;
+    }
+
+        .btn-success:hover {
+            transform: scale(1.03);
+        }
+
+    .btn-outline-secondary {
+        font-weight: 500;
+    }
+
+    .list-group-item {
+        border: none;
+        padding: 0.75rem 1rem;
+    }
+
+        .list-group-item + .list-group-item {
+            border-top: 1px solid #eee;
+        }
+</style>

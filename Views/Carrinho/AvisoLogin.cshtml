@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Aviso - Login Necessário";
+}
+
+<div class="container min-vh-100 d-flex justify-content-center align-items-center">
+    <div class="card p-5 text-center shadow-lg" style="max-width: 500px; width: 100%; border-radius: 1rem;">
+        <h2 class="mb-3">Você precisa estar logado!</h2>
+        <p class="mb-4">Para adicionar produtos ao carrinho, faça login na sua conta.</p>
+        <a href="~/Identity/Account/Login" class="btn btn-primary btn-lg w-100">Fazer Login</a>
+        <a href="~/Produto" class="btn btn-outline-secondary mt-3 w-100">Voltar para Produtos</a>
+    </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #f0f2f5, #d9e2ec);
+    }
+</style>

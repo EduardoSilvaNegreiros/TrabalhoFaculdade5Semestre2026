@@ -1,0 +1,46 @@
+﻿@page
+@model WebApplication1.Areas.Identity.Pages.Account.ConfirmEmailModel
+@{
+    ViewData["Title"] = "Confirmação de E-mail";
+}
+
+<div class="container min-vh-100 d-flex flex-column justify-content-center align-items-center">
+    <div class="card shadow-lg p-4 p-md-5" style="max-width: 500px; width: 100%; border-radius: 1rem; background: #ffffff;">
+        <div class="text-center">
+            <h1 class="mb-3" style="font-weight: 700; color: #343a40;">@ViewData["Title"]</h1>
+            <hr class="mb-4" />
+
+            @if (!string.IsNullOrEmpty(Model.StatusMessage))
+            {
+                <p class="text-success mb-4" style="font-size: 1rem;">@Model.StatusMessage</p>
+            }
+            else
+            {
+                <p class="mb-4" style="font-size: 1rem;">
+                    Clique no botão abaixo para confirmar seu e-mail e concluir o cadastro.
+                </p>
+
+                <a asp-page-handler="OnGetAsync"
+                   asp-route-userId="@Request.Query["userId"]"
+                   asp-route-code="@Request.Query["code"]"
+                   class="btn btn-primary btn-lg w-100 mb-3" style="font-weight: 500;">
+                    Confirmar e-mail
+                </a>
+            }
+
+            <a href="~/Identity/Account/Login" class="btn btn-outline-secondary w-100 mt-2">
+                Voltar para login
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #f0f2f5, #d9e2ec);
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+</style>

@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Escolher Pagamento";
+}
+
+<div class="container my-5">
+    <h2 class="mb-4 fw-bold text-dark">Escolha o Método de Pagamento</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 p-4">
+                <h5 class="mb-3">Selecione uma opção:</h5>
+                <form method="post" action="/Carrinho/FinalizarCompra">
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="radio" name="Pagamento" id="pix" value="Pix" checked>
+                        <label class="form-check-label" for="pix">Pix</label>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="radio" name="Pagamento" id="cartao" value="Cartão de Crédito">
+                        <label class="form-check-label" for="cartao">Cartão de Crédito</label>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="radio" name="Pagamento" id="boleto" value="Boleto">
+                        <label class="form-check-label" for="boleto">Boleto Bancário</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-lg w-100 mt-3">Finalizar Compra</button>
+                    <a href="/Carrinho" class="btn btn-outline-secondary btn-lg w-100 mt-2">Voltar ao Carrinho</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border-radius: 0.5rem;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+        }
+
+    .btn-success {
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: transform 0.2s;
+    }
+
+        .btn-success:hover {
+            transform: scale(1.03);
+        }
+</style>

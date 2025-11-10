@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BeautyMarket</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebApplication1.styles.css" asp-append-version="true" />
+    <style>
+        body {
+            background: linear-gradient(135deg, #fff5f7, #f0f2f5);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #e91e63 !important;
+        }
+
+        .nav-link {
+            color: #343a40 !important;
+            font-weight: 500;
+        }
+
+            .nav-link:hover {
+                color: #e91e63 !important;
+            }
+
+        /* Carrinho */
+        .cart-link {
+            position: relative;
+            display: inline-block;
+            color: #343a40 !important;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: #e91e63;
+            color: white;
+            font-size: 0.75rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-link:hover {
+            color: #e91e63 !important;
+            text-decoration: none;
+        }
+
+        footer {
+            background: #ffffff;
+            padding: 1.5rem 0;
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+
+            footer a {
+                color: #e91e63;
+                text-decoration: none;
+                margin-left: 1rem;
+            }
+
+                footer a:hover {
+                    text-decoration: underline;
+                }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light shadow-sm mb-4 bg-white">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BeautyMarket</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarMain">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Produto" asp-action="Index">Comece a comprar</a></li>
+                    </ul>
+
+                    <!-- Carrinho -->
+                    <ul class="navbar-nav ms-auto">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item me-3 position-relative">
+                                <a class="nav-link cart-link" asp-controller="Carrinho" asp-action="Index">
+                                    🛒
+                                    <span id="cart-count" class="cart-count">0</span>
+                                </a>
+                            </li>
+                        }
+                        <partial name="_LoginPartial" />
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Corpo principal -->
+    <div class="container py-5">
+        @RenderBody()
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        &copy; @DateTime.Now.Year - BeautyMarket
+    </footer>
+
+    <!-- Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        // Função para atualizar o contador do carrinho
+        function atualizarCarrinho() {
+            fetch('/Carrinho/ObterQuantidade')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('cart-count').textContent = data.quantidade;
+                });
+        }
+
+        // Atualiza contador ao carregar a página
+        document.addEventListener('DOMContentLoaded', atualizarCarrinho);
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

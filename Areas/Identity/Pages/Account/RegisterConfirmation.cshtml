@@ -1,0 +1,45 @@
+﻿@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Confirmação de Registro";
+}
+
+<div class="container min-vh-100 d-flex flex-column justify-content-center align-items-center">
+    <div class="card shadow-lg p-4 p-md-5" style="max-width: 500px; width: 100%; border-radius: 1rem; background: #ffffff;">
+        <div class="text-center">
+            <h1 class="mb-3" style="font-weight: 700; color: #343a40;">@ViewData["Title"]</h1>
+            <hr class="mb-4" />
+
+            @if (Model.DisplayConfirmAccountLink)
+            {
+                <p class="text-muted mb-4" style="font-size: 1rem;">
+                    Clique em <strong>Confirmar</strong> para efetuar o cadastro.
+                </p>
+
+                <a id="confirm-link" href="@Model.EmailConfirmationUrl" class="btn btn-primary btn-lg w-100 mb-3" style="font-weight: 500;">
+                    Confirmar
+                </a>
+            }
+            else
+            {
+                <p class="text-muted mb-4" style="font-size: 1rem;">
+                    Por favor, verifique seu e-mail para concluir o cadastro.
+                </p>
+            }
+
+            <a href="~/Identity/Account/Login" class="btn btn-outline-secondary w-100 mt-2">
+                Voltar para login
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #f0f2f5, #d9e2ec);
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+</style>

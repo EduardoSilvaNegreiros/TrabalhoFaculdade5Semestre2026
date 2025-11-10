@@ -1,0 +1,80 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Entrar";
+}
+
+<div class="container min-vh-100 d-flex flex-column justify-content-center align-items-center">
+    <div class="card shadow-lg p-4 p-md-5" style="max-width: 500px; width: 100%; border-radius: 1rem; background: #ffffff;">
+        <div class="text-center">
+            <h1 class="mb-4" style="font-weight: 700; color: #343a40;">@ViewData["Title"]</h1>
+            <hr class="mb-4" />
+
+            <form id="account" method="post">
+                <h5 class="mb-3 text-muted">Use uma conta local para entrar</h5>
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="email@exemplo.com" />
+                    <label asp-for="Input.Email" class="form-label">Email</label>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Password" type="password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Senha" />
+                    <label asp-for="Input.Password" class="form-label">Senha</label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-check mb-3 text-start">
+                    <input class="form-check-input" asp-for="Input.RememberMe" />
+                    <label class="form-check-label" asp-for="Input.RememberMe">
+                        @Html.DisplayNameFor(m => m.Input.RememberMe)
+                    </label>
+                </div>
+
+                <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary mb-3" style="font-weight: 500;">
+                    Entrar
+                </button>
+
+                <div class="text-center">
+                    <p><a id="forgot-password" asp-page="./ForgotPassword">Esqueceu sua senha?</a></p>
+                    <p><a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registrar uma nova conta</a></p>
+                    <p><a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Reenviar confirmação de e-mail</a></p>
+                </div>
+            </form>
+
+            @if ((Model.ExternalLogins?.Count ?? 0) > 0)
+            {
+                <hr class="my-4" />
+                <h5 class="mb-3 text-muted">Ou use outro serviço para entrar</h5>
+
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="text-center">
+                    @foreach (var provider in Model.ExternalLogins!)
+                    {
+                        <button type="submit" class="btn btn-outline-primary mb-2 w-100" name="provider" value="@provider.Name" title="Entrar usando a conta @provider.DisplayName">
+                            @provider.DisplayName
+                        </button>
+                    }
+                </form>
+            }
+        </div>
+    </div>
+
+   
+</div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #f0f2f5, #d9e2ec);
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
