@@ -1,0 +1,29 @@
+@model List<WebApplication1.Models.Pedido>
+
+@{
+    ViewData["Title"] = "Pedidos";
+}
+
+<h1>Histórico de pedidos</h1>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Nenhum pedido encontrado ainda.</div>
+}
+else
+{
+    <div class="row g-3">
+        @foreach (var pedido in Model)
+        {
+            <div class="col-md-6">
+                <div class="card h-100 p-3">
+                    <h2>Pedido #@pedido.Id</h2>
+                    <p class="text-muted">@pedido.CriadoEm.ToLocalTime().ToString("dd/MM/yyyy HH:mm") - @pedido.Status</p>
+                    <p><strong>Total:</strong> @((pedido.Total).ToString("C"))</p>
+                    <p><strong>Itens:</strong> @pedido.Itens.Sum(i => i.Quantidade)</p>
+                    <a class="btn btn-outline-primary" asp-controller="Pedidos" asp-action="Detalhes" asp-route-id="@pedido.Id">Acompanhar rastreio</a>
+                </div>
+            </div>
+        }
+    </div>
+}

@@ -1,20 +1,24 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using WebApplication1.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Conexão SQLite
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? "Data Source=meubanco.db";
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(connectionString));
+    options
+        .UseSqlite(connectionString)
+        .ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning)));
 
-// Identity com mensagens em português
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
-    options.SignIn.RequireConfirmedAccount = true;
+    options.SignIn.RequireConfirmedAccount = false;
+    options.SignIn.RequireConfirmedEmail = false;
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
     options.Password.RequireUppercase = true;
@@ -22,30 +26,32 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.Password.RequiredLength = 6;
 })
 .AddErrorDescriber<IdentityMensagensEmPortugues>()
+.AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-// ---------- ADICIONE ESTA PARTE PARA SESSION ----------
-builder.Services.AddDistributedMemoryCache(); // Necessário para Session
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // tempo que a sessão vai durar
-    options.Cookie.HttpOnly = true; // mais seguro
-    options.Cookie.IsEssential = true; // funciona mesmo sem consentimento de cookies
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
 });
-// --------------------------------------------------------
 
 var app = builder.Build();
 
-// Aplica migrations automaticamente
-using (var scope = app.Services.CreateScope())
+await MarketplaceSeeder.SeedAsync(app.Services);
+
+var supportedCultures = new[] { new CultureInfo("pt-BR") };
+app.UseRequestLocalization(new RequestLocalizationOptions
 {
-    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    db.Database.Migrate();
-}
+    DefaultRequestCulture = new RequestCulture("pt-BR"),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+});
 
 if (app.Environment.IsDevelopment())
 {
@@ -61,12 +67,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-app.UseAuthentication(); // <- importante!
+app.UseAuthentication();
 app.UseAuthorization();
-
-// ---------- ADICIONE ESTA LINHA PARA SESSION ----------
 app.UseSession();
-// --------------------------------------------------------
 
 app.MapControllerRoute(
     name: "default",

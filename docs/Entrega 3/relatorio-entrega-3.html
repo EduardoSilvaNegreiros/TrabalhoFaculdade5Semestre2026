@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <title>Beauty Marketplace - Entrega 3 - Arquitetura</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --ink: #27232b;
+            --muted: #625a66;
+            --accent: #b0164e;
+            --line: #ead6df;
+            --soft: #fff7fa;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            background: #fff;
+            font-family: "Segoe UI", Arial, sans-serif;
+            line-height: 1.55;
+        }
+
+        main {
+            max-width: 1060px;
+            margin: 0 auto;
+            padding: 40px 48px;
+        }
+
+        h1, h2, h3 {
+            color: #201b22;
+            line-height: 1.2;
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 34px;
+            border-bottom: 4px solid var(--accent);
+            padding-bottom: 12px;
+        }
+
+        h2 {
+            margin-top: 34px;
+            font-size: 24px;
+        }
+
+        h3 {
+            margin-top: 22px;
+            font-size: 18px;
+        }
+
+        p, li {
+            font-size: 14px;
+        }
+
+        .meta, .callout {
+            border: 1px solid var(--line);
+            background: var(--soft);
+            border-radius: 8px;
+            padding: 16px 18px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0 24px;
+            font-size: 13px;
+        }
+
+        th, td {
+            border: 1px solid var(--line);
+            padding: 9px 10px;
+            vertical-align: top;
+        }
+
+        th {
+            background: #f7e9ef;
+            text-align: left;
+        }
+
+        code {
+            background: #f7edf2;
+            border-radius: 4px;
+            padding: 1px 4px;
+            font-family: Consolas, monospace;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            background: #201b22;
+            color: #fff;
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 12px;
+        }
+
+        .diagram {
+            page-break-inside: avoid;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 12px;
+            margin: 12px 0 20px;
+        }
+
+        .diagram img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .small {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        @media print {
+            main {
+                max-width: none;
+                padding: 22mm 16mm;
+            }
+
+            h2 {
+                page-break-after: avoid;
+            }
+
+            .diagram, table {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+<main>
+    <h1>Beauty Marketplace - Entrega 3 - Arquitetura</h1>
+
+    <section class="meta">
+        <h2>1. Identificação do grupo</h2>
+        <p><strong>Número do grupo:</strong> [preencher número do grupo]</p>
+        <p><strong>Integrante 1:</strong> [nome completo] - RA [RA]</p>
+        <p><strong>Integrante 2:</strong> [nome completo] - RA [RA]</p>
+        <p><strong>Integrante 3:</strong> [nome completo] - RA [RA]</p>
+        <p><strong>Integrante 4:</strong> [nome completo] - RA [RA]</p>
+    </section>
+
+    <h2>Objetivo</h2>
+    <p>Apresentar a arquitetura completa do Beauty Marketplace, desde a visão de alto nível com C4 até os modelos de dados relacional e não-relacional. A entrega utiliza C4-PlantUML como Diagrams as Code, MySQL para o modelo relacional e MongoDB/Redis para a modelagem NoSQL.</p>
+    <p>O Beauty Marketplace centraliza produtos de beleza de diferentes lojistas, com catálogo unificado, filtros por perfil de beleza, carrinho multi-lojista, checkout único, lista de desejos, avaliações e rastreamento por item.</p>
+
+    <h2>2. Diagrama C4 - Nivel Context (C1)</h2>
+    <p>Arquivo fonte: <code>diagramas/c1-context.puml</code></p>
+    <div class="diagram">
+        <img src="diagramas/rendered/c1-context.svg" alt="Diagrama C4 Context do Beauty Marketplace" />
+    </div>
+    <table>
+        <thead><tr><th>Elemento</th><th>Tipo</th><th>Descrição</th></tr></thead>
+        <tbody>
+            <tr><td>Consumidor</td><td>Usuario</td><td>Pesquisa, filtra, compra produtos de beleza, avalia itens e acompanha entregas.</td></tr>
+            <tr><td>Lojista</td><td>Usuario</td><td>Cadastra produtos, acompanha vendas, gerencia estoque e recebe pedidos.</td></tr>
+            <tr><td>Administrador</td><td>Usuario</td><td>Aprova lojistas, define comissoes e monitora a plataforma.</td></tr>
+            <tr><td>Beauty Marketplace</td><td>Sistema</td><td>Centraliza catalogo, carrinho multi-lojista, checkout, avaliacoes e rastreio.</td></tr>
+            <tr><td>Gateway de pagamento</td><td>Sistema externo</td><td>Autoriza pagamento único e distribui valores entre lojistas por split.</td></tr>
+            <tr><td>Correios/Transportadoras</td><td>Sistema externo</td><td>Calcula preço de frete, prazo e status de rastreio.</td></tr>
+            <tr><td>E-mail/notificações</td><td>Sistema externo</td><td>Envia confirmações, avisos e recuperação de carrinho abandonado.</td></tr>
+            <tr><td>Redes sociais e comunidade</td><td>Sistema externo/social</td><td>Origem de resenhas, tendências e prova social.</td></tr>
+        </tbody>
+    </table>
+
+    <h2>3. Diagrama C4 - Nivel Container (C2)</h2>
+    <p>Arquivo fonte: <code>diagramas/c2-container.puml</code></p>
+    <div class="diagram">
+        <img src="diagramas/rendered/c2-container.svg" alt="Diagrama C4 Container do Beauty Marketplace" />
+    </div>
+    <table>
+        <thead><tr><th>Container</th><th>Tecnologia</th><th>Justificativa</th></tr></thead>
+        <tbody>
+            <tr><td>Navegador / Mobile Web</td><td>Razor Views, Bootstrap, HTML, CSS e JavaScript</td><td>Interface responsiva para demonstrar consumidor, lojista e administrador sem app nativo.</td></tr>
+            <tr><td>Aplicacao ASP.NET Core MVC</td><td>ASP.NET Core MVC, EF Core e Identity</td><td>Base do projeto, com MVC, autenticacao por roles e regras de marketplace.</td></tr>
+            <tr><td>MySQL</td><td>Banco relacional</td><td>Modelo oficial para dados transacionais, integridade referencial e consultas relacionais.</td></tr>
+            <tr><td>SQLite local</td><td>Banco relacional embarcado</td><td>Facilita execução local do protótipo, sem substituir o MySQL arquitetural.</td></tr>
+            <tr><td>MongoDB</td><td>Banco de documentos</td><td>Avaliações com mídias e atributos de beleza flexíveis.</td></tr>
+            <tr><td>Redis</td><td>Cache chave-valor</td><td>Carrinho rápido, TTL de abandono e ranking de produtos visualizados.</td></tr>
+            <tr><td>Serviços externos</td><td>APIs de pagamento, frete e notificações</td><td>Suportam split, prazo/rastreio e comunicação transacional.</td></tr>
+        </tbody>
+    </table>
+
+    <h2>4. Diagrama C4 - Nivel Component (C3)</h2>
+    <p>Arquivo fonte: <code>diagramas/c3-component-backend.puml</code></p>
+    <div class="diagram">
+        <img src="diagramas/rendered/c3-component-backend.svg" alt="Diagrama C4 Component do backend" />
+    </div>
+    <table>
+        <thead><tr><th>Componente</th><th>Responsabilidade</th></tr></thead>
+        <tbody>
+            <tr><td>ProdutoController</td><td>Catálogo, busca, filtros de beleza, detalhes, avaliações e recomendações.</td></tr>
+            <tr><td>CarrinhoController</td><td>Carrinho multi-lojista, estoque, checkout, frete, split e rastreio.</td></tr>
+            <tr><td>PedidosController</td><td>Histórico e rastreamento por item/lojista.</td></tr>
+            <tr><td>ListaDesejosController</td><td>Produtos salvos para compra futura.</td></tr>
+            <tr><td>LojistaController</td><td>Dashboard, vendas, notificações e estoque do lojista.</td></tr>
+            <tr><td>AdminController</td><td>Aprovação de lojistas, comissões e mapa de atendimento.</td></tr>
+            <tr><td>ASP.NET Identity</td><td>Login, cadastro e roles Consumidor, Lojista e Administrador.</td></tr>
+            <tr><td>ApplicationDbContext</td><td>Mapeamento relacional e acesso ao banco via EF Core.</td></tr>
+        </tbody>
+    </table>
+
+    <h2>5. Diagrams as Code</h2>
+    <p>Os diagramas C4 foram criados com PlantUML e C4-PlantUML. Os arquivos fonte ficam versionados no GitHub em <code>docs/Entrega 3/diagramas</code>.</p>
+    <pre>plantuml "docs/Entrega 3/diagramas/*.puml"</pre>
+
+    <h2>6. Modelagem de dados - SQL (MySQL)</h2>
+    <p>Arquivo fonte: <code>sql/mysql-schema.sql</code></p>
+    <p>O modelo relacional possui 9 tabelas com chaves primárias, estrangeiras, checks e índices: usuarios, lojistas, categorias, comissoes_categoria, produtos, pedidos, pedido_itens, avaliacoes e lista_desejos_itens.</p>
+    <table>
+        <thead><tr><th>Relacionamento</th><th>Descricao</th></tr></thead>
+        <tbody>
+            <tr><td>usuarios -> pedidos</td><td>Um consumidor pode realizar muitos pedidos.</td></tr>
+            <tr><td>lojistas -> produtos</td><td>Um lojista vende muitos produtos.</td></tr>
+            <tr><td>categorias -> produtos</td><td>Uma categoria classifica muitos produtos.</td></tr>
+            <tr><td>categorias -> comissoes_categoria</td><td>Cada categoria possui percentual de comissão vigente.</td></tr>
+            <tr><td>pedidos -> pedido_itens</td><td>Um pedido possui itens separados por produto e lojista.</td></tr>
+            <tr><td>produtos -> avaliacoes</td><td>Um produto pode receber muitas avaliações.</td></tr>
+            <tr><td>usuarios/produtos -> lista_desejos_itens</td><td>Consumidores salvam produtos para compra futura.</td></tr>
+        </tbody>
+    </table>
+
+    <h2>7. Modelagem de dados - NoSQL</h2>
+    <h3>MongoDB</h3>
+    <p>Arquivo fonte: <code>nosql/mongodb-avaliacoes.json</code>. A coleção <code>avaliacoes_produto</code> guarda avaliações ricas com produto, lojista, usuário, nota, comentário, mídias, atributos de beleza, compra verificada e moderação.</p>
+    <h3>Redis</h3>
+    <p>Arquivo fonte: <code>nosql/redis-estruturas.md</code>. As estruturas modeladas são <code>cart:{usuarioId}</code> como Hash com TTL, <code>ranking:produtos:visualizados</code> como Sorted Set e <code>cart:abandoned:{usuarioId}</code> para recuperação de carrinho.</p>
+
+    <h2>Checklist final dos criterios</h2>
+    <table>
+        <thead><tr><th>Criterio</th><th>Atendimento</th></tr></thead>
+        <tbody>
+            <tr><td>C4 completo</td><td>C1, C2 e C3 incluidos com descricoes.</td></tr>
+            <tr><td>Diagrams as Code</td><td>PlantUML/C4-PlantUML versionado no repositorio.</td></tr>
+            <tr><td>SQL MySQL</td><td>Script com 9 tabelas, PKs, FKs e índices.</td></tr>
+            <tr><td>NoSQL</td><td>MongoDB e Redis modelados com caso de uso e justificativa.</td></tr>
+        </tbody>
+    </table>
+
+    <p class="small">Forma de entrega: enviar este PDF e o link do repositório GitHub contendo a pasta <code>docs/Entrega 3</code>.</p>
+</main>
+</body>
+</html>

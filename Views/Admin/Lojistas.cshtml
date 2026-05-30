@@ -1,0 +1,71 @@
+@model List<WebApplication1.Models.Lojista>
+
+@{
+    ViewData["Title"] = "Administração";
+    var comissoes = ViewBag.Comissoes as List<WebApplication1.Models.ComissaoCategoria> ?? new();
+}
+
+<h1>Administração do marketplace</h1>
+
+<section class="mb-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-center">
+        <div>
+            <h2>Aprovação de lojistas</h2>
+            <p class="text-muted mb-0">Controle a procedência dos vendedores antes que eles operem na plataforma.</p>
+        </div>
+        <a class="btn btn-outline-primary" asp-controller="Admin" asp-action="MapaAtendimento">Ver mapa de atendimento</a>
+    </div>
+
+    <div class="table-responsive mt-3">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Lojista</th>
+                    <th>CNPJ</th>
+                    <th>Local</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var lojista in Model)
+                {
+                    <tr>
+                        <td>@lojista.NomeFantasia<br /><small>@lojista.Email</small></td>
+                        <td>@lojista.Cnpj</td>
+                        <td>@lojista.Cidade/@lojista.Estado</td>
+                        <td><span class="badge text-bg-light">@lojista.Status</span></td>
+                        <td>
+                            <form class="d-flex gap-2" asp-controller="Admin" asp-action="AlterarStatus" method="post">
+                                <input type="hidden" name="id" value="@lojista.Id" />
+                                <button class="btn btn-sm btn-success" name="status" value="Aprovado">Aprovar</button>
+                                <button class="btn btn-sm btn-outline-danger" name="status" value="Reprovado">Reprovar</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section id="comissoes">
+    <h2>Comissões por categoria</h2>
+    <p class="text-muted">Defina percentuais diferentes para otimizar a lucratividade da plataforma.</p>
+    <div class="row g-3">
+        @foreach (var comissao in comissoes)
+        {
+            <div class="col-md-4">
+                <form class="metric" asp-controller="Admin" asp-action="AtualizarComissao" method="post">
+                    <input type="hidden" name="id" value="@comissao.Id" />
+                    <span>@comissao.Categoria</span>
+                    <div class="input-group">
+                        <input class="form-control" type="number" step="0.1" min="0" max="100" name="percentual" value="@comissao.Percentual.ToString("0.##")" />
+                        <span class="input-group-text">%</span>
+                    </div>
+                    <button class="btn btn-sm btn-outline-primary mt-2">Salvar comissão</button>
+                </form>
+            </div>
+        }
+    </div>
+</section>

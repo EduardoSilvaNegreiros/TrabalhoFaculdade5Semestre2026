@@ -1,219 +1,237 @@
-﻿@model List<WebApplication1.Models.Produto>
+@model List<WebApplication1.Models.Produto>
 
 @{
-    ViewData["Title"] = "Produtos";
+    ViewData["Title"] = "Catálogo";
+    var categorias = ViewBag.Categorias as List<string> ?? new();
+    var peles = ViewBag.Peles as List<string> ?? new();
+    var cabelos = ViewBag.Cabelos as List<string> ?? new();
+    var marcas = ViewBag.Marcas as List<string> ?? new();
+    var lojistas = ViewBag.Lojistas as List<string> ?? new();
+    var tons = ViewBag.Tons as List<string> ?? new();
+    var acabamentos = ViewBag.Acabamentos as List<string> ?? new();
+    var totalProdutos = ViewBag.TotalProdutos as int? ?? Model.Count;
 }
 
-<div class="container my-5">
-    <h2 class="mb-4" style="font-weight: 700; color:#343a40;">Todos os Produtos</h2>
+<section class="market-hero">
+    <div>
+        <p class="eyebrow">Marketplace de beleza</p>
+        <h1>Produtos de diferentes lojistas em um checkout único.</h1>
+        <p>Busque por produto, marca, benefício, composição ou lojista e refine pelos filtros de beleza.</p>
+    </div>
+</section>
 
-    <!-- Filtro e pesquisa -->
-    <div class="row mb-4 g-2">
-        <div class="col-md-6">
-            <input id="search" type="text" class="form-control form-control-lg" placeholder="Buscar produto pelo nome..." />
-        </div>
-        <div class="col-md-6">
-            <select id="categoryFilter" class="form-select form-select-lg">
-                <option value="">Todas as categorias</option>
-                @foreach (var cat in Model.Select(p => p.Categoria).Distinct())
-                {
-                    <option value="@cat">@cat</option>
-                }
-            </select>
-        </div>
+<form method="get" class="filter-panel mb-4">
+    <div class="filter-wide">
+        <label class="form-label" for="busca">Buscar</label>
+        <input id="busca" name="busca" class="form-control" value="@Context.Request.Query["busca"]" placeholder="Ex: pele oleosa, CeraVe, matte, cachos" />
     </div>
 
-    <!-- Produtos -->
-    <div class="row row-cols-1 row-cols-md-3 g-4" id="productList">
-        @foreach (var produto in Model)
-        {
-            <div class="col product-card"
-                 data-category="@produto.Categoria"
-                 data-name="@produto.Nome.ToLower()"
-                 data-id="@produto.Id"
-                 data-nome="@produto.Nome"
-                 data-descricao="@produto.Descricao"
-                 data-preco="@produto.Preco.ToString("C")"
-                 data-imagem="@produto.ImagemUrl">
-                <div class="card h-100 shadow border-0 produto-detalhe" style="cursor:pointer; transition: transform 0.3s, box-shadow 0.3s;">
-                    <div class="position-relative">
-                        <img src="@(produto.ImagemUrl ?? "/images/produto-placeholder.png")"
-                             class="card-img-top"
-                             alt="@produto.Nome"
-                             style="height: 250px; object-fit: cover; border-radius: 0.5rem 0.5rem 0 0;" />
-                        <span class="badge bg-primary position-absolute top-0 end-0 m-2">@produto.Categoria</span>
-                    </div>
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title text-truncate" title="@produto.Nome">@produto.Nome</h5>
-                        <p class="card-text text-truncate" title="@produto.Descricao">@produto.Descricao</p>
-                        <p class="mt-auto mb-3 fw-bold text-primary fs-5">@produto.Preco.ToString("C")</p>
-                        <button class="btn btn-success w-100 btn-lg adicionar-carrinho" data-id="@produto.Id">
-                            Adicionar ao Carrinho
-                        </button>
-                    </div>
-                </div>
-            </div>
-        }
+    <div>
+        <label class="form-label" for="category">Categoria</label>
+        <select id="category" name="category" class="form-select">
+            <option value="">Todas</option>
+            @foreach (var item in categorias)
+            {
+                <option value="@item" selected="@(Context.Request.Query["category"] == item)">@item</option>
+            }
+        </select>
     </div>
+
+    <div>
+        <label class="form-label" for="pele">Tipo de pele</label>
+        <select id="pele" name="pele" class="form-select">
+            <option value="">Todos</option>
+            @foreach (var item in peles)
+            {
+                <option value="@item" selected="@(Context.Request.Query["pele"] == item)">@item</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <label class="form-label" for="cabelo">Tipo de cabelo</label>
+        <select id="cabelo" name="cabelo" class="form-select">
+            <option value="">Todos</option>
+            @foreach (var item in cabelos)
+            {
+                <option value="@item" selected="@(Context.Request.Query["cabelo"] == item)">@item</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <label class="form-label" for="marca">Marca</label>
+        <select id="marca" name="marca" class="form-select">
+            <option value="">Todas</option>
+            @foreach (var item in marcas)
+            {
+                <option value="@item" selected="@(Context.Request.Query["marca"] == item)">@item</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <label class="form-label" for="lojista">Lojista</label>
+        <select id="lojista" name="lojista" class="form-select">
+            <option value="">Todos</option>
+            @foreach (var item in lojistas)
+            {
+                <option value="@item" selected="@(Context.Request.Query["lojista"] == item)">@item</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <label class="form-label" for="tom">Tom</label>
+        <select id="tom" name="tom" class="form-select">
+            <option value="">Todos</option>
+            @foreach (var item in tons)
+            {
+                <option value="@item" selected="@(Context.Request.Query["tom"] == item)">@item</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <label class="form-label" for="acabamento">Acabamento</label>
+        <select id="acabamento" name="acabamento" class="form-select">
+            <option value="">Todos</option>
+            @foreach (var item in acabamentos)
+            {
+                <option value="@item" selected="@(Context.Request.Query["acabamento"] == item)">@item</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <label class="form-label" for="precoMin">Preço mín.</label>
+        <input id="precoMin" name="precoMin" type="number" step="1" min="0" class="form-control" value="@Context.Request.Query["precoMin"]" placeholder="R$ 0" />
+    </div>
+
+    <div>
+        <label class="form-label" for="precoMax">Preço máx.</label>
+        <input id="precoMax" name="precoMax" type="number" step="1" min="0" class="form-control" value="@Context.Request.Query["precoMax"]" placeholder="R$ 200" />
+    </div>
+
+    <div>
+        <label class="form-label" for="ordenacao">Ordenar</label>
+        <select id="ordenacao" name="ordenacao" class="form-select">
+            <option value="">Nome A-Z</option>
+            <option value="nome-desc" selected="@(Context.Request.Query["ordenacao"] == "nome-desc")">Nome Z-A</option>
+            <option value="menor-preco" selected="@(Context.Request.Query["ordenacao"] == "menor-preco")">Menor preço</option>
+            <option value="maior-preco" selected="@(Context.Request.Query["ordenacao"] == "maior-preco")">Maior preço</option>
+            <option value="estoque" selected="@(Context.Request.Query["ordenacao"] == "estoque")">Maior estoque</option>
+        </select>
+    </div>
+
+    <label class="form-check filter-check">
+        <input class="form-check-input" type="checkbox" name="vegano" value="true" checked="@(Context.Request.Query["vegano"] == "true")" />
+        <span class="form-check-label">Somente veganos</span>
+    </label>
+
+    <button class="btn btn-primary">Aplicar filtros</button>
+    <a class="btn btn-outline-secondary" asp-controller="Produto" asp-action="Index">Limpar</a>
+</form>
+
+<div class="catalog-toolbar mb-3">
+    <strong>@totalProdutos produto(s) encontrado(s)</strong>
+    <span class="text-muted">Os produtos universais também aparecem quando você filtra por pele, cabelo ou tom.</span>
 </div>
 
-<!-- Modal Produto -->
-<div class="modal fade" id="produtoModal" tabindex="-1" aria-labelledby="produtoModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg">
-            <div class="modal-header border-0">
-                <h5 class="modal-title" id="produtoModalLabel"></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-            </div>
-            <div class="modal-body d-flex flex-column align-items-center">
-                <img id="produtoModalImg" src="" class="img-fluid mb-3 rounded" style="max-height:350px; object-fit:cover;">
-                <p id="produtoModalDescricao" class="text-center fs-6"></p>
-                <p class="fw-bold text-primary fs-5" id="produtoModalPreco"></p>
-                <div class="d-grid w-100">
-                    <button id="produtoModalAdicionar" class="btn btn-success btn-lg">Adicionar ao Carrinho</button>
-                </div>
-            </div>
-        </div>
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        Nenhum produto encontrado com esses filtros. Tente remover algum critério ou buscar por marca/categoria.
     </div>
+}
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+    @foreach (var produto in Model)
+    {
+        <div class="col">
+            <article class="card product-card h-100">
+                <a asp-controller="Produto" asp-action="Detalhes" asp-route-id="@produto.Id">
+                    <img src="@produto.ImagemUrl" class="card-img-top" alt="@produto.Nome" />
+                </a>
+                <div class="card-body d-flex flex-column">
+                    <div class="d-flex justify-content-between gap-2">
+                        <span class="badge text-bg-light">@produto.Categoria</span>
+                        @if (produto.Vegano)
+                        {
+                            <span class="badge text-bg-success">Vegano</span>
+                        }
+                    </div>
+                    <h2 class="product-title">@produto.Nome</h2>
+                    <p class="text-muted mb-2">@produto.Marca - @produto.Lojista?.NomeFantasia</p>
+                    <p class="small flex-grow-1">@produto.Descricao</p>
+                    <div class="product-tags">
+                        <span>Pele: @produto.TipoPele</span>
+                        <span>Cabelo: @produto.TipoCabelo</span>
+                        <span>Tom: @produto.Tom</span>
+                        <span>@produto.Acabamento</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-end gap-2">
+                        <p class="price mb-0">@((produto.Preco).ToString("C"))</p>
+                        <small class="text-muted">@produto.Estoque em estoque</small>
+                    </div>
+                    <div class="d-flex gap-2 mt-3">
+                        @if (produto.Estoque <= 0)
+                        {
+                            <button class="btn btn-secondary flex-fill" disabled>Indisponível</button>
+                        }
+                        else if (User.IsInRole("Consumidor"))
+                        {
+                            <button class="btn btn-success flex-fill adicionar-carrinho" data-id="@produto.Id">Adicionar</button>
+                            <form asp-controller="ListaDesejos" asp-action="Alternar" method="post">
+                                <input type="hidden" name="produtoId" value="@produto.Id" />
+                                <button class="btn btn-outline-danger" title="Lista de desejos">Favoritar</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a class="btn btn-outline-primary flex-fill" asp-controller="Produto" asp-action="Detalhes" asp-route-id="@produto.Id">Ver detalhes</a>
+                        }
+                    </div>
+                </div>
+            </article>
+        </div>
+    }
 </div>
 
-<!-- Notificação do Carrinho -->
-<div id="cart-notification" class="toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0 m-3" role="alert" aria-live="assertive" aria-atomic="true">
+<div id="cart-notification" class="toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0 m-3" role="alert">
     <div class="d-flex">
-        <div class="toast-body">
-            Produto adicionado ao carrinho!
-        </div>
-        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        <div class="toast-body">Produto adicionado ao carrinho.</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
     </div>
 </div>
-
-<style>
-    #search, #categoryFilter {
-        max-width: 100%;
-        border-radius: 0.5rem;
-    }
-
-    .card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 20px 30px rgba(0,0,0,0.25);
-    }
-
-    .card-title {
-        font-weight: 600;
-        font-size: 1.15rem;
-    }
-
-    .card-text {
-        font-size: 0.95rem;
-        color: #555;
-    }
-
-    .btn-success {
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        transition: transform 0.2s;
-    }
-
-        .btn-success:hover {
-            transform: scale(1.03);
-        }
-</style>
 
 @section Scripts {
     <script>
-        const searchInput = document.getElementById("search");
-        const categoryFilter = document.getElementById("categoryFilter");
-        const productList = document.getElementById("productList");
-        const products = productList.getElementsByClassName("product-card");
-
-        function filterProducts() {
-            const searchText = searchInput.value.toLowerCase();
-            const selectedCategory = categoryFilter.value.toLowerCase();
-
-            Array.from(products).forEach(prod => {
-                const name = prod.dataset.name;
-                const category = (prod.dataset.category ?? "").toLowerCase();
-                const matchSearch = name.includes(searchText);
-                const matchCategory = !selectedCategory || category === selectedCategory;
-                prod.style.display = (matchSearch && matchCategory) ? "" : "none";
-            });
-        }
-
-        searchInput.addEventListener("input", filterProducts);
-        categoryFilter.addEventListener("change", filterProducts);
-
-        // Modal
-        const modal = new bootstrap.Modal(document.getElementById('produtoModal'));
-        const modalTitle = document.getElementById('produtoModalLabel');
-        const modalImg = document.getElementById('produtoModalImg');
-        const modalDescricao = document.getElementById('produtoModalDescricao');
-        const modalPreco = document.getElementById('produtoModalPreco');
-        const modalAdicionar = document.getElementById('produtoModalAdicionar');
-
-        Array.from(products).forEach(prod => {
-            prod.querySelector('.card').addEventListener('click', function(e){
-                if(e.target.classList.contains('adicionar-carrinho')) return;
-
-                modalTitle.textContent = prod.dataset.nome;
-                modalDescricao.textContent = prod.dataset.descricao;
-                modalPreco.textContent = prod.dataset.preco;
-                modalImg.src = prod.dataset.imagem;
-                modalAdicionar.dataset.id = prod.dataset.id;
-
-                modal.show();
-            });
-        });
-
-        modalAdicionar.addEventListener('click', function(){
-            const produtoId = this.dataset.id;
-            fetch(`/Carrinho/Adicionar/${produtoId}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" }
-            })
-            .then(response => {
-                if(response.status === 401){
-                    window.location.href = '/Carrinho/AvisoLogin';
-                    return;
-                }
-                return response.json();
-            })
-            .then(data => {
-                if(data && data.sucesso){
-                    const toastEl = document.getElementById('cart-notification');
-                    const toast = new bootstrap.Toast(toastEl);
-                    toast.show();
-
-                    const countElem = document.getElementById("cart-count");
-                    if(countElem) countElem.textContent = data.quantidade;
-                    modal.hide();
-                }
-            });
-        });
-
         document.querySelectorAll(".adicionar-carrinho").forEach(btn => {
-            btn.addEventListener("click", function() {
-                const produtoId = this.dataset.id;
-                fetch(`/Carrinho/Adicionar/${produtoId}`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" }
-                })
-                .then(response => {
-                    if(response.status === 401){
-                        window.location.href = '/Carrinho/AvisoLogin';
-                        return;
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if(data && data.sucesso){
-                        const toastEl = document.getElementById('cart-notification');
+            btn.addEventListener("click", function () {
+                fetch(`/Carrinho/Adicionar/${this.dataset.id}`, { method: "POST" })
+                    .then(response => {
+                        if (response.redirected) {
+                            window.location.href = response.url;
+                            return null;
+                        }
+                        if (response.status === 401 || response.status === 403) {
+                            window.location.href = "/Identity/Account/Login";
+                            return null;
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (!data) return;
+                        const toastEl = document.getElementById("cart-notification");
+                        toastEl.querySelector(".toast-body").textContent = data.mensagem || "Produto adicionado ao carrinho.";
+                        toastEl.classList.toggle("bg-danger", data.sucesso === false);
+                        toastEl.classList.toggle("bg-success", data.sucesso !== false);
                         const toast = new bootstrap.Toast(toastEl);
                         toast.show();
-
                         const countElem = document.getElementById("cart-count");
                         if (countElem) countElem.textContent = data.quantidade;
-                    }
-                });
+                    });
             });
         });
     </script>

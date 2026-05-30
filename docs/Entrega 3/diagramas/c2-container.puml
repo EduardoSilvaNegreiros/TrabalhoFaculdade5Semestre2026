@@ -1,0 +1,39 @@
+@startuml C2_Container_Beauty_Marketplace
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+title Beauty Marketplace - C4 Nivel 2 - Container
+
+Person(consumidor, "Consumidor")
+Person(lojista, "Lojista")
+Person(admin, "Administrador")
+
+System_Boundary(sistema, "Beauty Marketplace") {
+    Container(web, "Navegador / Mobile Web", "Razor Views, Bootstrap, HTML, CSS e JavaScript", "Interface responsiva para catalogo, carrinho, checkout, pedidos, lojista e administracao.")
+    Container(app, "Aplicacao ASP.NET Core MVC", "ASP.NET Core MVC, EF Core e Identity", "Executa controllers, regras de negocio, autenticacao por roles, split, frete, pedidos e administracao.")
+    ContainerDb(mysql, "MySQL", "Banco relacional", "Modelo SQL oficial da entrega para usuarios, lojistas, produtos, pedidos, comissoes e avaliacoes.")
+    ContainerDb(sqlite, "SQLite local", "Banco relacional embarcado", "Banco usado apenas para facilitar execucao local do prototipo na apresentacao.")
+    ContainerDb(mongo, "MongoDB", "Banco de documentos", "Armazena avaliacoes ricas com fotos, videos e atributos flexiveis de beleza.")
+    ContainerDb(redis, "Redis", "Cache chave-valor", "Mantem carrinho rapido, TTL de carrinho abandonado e ranking de produtos visualizados.")
+}
+
+System_Ext(pgto, "Gateway de pagamento", "API externa de pagamento e split")
+System_Ext(frete, "Correios/Transportadoras", "API externa de frete, prazo e rastreio")
+System_Ext(notif, "E-mail/notificacoes", "API externa de mensagens transacionais")
+
+Rel(consumidor, web, "Usa pelo navegador ou celular")
+Rel(lojista, web, "Gerencia mini-loja e pedidos")
+Rel(admin, web, "Administra lojistas e comissoes")
+
+Rel(web, app, "Envia requisicoes HTTP/MVC")
+Rel(app, sqlite, "Persiste dados do prototipo local via EF Core")
+Rel(app, mysql, "Persiste dados relacionais na arquitetura alvo")
+Rel(app, mongo, "Registra prova social flexivel")
+Rel(app, redis, "Le e atualiza cache, carrinho e rankings")
+
+Rel(app, pgto, "Solicita pagamento e divisao de valores")
+Rel(app, frete, "Consulta frete e rastreio")
+Rel(app, notif, "Envia confirmacoes e alertas")
+
+@enduml
+

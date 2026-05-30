@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-WebApplication1-99b1ca53-8922-46da-b60f-3ef601e64c9c</UserSecretsId>
@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Pacotes necessários para EF Core + Identity -->
+    <!-- Pacotes necessÃ¡rios para EF Core + Identity -->
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.6" />

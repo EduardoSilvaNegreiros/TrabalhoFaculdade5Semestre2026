@@ -1,0 +1,96 @@
+{
+  "collection": "avaliacoes_produto",
+  "objetivo": "Registrar avaliacoes ricas de produtos de beleza com fotos, videos e atributos variaveis de perfil do consumidor.",
+  "justificativa": "Avaliacoes de beleza mudam de formato conforme categoria, midia, tom de pele, tipo de cabelo e contexto de uso. MongoDB permite evoluir esses campos sem alterar o modelo relacional de pedidos e catalogo.",
+  "schemaDocumento": {
+    "_id": "ObjectId",
+    "produto": {
+      "id": "number",
+      "nome": "string",
+      "categoria": "string",
+      "marca": "string"
+    },
+    "lojista": {
+      "id": "number",
+      "nomeFantasia": "string"
+    },
+    "usuario": {
+      "id": "string",
+      "nomeExibicao": "string",
+      "perfilVerificado": "boolean"
+    },
+    "nota": "number de 1 a 5",
+    "titulo": "string",
+    "comentario": "string",
+    "midias": [
+      {
+        "tipo": "foto | video",
+        "url": "string",
+        "legenda": "string",
+        "ordem": "number"
+      }
+    ],
+    "atributosBeleza": {
+      "tipoPele": "string",
+      "tipoCabelo": "string",
+      "curvaturaCachos": "string",
+      "tomPele": "string",
+      "sensibilidade": "string",
+      "resultadoPercebido": "string"
+    },
+    "compraVerificada": "boolean",
+    "curtidas": "number",
+    "statusModeracao": "aprovada | pendente | reprovada",
+    "criadoEm": "datetime",
+    "atualizadoEm": "datetime"
+  },
+  "documentoExemplo": {
+    "_id": "665a9c7e91b2f0a112345678",
+    "produto": {
+      "id": 101,
+      "nome": "Gel de Limpeza Facial",
+      "categoria": "Skincare",
+      "marca": "CeraVe"
+    },
+    "lojista": {
+      "id": 2,
+      "nomeFantasia": "Dermocosmeticos Prime"
+    },
+    "usuario": {
+      "id": "8f55bfc2-2390-4c2a-a0a5-efbbd6b17211",
+      "nomeExibicao": "Cliente verificado",
+      "perfilVerificado": true
+    },
+    "nota": 5,
+    "titulo": "Bom para pele oleosa",
+    "comentario": "Funcionou bem na minha pele oleosa, nao ressecou e chegou dentro do prazo.",
+    "midias": [
+      {
+        "tipo": "foto",
+        "url": "https://cdn.beautymarket.com/reviews/101/foto-01.jpg",
+        "legenda": "Textura do produto",
+        "ordem": 1
+      }
+    ],
+    "atributosBeleza": {
+      "tipoPele": "Oleosa",
+      "tipoCabelo": "Todos",
+      "curvaturaCachos": "Nao se aplica",
+      "tomPele": "Medio",
+      "sensibilidade": "Baixa",
+      "resultadoPercebido": "Controle de oleosidade"
+    },
+    "compraVerificada": true,
+    "curtidas": 18,
+    "statusModeracao": "aprovada",
+    "criadoEm": "2026-05-30T20:30:00Z",
+    "atualizadoEm": "2026-05-30T20:30:00Z"
+  },
+  "indicesSugeridos": [
+    { "produto.id": 1, "criadoEm": -1 },
+    { "produto.categoria": 1, "nota": -1 },
+    { "atributosBeleza.tipoPele": 1 },
+    { "statusModeracao": 1, "criadoEm": -1 }
+  ]
+}
+

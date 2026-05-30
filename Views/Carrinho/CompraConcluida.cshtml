@@ -1,34 +1,31 @@
-﻿@{
-    ViewData["Title"] = "Compra Concluída";
+@model WebApplication1.Models.Pedido?
+
+@{
+    ViewData["Title"] = "Compra concluída";
 }
 
-<div class="container my-5 text-center">
-    <div class="card shadow-sm border-0 p-5">
-        <h2 class="mb-4 fw-bold text-success">Compra Concluída!</h2>
-        <p class="mb-4 fs-5">Seu pedido foi realizado com sucesso. Obrigado por comprar conosco!</p>
-        <a href="/Produto" class="btn btn-primary btn-lg">Continuar Comprando</a>
-        <a href="/Carrinho" class="btn btn-outline-secondary btn-lg ms-2">Ver Carrinho</a>
-    </div>
+<div class="success-panel">
+    <h1>Compra concluída</h1>
+    <p>Seu pedido foi confirmado. Você pode acompanhar o envio de cada item pelo histórico de pedidos.</p>
+
+    @if (Model != null)
+    {
+        <p><strong>Pedido #@Model.Id</strong> - @((Model.Total).ToString("C")) - @Model.Status</p>
+        <div class="row g-3 mt-3">
+            @foreach (var item in Model.Itens)
+            {
+                <div class="col-md-6">
+                    <div class="card p-3 h-100">
+                        <strong>@item.NomeProduto</strong>
+                        <span>@item.NomeLojista</span>
+                        <span>Rastreio: @item.CodigoRastreio</span>
+                        <span>Status: @item.StatusEntrega</span>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    <a class="btn btn-primary mt-4" asp-controller="Pedidos" asp-action="Index">Ver histórico de pedidos</a>
+    <a class="btn btn-outline-secondary mt-4" asp-controller="Produto" asp-action="Index">Continuar comprando</a>
 </div>
-
-<style>
-    .card {
-        border-radius: 0.5rem;
-        transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 25px rgba(0,0,0,0.15);
-        }
-
-    .btn-primary {
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        transition: transform 0.2s;
-    }
-
-        .btn-primary:hover {
-            transform: scale(1.03);
-        }
-</style>

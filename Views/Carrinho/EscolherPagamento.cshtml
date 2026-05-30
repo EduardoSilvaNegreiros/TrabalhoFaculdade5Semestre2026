@@ -1,54 +1,63 @@
-﻿@{
-    ViewData["Title"] = "Escolher Pagamento";
+@model List<WebApplication1.Models.CarrinhoItem>
+
+@{
+    ViewData["Title"] = "Checkout";
+    var frete = ViewBag.Frete as decimal? ?? 0m;
+    var subtotal = Model.Sum(i => i.Subtotal);
 }
 
-<div class="container my-5">
-    <h2 class="mb-4 fw-bold text-dark">Escolha o Método de Pagamento</h2>
+<h1>Checkout</h1>
 
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow-sm border-0 p-4">
-                <h5 class="mb-3">Selecione uma opção:</h5>
-                <form method="post" action="/Carrinho/FinalizarCompra">
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="radio" name="Pagamento" id="pix" value="Pix" checked>
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Não há itens para finalizar.</div>
+}
+else
+{
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="card p-4">
+                <h2>Pagamento e entrega</h2>
+                <form method="post" asp-controller="Carrinho" asp-action="FinalizarCompra">
+                    <label class="form-label mt-3">CEP para entrega</label>
+                    <input class="form-control" name="cep" value="@ViewBag.Cep" maxlength="9" />
+
+                    <label class="form-label mt-3">Método de pagamento</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="pagamento" id="pix" value="Pix" checked>
                         <label class="form-check-label" for="pix">Pix</label>
                     </div>
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="radio" name="Pagamento" id="cartao" value="Cartão de Crédito">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="pagamento" id="cartao" value="Cartão de Crédito">
                         <label class="form-check-label" for="cartao">Cartão de Crédito</label>
                     </div>
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="radio" name="Pagamento" id="boleto" value="Boleto">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="pagamento" id="boleto" value="Boleto">
                         <label class="form-check-label" for="boleto">Boleto Bancário</label>
                     </div>
 
-                    <button type="submit" class="btn btn-success btn-lg w-100 mt-3">Finalizar Compra</button>
-                    <a href="/Carrinho" class="btn btn-outline-secondary btn-lg w-100 mt-2">Voltar ao Carrinho</a>
+                    <button class="btn btn-success btn-lg w-100 mt-4">Confirmar pedido</button>
                 </form>
             </div>
         </div>
+        <aside class="col-lg-5">
+            <div class="summary-box">
+                <h2>Distribuição por lojista</h2>
+                @foreach (var grupo in Model.GroupBy(i => i.NomeLojista))
+                {
+                    <div class="split-row">
+                        <strong>@grupo.Key</strong>
+                        <span>Venda: @((grupo.Sum(i => i.Subtotal)).ToString("C"))</span>
+                        <span>Comissão: @((grupo.Sum(i => i.ValorComissao)).ToString("C"))</span>
+                        <span>Repasse: @((grupo.Sum(i => i.ValorRepasseLojista)).ToString("C"))</span>
+                    </div>
+                }
+                <hr />
+                <p><span>Subtotal</span><strong>@((subtotal).ToString("C"))</strong></p>
+                <p><span>Frete</span><strong>@((frete).ToString("C"))</strong></p>
+                <p><span>Prazo</span><strong>@ViewBag.Prazo</strong></p>
+                <p class="total"><span>Total</span><strong>@((subtotal + frete).ToString("C"))</strong></p>
+            </div>
+        </aside>
     </div>
-</div>
-
-<style>
-    .card {
-        border-radius: 0.5rem;
-        transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 25px rgba(0,0,0,0.15);
-        }
-
-    .btn-success {
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        transition: transform 0.2s;
-    }
-
-        .btn-success:hover {
-            transform: scale(1.03);
-        }
-</style>
+}

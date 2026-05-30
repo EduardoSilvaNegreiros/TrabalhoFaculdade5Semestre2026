@@ -1,0 +1,52 @@
+@{
+    ViewData["Title"] = "Mapa de Atendimento";
+}
+
+<h1>Mapa de Atendimento dos Requisitos</h1>
+<p class="lead">Esta área ajuda a demonstrar para a banca onde cada requisito aparece no sistema.</p>
+
+<div class="table-responsive">
+    <table class="table align-middle requirement-map">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Demonstrado em</th>
+                <th>Evidência no sistema</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>RF01 - Multi-vendedores e split</td><td>Carrinho / Checkout</td><td>Itens agrupados por lojista, comissão e repasse.</td></tr>
+            <tr><td>RF02 - Onboarding de lojista</td><td>Administração</td><td>Aprovação e reprovação de lojistas cadastrados.</td></tr>
+            <tr><td>RF03 - Catálogo unificado</td><td>Catálogo / Detalhes</td><td>Fotos, descrição, composição, estoque e lojista.</td></tr>
+            <tr><td>RF04 - Filtros de beleza</td><td>Catálogo</td><td>Filtros por pele, cabelo, marca, preço e vegano.</td></tr>
+            <tr><td>RF05 - Painel do lojista</td><td>Painel do Lojista</td><td>Faturamento, pedidos, repasse e inventário.</td></tr>
+            <tr><td>RF06 - Avaliações e prova social</td><td>Detalhe do produto</td><td>Nota, comentário, perfil e foto enviada por cliente.</td></tr>
+            <tr><td>RF07 - Recomendação inteligente</td><td>Detalhe do produto</td><td>Produtos recomendados por categoria e perfil.</td></tr>
+            <tr><td>RF08 - Recuperação de carrinho</td><td>Carrinho</td><td>Itens preservados por sessão para continuar depois.</td></tr>
+            <tr><td>RF09 - Frete integrado</td><td>Checkout</td><td>CEP, preço de frete e prazo de entrega.</td></tr>
+            <tr><td>RF10 - Histórico e rastreio</td><td>Pedidos</td><td>Código de rastreio e status por item.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Histórias de usuário por perfil</h2>
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="feature-block h-100">
+            <h3>Consumidor</h3>
+            <p>Filtra produtos, compra de múltiplos vendedores, salva desejos, vê avaliações e acompanha rastreio.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="feature-block h-100">
+            <h3>Lojista</h3>
+            <p>Acompanha vendas, recebe notificações de pedidos e gerencia o estoque dos próprios produtos.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="feature-block h-100">
+            <h3>Administrador</h3>
+            <p>Aprova lojistas, controla procedência e define comissões por categoria.</p>
+        </div>
+    </div>
+</div>

@@ -1,10 +1,12 @@
-﻿@page
+@page
 @model AccessDeniedModel
 @{
     ViewData["Title"] = "Acesso negado";
 }
 
-<header>
-    <h1 class="text-danger">@ViewData["Title"]</h1>
-    <p class="text-danger">Você não tem permissão para acessar este recurso.</p>
-</header>
+<section class="success-panel">
+    <h1>Acesso negado</h1>
+    <p>Seu perfil não tem permissão para acessar esta área.</p>
+    <p class="text-muted">Consumidores, lojistas e administradores possuem menus e permissões separados.</p>
+    <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Voltar ao início</a>
+</section>

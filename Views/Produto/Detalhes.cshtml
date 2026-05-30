@@ -1,0 +1,94 @@
+@model WebApplication1.Models.Produto
+
+@{
+    ViewData["Title"] = Model.Nome;
+    var avaliacoes = ViewBag.Avaliacoes as List<WebApplication1.Models.Avaliacao> ?? new();
+    var recomendados = ViewBag.Recomendados as List<WebApplication1.Models.Produto> ?? new();
+}
+
+<div class="row g-4 align-items-start">
+    <div class="col-lg-5">
+        <img src="@Model.ImagemUrl" class="img-fluid detail-image" alt="@Model.Nome" />
+    </div>
+    <div class="col-lg-7">
+        <span class="badge text-bg-light">@Model.Categoria</span>
+        <h1 class="mt-3">@Model.Nome</h1>
+        <p class="text-muted">@Model.Marca - vendido por @Model.Lojista?.NomeFantasia</p>
+        <p>@Model.Descricao</p>
+        <dl class="row specs">
+            <dt class="col-sm-4">Tipo de pele</dt><dd class="col-sm-8">@Model.TipoPele</dd>
+            <dt class="col-sm-4">Tipo de cabelo</dt><dd class="col-sm-8">@Model.TipoCabelo / @Model.CurvaturaCachos</dd>
+            <dt class="col-sm-4">Tom</dt><dd class="col-sm-8">@Model.Tom</dd>
+            <dt class="col-sm-4">Composição</dt><dd class="col-sm-8">@Model.Composicao</dd>
+            <dt class="col-sm-4">Estoque</dt><dd class="col-sm-8">@Model.Estoque unidades</dd>
+        </dl>
+        <p class="price fs-3">@((Model.Preco).ToString("C"))</p>
+        @if (Model.Estoque <= 0)
+        {
+            <button class="btn btn-secondary btn-lg" disabled>Produto indisponível</button>
+        }
+        else if (User.IsInRole("Consumidor"))
+        {
+            <button class="btn btn-success btn-lg adicionar-carrinho" data-id="@Model.Id">Adicionar ao carrinho</button>
+        }
+        else
+        {
+            <a class="btn btn-outline-primary btn-lg" asp-area="Identity" asp-page="/Account/Login">Entrar para comprar</a>
+        }
+    </div>
+</div>
+
+<section class="mt-5">
+    <h2>Avaliações de clientes</h2>
+    <div class="row g-3">
+        @foreach (var avaliacao in avaliacoes)
+        {
+            <div class="col-md-6">
+                <div class="card h-100 review-card">
+                    <div class="row g-0">
+                        <div class="col-4">
+                            <img src="@avaliacao.MidiaUrl" class="img-fluid rounded-start review-image" alt="Foto enviada por cliente" />
+                        </div>
+                        <div class="col-8">
+                            <div class="card-body">
+                                <strong>@avaliacao.Nota/5 estrelas</strong>
+                                <p class="mb-1">@avaliacao.Comentario</p>
+                                <small class="text-muted">@avaliacao.TipoPele - @avaliacao.TipoCabelo - @avaliacao.UsuarioEmail</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<section class="mt-5">
+    <h2>Produtos recomendados</h2>
+    <div class="row row-cols-1 row-cols-md-4 g-3">
+        @foreach (var produto in recomendados)
+        {
+            <div class="col">
+                <a class="recommend-card" asp-controller="Produto" asp-action="Detalhes" asp-route-id="@produto.Id">
+                    <img src="@produto.ImagemUrl" alt="@produto.Nome" />
+                    <span>@produto.Nome</span>
+                </a>
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        document.querySelector(".adicionar-carrinho")?.addEventListener("click", function () {
+            fetch(`/Carrinho/Adicionar/${this.dataset.id}`, { method: "POST" })
+                .then(response => response.redirected ? (window.location.href = response.url) : response.json())
+                .then(data => {
+                    if (data?.quantidade) {
+                        const countElem = document.getElementById("cart-count");
+                        if (countElem) countElem.textContent = data.quantidade;
+                    }
+                });
+        });
+    </script>
+}

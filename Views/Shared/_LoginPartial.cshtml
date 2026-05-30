@@ -1,33 +1,27 @@
-﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
-
-<!-- Bootstrap Icons CDN -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 
 <ul class="navbar-nav align-items-center">
     @if (SignInManager.IsSignedIn(User))
     {
-        <!-- Saudação do usuário -->
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Olá @User.Identity?.Name!</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Minha conta">
+                Olá, @User.Identity?.Name
+            </a>
         </li>
-
-        <!-- Logout -->
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-dark p-0">Logout</button>
+                <button type="submit" class="nav-link btn btn-link text-dark p-0">Sair</button>
             </form>
         </li>
     }
     else
     {
-        <!-- Cadastro e Login -->
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Cadastro</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Cadastrar</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Entrar</a>
         </li>
     }
 </ul>

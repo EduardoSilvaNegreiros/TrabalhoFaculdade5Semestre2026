@@ -1,0 +1,29 @@
+@model WebApplication1.Models.Pedido
+
+@{
+    ViewData["Title"] = $"Pedido #{Model.Id}";
+}
+
+<h1>Pedido #@Model.Id</h1>
+<p class="lead">@Model.Status - pagamento por @Model.MetodoPagamento - CEP @Model.CepEntrega</p>
+
+<div class="summary-box mb-4">
+    <p><span>Subtotal</span><strong>@((Model.Subtotal).ToString("C"))</strong></p>
+    <p><span>Frete</span><strong>@((Model.Frete).ToString("C"))</strong></p>
+    <p class="total"><span>Total</span><strong>@((Model.Total).ToString("C"))</strong></p>
+</div>
+
+<h2>Rastreamento por lojista</h2>
+<div class="row g-3">
+    @foreach (var item in Model.Itens)
+    {
+        <div class="col-md-6">
+            <div class="card p-3 h-100">
+                <strong>@item.NomeProduto</strong>
+                <span>@item.NomeLojista</span>
+                <span>Código: @item.CodigoRastreio</span>
+                <span>Status atual: @item.StatusEntrega</span>
+            </div>
+        </div>
+    }
+</div>

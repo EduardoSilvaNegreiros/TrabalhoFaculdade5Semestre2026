@@ -1,0 +1,76 @@
+@model WebApplication1.Models.Lojista
+
+@{
+    ViewData["Title"] = "Painel do lojista";
+    var vendas = ViewBag.ItensVendidos as List<WebApplication1.Models.PedidoItem> ?? new();
+    var notificacoes = ViewBag.Notificacoes as List<WebApplication1.Models.PedidoItem> ?? new();
+}
+
+<h1>Painel do lojista</h1>
+<p class="lead">@Model.NomeFantasia - status @Model.Status</p>
+
+<div class="dashboard-grid">
+    <div class="metric"><span>Produtos cadastrados</span><strong>@Model.Produtos.Count</strong></div>
+    <div class="metric"><span>Itens vendidos</span><strong>@vendas.Sum(v => v.Quantidade)</strong></div>
+    <div class="metric"><span>Faturamento</span><strong>@((vendas.Sum(v => v.PrecoUnitario * v.Quantidade)).ToString("C"))</strong></div>
+    <div class="metric"><span>Repasse</span><strong>@((vendas.Sum(v => v.ValorRepasseLojista)).ToString("C"))</strong></div>
+</div>
+
+<section id="pedidos" class="mt-4">
+    <h2>Notificações de novos pedidos</h2>
+    @if (!notificacoes.Any())
+    {
+        <div class="alert alert-info">Nenhum pedido novo aguardando separação.</div>
+    }
+    else
+    {
+        <div class="row g-3">
+            @foreach (var item in notificacoes)
+            {
+                <div class="col-md-6">
+                    <div class="card p-3 h-100">
+                        <strong>@item.NomeProduto</strong>
+                        <span>Quantidade: @item.Quantidade</span>
+                        <span>Status: @item.StatusEntrega</span>
+                        <span>Rastreio: @item.CodigoRastreio</span>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</section>
+
+<section id="estoque" class="mt-4">
+    <h2>Inventário e estoque físico</h2>
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Categoria</th>
+                    <th>Estoque</th>
+                    <th>Preço</th>
+                    <th>Atualizar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var produto in Model.Produtos.OrderBy(p => p.Nome))
+                {
+                    <tr>
+                        <td>@produto.Nome</td>
+                        <td>@produto.Categoria</td>
+                        <td>@produto.Estoque</td>
+                        <td>@((produto.Preco).ToString("C"))</td>
+                        <td>
+                            <form class="d-flex gap-2" asp-controller="Lojista" asp-action="AtualizarEstoque" method="post">
+                                <input type="hidden" name="produtoId" value="@produto.Id" />
+                                <input class="form-control form-control-sm stock-input" type="number" min="0" name="estoque" value="@produto.Estoque" />
+                                <button class="btn btn-sm btn-outline-primary">Salvar</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

@@ -1,0 +1,34 @@
+@{
+    ViewData["Title"] = "Minha área";
+}
+
+<h1>Minha área</h1>
+<p class="lead">Acompanhe seus pedidos, produtos salvos e continue sua rotina de beleza.</p>
+
+<div class="dashboard-grid">
+    <div class="metric"><span>Pedidos realizados</span><strong>@ViewBag.TotalPedidos</strong></div>
+    <div class="metric"><span>Itens salvos</span><strong>@ViewBag.TotalDesejos</strong></div>
+    <div class="metric"><span>Perfil</span><strong>Consumidor</strong></div>
+    <div class="metric"><span>Compra</span><strong>Unificada</strong></div>
+</div>
+
+<div class="row g-3 mt-4">
+    <div class="col-md-4">
+        <a class="feature-block h-100 d-block text-reset" asp-controller="Produto" asp-action="Index">
+            <h2>Encontrar produtos</h2>
+            <p>Use filtros por pele, cabelo, marca e opções veganas.</p>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a class="feature-block h-100 d-block text-reset" asp-controller="ListaDesejos" asp-action="Index">
+            <h2>Lista de desejos</h2>
+            <p>Guarde produtos para comprar futuramente.</p>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a class="feature-block h-100 d-block text-reset" asp-controller="Pedidos" asp-action="Index">
+            <h2>Pedidos e rastreio</h2>
+            <p>Acompanhe cada item do pedido por lojista.</p>
+        </a>
+    </div>
+</div>

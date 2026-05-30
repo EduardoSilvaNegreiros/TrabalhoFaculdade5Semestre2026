@@ -1,0 +1,37 @@
+@model List<WebApplication1.Models.ListaDesejosItem>
+
+@{
+    ViewData["Title"] = "Lista de desejos";
+}
+
+<h1>Lista de desejos</h1>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Sua lista está vazia. Salve produtos para comprar em uma promoção futura.</div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card product-card h-100">
+                    <img src="@item.Produto?.ImagemUrl" class="card-img-top" alt="@item.Produto?.Nome" />
+                    <div class="card-body d-flex flex-column">
+                        <h2 class="product-title">@item.Produto?.Nome</h2>
+                        <p class="text-muted">@item.Produto?.Lojista?.NomeFantasia</p>
+                        <p class="price">@((item.Produto?.Preco ?? 0m).ToString("C"))</p>
+                        <div class="mt-auto d-flex gap-2">
+                            <a class="btn btn-primary flex-fill" asp-controller="Produto" asp-action="Detalhes" asp-route-id="@item.ProdutoId">Ver</a>
+                            <form asp-controller="ListaDesejos" asp-action="Alternar" method="post">
+                                <input type="hidden" name="produtoId" value="@item.ProdutoId" />
+                                <button class="btn btn-outline-danger">Remover</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
