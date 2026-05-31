@@ -1,5 +1,5 @@
 @startuml Strategy_Recomendacao
-title Strategy - Recomendacao de produtos
+title Strategy - Recomendação de produtos
 
 interface IProductRecommendationStrategy {
   +Nome: string
@@ -21,9 +21,8 @@ IProductRecommendationStrategy <|.. CategoryRecommendationStrategy
 IProductRecommendationStrategy <|.. VeganPriceRecommendationStrategy
 
 note right of ProductRecommendationService
-Combina estrategias e ordena produtos
+Combina estratégias e ordena produtos
 pelo score calculado.
 end note
 
 @enduml
-

@@ -2,28 +2,27 @@
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
 
 LAYOUT_WITH_LEGEND()
-title Beauty Marketplace - C4 Nivel 1 - Context
+title Beauty Marketplace - C4 Nível 1 - Context
 
 Person(consumidor, "Consumidor", "Pessoa que pesquisa produtos de beleza, aplica filtros, compra, avalia e acompanha entregas.")
 Person(lojista, "Lojista", "Vendedor parceiro que cadastra produtos, acompanha pedidos e gerencia estoque.")
-Person(admin, "Administrador", "Responsavel por aprovar lojistas, definir comissoes e monitorar a plataforma.")
+Person(admin, "Administrador", "Responsável por aprovar lojistas, definir comissões e monitorar a plataforma.")
 
-System(beauty, "Beauty Marketplace", "Marketplace de beleza que centraliza catalogo, carrinho multi-lojista, checkout unificado, avaliacoes e rastreio.")
+System(beauty, "Beauty Marketplace", "Marketplace de beleza que centraliza catálogo, carrinho multi-lojista, checkout unificado, avaliações e rastreio.")
 
 System_Ext(pgto, "Gateway de pagamento", "Autoriza pagamentos e distribui valores entre lojistas por split.")
 System_Ext(frete, "Correios/Transportadoras", "Calcula frete, prazo e rastreio das entregas.")
-System_Ext(notif, "Servico de e-mail/notificacoes", "Envia confirmacoes, avisos de pedido e recuperacao de carrinho.")
-System_Ext(comunidade, "Redes sociais e comunidade", "Origem de tendencias, resenhas e prova social para descoberta de produtos.")
+System_Ext(notif, "Serviço de e-mail/notificações", "Envia confirmações, avisos de pedido e recuperação de carrinho.")
+System_Ext(comunidade, "Redes sociais e comunidade", "Origem de tendências, resenhas e prova social para descoberta de produtos.")
 
 Rel(consumidor, beauty, "Pesquisa, filtra, compra, avalia e acompanha pedidos")
 Rel(lojista, beauty, "Cadastra produtos, acompanha vendas e atualiza estoque")
-Rel(admin, beauty, "Aprova lojistas, configura comissoes e acompanha requisitos")
+Rel(admin, beauty, "Aprova lojistas, configura comissões e acompanha requisitos")
 
-Rel(beauty, pgto, "Solicita autorizacao e split de pagamento")
-Rel(beauty, frete, "Consulta prazo, preco de frete e status de entrega")
+Rel(beauty, pgto, "Solicita autorização e split de pagamento")
+Rel(beauty, frete, "Consulta prazo, preço de frete e status de entrega")
 Rel(beauty, notif, "Dispara e-mails e alertas")
-Rel(comunidade, consumidor, "Influencia decisao de compra")
-Rel(beauty, comunidade, "Aproveita prova social e tendencias de beleza")
+Rel(comunidade, consumidor, "Influencia decisão de compra")
+Rel(beauty, comunidade, "Aproveita prova social e tendências de beleza")
 
 @enduml
-

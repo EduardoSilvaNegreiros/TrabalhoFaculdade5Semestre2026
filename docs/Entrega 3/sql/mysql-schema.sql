@@ -7,7 +7,7 @@ CREATE DATABASE IF NOT EXISTS beauty_marketplace
 
 USE beauty_marketplace;
 
--- Usuarios e perfis de acesso
+-- Usuários e perfis de acesso
 CREATE TABLE usuarios (
     id CHAR(36) PRIMARY KEY,
     nome VARCHAR(120) NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE lojistas (
         FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 ) ENGINE=InnoDB;
 
--- Catalogo e comissoes
+-- Catálogo e comissões
 CREATE TABLE categorias (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(80) NOT NULL UNIQUE,
@@ -162,4 +162,3 @@ CREATE INDEX idx_produtos_lojista ON produtos (lojista_id, ativo);
 CREATE INDEX idx_pedidos_usuario ON pedidos (usuario_id, criado_em);
 CREATE INDEX idx_itens_lojista ON pedido_itens (lojista_id, status_entrega);
 CREATE INDEX idx_avaliacoes_produto ON avaliacoes (produto_id, criado_em);
-

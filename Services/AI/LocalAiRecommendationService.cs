@@ -29,8 +29,8 @@ public sealed class LocalAiRecommendationService : IAiRecommendationService
 
         return new AiRecommendationResponse(
             "Local demonstrativo",
-            "Recomendacao gerada por regras locais que simulam a camada de IA para apresentacao sem chave externa.",
-            "As sugestoes nao substituem avaliacao dermatologica ou profissional.",
+            "Recomendação gerada por regras locais que simulam a camada de IA para apresentação sem chave externa.",
+            "As sugestões não substituem avaliação dermatológica ou profissional.",
             itens);
     }
 
@@ -58,4 +58,3 @@ public sealed class LocalAiRecommendationService : IAiRecommendationService
             : $"Produto versatil para pele {tipoPeleProduto} e cabelo {tipoCabeloProduto}.";
     }
 }
-

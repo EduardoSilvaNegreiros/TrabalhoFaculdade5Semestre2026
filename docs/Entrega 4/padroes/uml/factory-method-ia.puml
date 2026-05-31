@@ -27,9 +27,8 @@ AiRecommendationServiceFactory ..> LocalAiRecommendationService
 AiRecommendationServiceFactory ..> OpenAiRecommendationService
 
 note right of AiRecommendationServiceFactory
-Escolhe OpenAI quando ha chave configurada
-e fallback local quando nao ha chave.
+Escolhe OpenAI quando há chave configurada
+e fallback local quando não há chave.
 end note
 
 @enduml
-

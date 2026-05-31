@@ -90,6 +90,8 @@ O projeto expõe documentação Swagger em:
 - Arquivo versionado: `api/openapi.json`
 - Postman Collection: `api/postman_collection.json`
 
+O Swagger/OpenAPI final foi filtrado para documentar somente endpoints cujo caminho começa com `/api`. As rotas MVC usadas pela interface web, como ações internas do carrinho, não entram na documentação oficial da Entrega 4.
+
 ### Endpoints documentados
 
 | Endpoint | Método | Descrição | Status principais |
@@ -106,6 +108,8 @@ O projeto expõe documentação Swagger em:
 | `/api/pedidos` | GET | Lista pedidos do consumidor. | 200, 401 |
 | `/api/pedidos/{id}` | GET | Consulta pedido com rastreio. | 200, 404 |
 | `/api/ia/recomendacoes` | POST | Executa PoC de recomendação por IA. | 200, 400 |
+
+Total documentado: **12 operações `/api`**, acima do mínimo de 10 endpoints solicitado.
 
 Exemplo de request para IA:
 
@@ -124,8 +128,8 @@ Exemplo de response:
 ```json
 {
   "provedor": "Local demonstrativo",
-  "resumo": "Recomendacao gerada por regras locais que simulam a camada de IA para apresentacao sem chave externa.",
-  "alertaCompatibilidade": "As sugestoes nao substituem avaliacao dermatologica ou profissional.",
+  "resumo": "Recomendação gerada por regras locais que simulam a camada de IA para apresentação sem chave externa.",
+  "alertaCompatibilidade": "As sugestões não substituem avaliação dermatológica ou profissional.",
   "produtos": []
 }
 ```
@@ -167,7 +171,7 @@ Fluxo:
 - Lista de desejos, avaliações, pedidos e dashboard do lojista.
 - Área administrativa para aprovação de lojistas e comissões.
 - Entrega 3 organizada com C4, SQL, MongoDB e Redis.
-- APIs JSON com Swagger/OpenAPI.
+- APIs JSON com Swagger/OpenAPI filtrado para `/api`.
 - PoC de IA para recomendação.
 
 ### Em andamento
@@ -197,6 +201,6 @@ Observação: caso o professor exija evidência individual de todos os integrant
 | Critério | Atendimento |
 | --- | --- |
 | Padrões GoF | Strategy, Facade e Factory Method aplicados e documentados. |
-| Documentação de APIs | Swagger/OpenAPI e Postman com mais de 10 endpoints. |
+| Documentação de APIs | Swagger/OpenAPI e Postman com 12 operações `/api`, métodos HTTP, parâmetros, exemplos e status codes. |
 | Inteligência Artificial | PoC de recomendação com OpenAI planejado e fallback local funcional. |
-| Checkpoint 2 | Estado atual, pendências e links previstos documentados. |
+| Checkpoint 2 | Estado atual, pendências, GitHub, Kanban e commits conferidos. |

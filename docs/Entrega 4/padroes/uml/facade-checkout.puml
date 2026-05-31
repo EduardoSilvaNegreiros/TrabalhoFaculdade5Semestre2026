@@ -26,10 +26,9 @@ CheckoutFacade --> Pedido
 CheckoutFacade --> PedidoItem
 
 note right of CheckoutFacade
-Centraliza validacao de carrinho,
+Centraliza validação de carrinho,
 estoque, frete, split, pedido e
 baixa de estoque.
 end note
 
 @enduml
-

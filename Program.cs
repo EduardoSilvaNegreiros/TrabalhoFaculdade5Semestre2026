@@ -71,8 +71,10 @@ builder.Services.AddSwaggerGen(options =>
     {
         Title = "Beauty Marketplace API",
         Version = "v1",
-        Description = "Documentacao OpenAPI da Entrega 4: catalogo, carrinho, checkout, pedidos e IA."
+        Description = "Documentação OpenAPI da Entrega 4: catálogo, carrinho, checkout, pedidos e IA."
     });
+    options.DocInclusionPredicate((_, apiDescription) =>
+        apiDescription.RelativePath?.StartsWith("api/", StringComparison.OrdinalIgnoreCase) == true);
 
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);

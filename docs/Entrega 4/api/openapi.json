@@ -1,8 +1,8 @@
-﻿{
+{
   "openapi": "3.0.4",
   "info": {
     "title": "Beauty Marketplace API",
-    "description": "Documentacao OpenAPI da Entrega 4: catalogo, carrinho, checkout, pedidos e IA.",
+    "description": "Documentação OpenAPI da Entrega 4: catálogo, carrinho, checkout, pedidos e IA.",
     "version": "v1"
   },
   "paths": {
@@ -374,7 +374,7 @@
         "tags": [
           "ApiProdutos"
         ],
-        "summary": "Lista produtos do catalogo com filtros de beleza.",
+        "summary": "Lista produtos do catálogo com filtros de beleza.",
         "description": "Exemplo: GET /api/produtos?pele=Oleosa&vegano=true&precoMax=120",
         "parameters": [
           {
@@ -491,7 +491,7 @@
         "tags": [
           "ApiProdutos"
         ],
-        "summary": "Lista avaliacoes de um produto.",
+        "summary": "Lista avaliações de um produto.",
         "parameters": [
           {
             "name": "id",
@@ -560,83 +560,6 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/Carrinho/Adicionar/{id}": {
-      "post": {
-        "tags": [
-          "Carrinho"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/Carrinho/Atualizar/{id}": {
-      "post": {
-        "tags": [
-          "Carrinho"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "quantidade",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/Carrinho/Remover/{id}": {
-      "post": {
-        "tags": [
-          "Carrinho"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
           }
         }
       }
@@ -1225,9 +1148,6 @@
     },
     {
       "name": "ApiProdutos"
-    },
-    {
-      "name": "Carrinho"
     }
   ]
 }

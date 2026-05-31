@@ -68,7 +68,6 @@ public sealed class OpenAiRecommendationService : IAiRecommendationService
             return outputText.GetString() ?? string.Empty;
         }
 
-        return "Recomendacao gerada pela OpenAI Responses API com retorno estruturado pelo sistema.";
+        return "Recomendação gerada pela OpenAI Responses API com retorno estruturado pelo sistema.";
     }
 }
-

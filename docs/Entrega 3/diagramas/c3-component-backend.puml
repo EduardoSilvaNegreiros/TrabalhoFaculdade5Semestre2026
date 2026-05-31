@@ -2,48 +2,47 @@
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
 LAYOUT_WITH_LEGEND()
-title Beauty Marketplace - C4 Nivel 3 - Component Backend
+title Beauty Marketplace - C4 Nível 3 - Component Backend
 
-Container_Boundary(app, "Aplicacao ASP.NET Core MVC") {
-    Component(produtoController, "ProdutoController", "MVC Controller", "Catalogo publico, busca, filtros de beleza, detalhes, avaliacoes e recomendacoes.")
-    Component(carrinhoController, "CarrinhoController", "MVC Controller", "Carrinho do consumidor, itens multi-lojista, validacao de estoque, checkout, frete e split.")
-    Component(pedidosController, "PedidosController", "MVC Controller", "Historico do consumidor e rastreio por item/lojista.")
+Container_Boundary(app, "Aplicação ASP.NET Core MVC") {
+    Component(produtoController, "ProdutoController", "MVC Controller", "Catálogo público, busca, filtros de beleza, detalhes, avaliações e recomendações.")
+    Component(carrinhoController, "CarrinhoController", "MVC Controller", "Carrinho do consumidor, itens multi-lojista, validação de estoque, checkout, frete e split.")
+    Component(pedidosController, "PedidosController", "MVC Controller", "Histórico do consumidor e rastreio por item/lojista.")
     Component(listaController, "ListaDesejosController", "MVC Controller", "Produtos salvos para compra futura.")
-    Component(lojistaController, "LojistaController", "MVC Controller", "Dashboard do lojista, vendas, notificacoes de pedidos e atualizacao de estoque.")
-    Component(adminController, "AdminController", "MVC Controller", "Aprovacao de lojistas, comissoes por categoria e mapa de atendimento dos requisitos.")
+    Component(lojistaController, "LojistaController", "MVC Controller", "Dashboard do lojista, vendas, notificações de pedidos e atualização de estoque.")
+    Component(adminController, "AdminController", "MVC Controller", "Aprovação de lojistas, comissões por categoria e mapa de atendimento dos requisitos.")
     Component(identity, "ASP.NET Identity", "Framework", "Cadastro, login, roles Consumidor, Lojista e Administrador.")
     Component(dbcontext, "ApplicationDbContext", "EF Core DbContext", "Mapeamento das entidades, chaves, relacionamentos e acesso ao banco.")
-    Component(session, "SessionExtensions", "Helper", "Serializacao do carrinho na sessao do usuario.")
-    Component(seed, "MarketplaceSeeder", "Inicializacao", "Cria roles, usuarios de demonstracao, lojistas, produtos, categorias e avaliacoes.")
-    Component(integracoes, "Integracoes de dominio", "Servicos/regras locais", "Calculo de frete, prazo, split, repasse, rastreio e notificacoes demonstraveis.")
+    Component(session, "SessionExtensions", "Helper", "Serialização do carrinho na sessão do usuário.")
+    Component(seed, "MarketplaceSeeder", "Inicialização", "Cria roles, usuários de demonstração, lojistas, produtos, categorias e avaliações.")
+    Component(integracoes, "Integrações de domínio", "Serviços/regras locais", "Cálculo de frete, prazo, split, repasse, rastreio e notificações demonstráveis.")
 }
 
-ContainerDb(sqlite, "SQLite local", "Banco local do prototipo")
+ContainerDb(sqlite, "SQLite local", "Banco local do protótipo")
 ContainerDb(mysql, "MySQL", "Modelo relacional alvo")
-ContainerDb(mongo, "MongoDB", "Avaliacoes ricas")
+ContainerDb(mongo, "MongoDB", "Avaliações ricas")
 ContainerDb(redis, "Redis", "Carrinho/cache/ranking")
 System_Ext(pgto, "Gateway de pagamento", "Pagamento e split")
 System_Ext(frete, "Correios/Transportadoras", "Frete e rastreio")
-System_Ext(notif, "E-mail/notificacoes", "Mensagens")
+System_Ext(notif, "E-mail/notificações", "Mensagens")
 
-Rel(produtoController, dbcontext, "Consulta produtos, lojistas e avaliacoes")
-Rel(carrinhoController, session, "Le e grava carrinho")
+Rel(produtoController, dbcontext, "Consulta produtos, lojistas e avaliações")
+Rel(carrinhoController, session, "Lê e grava carrinho")
 Rel(carrinhoController, dbcontext, "Cria pedidos e baixa estoque")
 Rel(carrinhoController, integracoes, "Calcula frete, prazo, split e rastreio")
 Rel(pedidosController, dbcontext, "Consulta pedidos do consumidor")
 Rel(listaController, dbcontext, "Persiste lista de desejos")
 Rel(lojistaController, dbcontext, "Consulta vendas e atualiza produtos do lojista")
-Rel(adminController, dbcontext, "Atualiza status de lojistas e comissoes")
-Rel(identity, dbcontext, "Persiste usuarios e roles")
+Rel(adminController, dbcontext, "Atualiza status de lojistas e comissões")
+Rel(identity, dbcontext, "Persiste usuários e roles")
 Rel(seed, dbcontext, "Popula dados iniciais")
 
-Rel(dbcontext, sqlite, "Executa prototipo local")
-Rel(dbcontext, mysql, "Representa persistencia relacional alvo")
-Rel(integracoes, pgto, "Integracao planejada")
-Rel(integracoes, frete, "Integracao planejada")
-Rel(integracoes, notif, "Integracao planejada")
-Rel(produtoController, mongo, "Consulta avaliacoes ricas na arquitetura alvo")
+Rel(dbcontext, sqlite, "Executa protótipo local")
+Rel(dbcontext, mysql, "Representa persistência relacional alvo")
+Rel(integracoes, pgto, "Integração planejada")
+Rel(integracoes, frete, "Integração planejada")
+Rel(integracoes, notif, "Integração planejada")
+Rel(produtoController, mongo, "Consulta avaliações ricas na arquitetura alvo")
 Rel(carrinhoController, redis, "Usa carrinho/cache na arquitetura alvo")
 
 @enduml
-

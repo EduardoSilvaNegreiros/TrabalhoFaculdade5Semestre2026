@@ -1,7 +1,7 @@
 {
   "collection": "avaliacoes_produto",
-  "objetivo": "Registrar avaliacoes ricas de produtos de beleza com fotos, videos e atributos variaveis de perfil do consumidor.",
-  "justificativa": "Avaliacoes de beleza mudam de formato conforme categoria, midia, tom de pele, tipo de cabelo e contexto de uso. MongoDB permite evoluir esses campos sem alterar o modelo relacional de pedidos e catalogo.",
+  "objetivo": "Registrar avaliações ricas de produtos de beleza com fotos, vídeos e atributos variáveis de perfil do consumidor.",
+  "justificativa": "Avaliações de beleza mudam de formato conforme categoria, mídia, tom de pele, tipo de cabelo e contexto de uso. MongoDB permite evoluir esses campos sem alterar o modelo relacional de pedidos e catálogo.",
   "schemaDocumento": {
     "_id": "ObjectId",
     "produto": {
@@ -54,7 +54,7 @@
     },
     "lojista": {
       "id": 2,
-      "nomeFantasia": "Dermocosmeticos Prime"
+      "nomeFantasia": "Dermocosméticos Prime"
     },
     "usuario": {
       "id": "8f55bfc2-2390-4c2a-a0a5-efbbd6b17211",
@@ -63,7 +63,7 @@
     },
     "nota": 5,
     "titulo": "Bom para pele oleosa",
-    "comentario": "Funcionou bem na minha pele oleosa, nao ressecou e chegou dentro do prazo.",
+    "comentario": "Funcionou bem na minha pele oleosa, não ressecou e chegou dentro do prazo.",
     "midias": [
       {
         "tipo": "foto",
@@ -75,8 +75,8 @@
     "atributosBeleza": {
       "tipoPele": "Oleosa",
       "tipoCabelo": "Todos",
-      "curvaturaCachos": "Nao se aplica",
-      "tomPele": "Medio",
+      "curvaturaCachos": "Não se aplica",
+      "tomPele": "Médio",
       "sensibilidade": "Baixa",
       "resultadoPercebido": "Controle de oleosidade"
     },
@@ -93,4 +93,3 @@
     { "statusModeracao": 1, "criadoEm": -1 }
   ]
 }
-

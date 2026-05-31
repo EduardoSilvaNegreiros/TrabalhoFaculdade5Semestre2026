@@ -29,11 +29,10 @@ public sealed class ApiIaController : ControllerBase
     {
         if (request == null)
         {
-            return BadRequest(new { mensagem = "Informe os criterios de recomendacao." });
+            return BadRequest(new { mensagem = "Informe os critérios de recomendação." });
         }
 
         var service = _factory.Create();
         return Ok(await service.RecommendAsync(request, cancellationToken));
     }
 }
-

@@ -10,11 +10,11 @@
 
 ## Objetivo da entrega
 
-Apresentar a arquitetura completa do Beauty Marketplace, desde a visão de alto nível com C4 até os modelos de dados relacional e não-relacional. A entrega usa C4-PlantUML como Diagrams as Code, MySQL para o modelo relacional e MongoDB/Redis para a modelagem NoSQL.
+Apresentar a arquitetura completa do Beauty Marketplace, desde a visão de alto nível com C4 até os modelos de dados relacional e não relacional. A entrega usa C4-PlantUML como Diagrams as Code, MySQL para o modelo relacional e MongoDB/Redis para a modelagem NoSQL.
 
 O Beauty Marketplace centraliza produtos de beleza de diferentes lojistas em uma única plataforma. O sistema atende consumidores que desejam comparar produtos por perfil de beleza, comprar de múltiplos vendedores em um carrinho unificado e acompanhar pedidos com rastreio por item. Também atende lojistas, que precisam gerenciar estoque e vendas, e administradores, que controlam aprovação de lojistas e comissões por categoria.
 
-## 2. Diagrama C4 - Nivel Context (C1)
+## 2. Diagrama C4 - Nível Context (C1)
 
 Arquivo fonte do diagrama: `diagramas/c1-context.puml`
 
@@ -24,27 +24,27 @@ O diagrama de contexto apresenta o Beauty Marketplace como sistema central e mos
 
 | Elemento | Tipo | Descrição |
 | --- | --- | --- |
-| Consumidor | Usuario | Pesquisa, filtra, compra produtos de beleza, avalia itens e acompanha entregas. |
-| Lojista | Usuario | Cadastra produtos, acompanha vendas, gerencia estoque e recebe pedidos. |
-| Administrador | Usuario | Aprova ou reprova lojistas, define comissoes por categoria e monitora a plataforma. |
-| Beauty Marketplace | Sistema | Centraliza catalogo, carrinho multi-lojista, checkout, avaliacoes, lista de desejos e rastreio. |
+| Consumidor | Usuário | Pesquisa, filtra, compra produtos de beleza, avalia itens e acompanha entregas. |
+| Lojista | Usuário | Cadastra produtos, acompanha vendas, gerencia estoque e recebe pedidos. |
+| Administrador | Usuário | Aprova ou reprova lojistas, define comissões por categoria e monitora a plataforma. |
+| Beauty Marketplace | Sistema | Centraliza catálogo, carrinho multi-lojista, checkout, avaliações, lista de desejos e rastreio. |
 | Gateway de pagamento | Sistema externo | Autoriza pagamento único e distribui valores entre lojistas por split. |
 | Correios/Transportadoras | Sistema externo | Calcula preço de frete, prazo e status de rastreio. |
 | Serviço de e-mail/notificações | Sistema externo | Envia confirmações, avisos de novos pedidos e recuperação de carrinho abandonado. |
 | Redes sociais e comunidade | Sistema externo/social | Representa origem de resenhas, tendências e prova social que influenciam a compra. |
 
-## 3. Diagrama C4 - Nivel Container (C2)
+## 3. Diagrama C4 - Nível Container (C2)
 
 Arquivo fonte do diagrama: `diagramas/c2-container.puml`
 
-O diagrama de containers detalha os blocos executaveis e de armazenamento envolvidos na solucao.
+O diagrama de containers detalha os blocos executáveis e de armazenamento envolvidos na solução.
 
 ### Containers e justificativas tecnológicas
 
 | Container | Tecnologia | Responsabilidade | Justificativa |
 | --- | --- | --- | --- |
 | Navegador / Mobile Web | Razor Views, Bootstrap, HTML, CSS e JavaScript | Interface responsiva para consumidor, lojista e administrador. | Permite demonstrar os fluxos do marketplace em ambiente web e mobile sem criar aplicativo nativo. |
-| Aplicacao ASP.NET Core MVC | ASP.NET Core MVC, EF Core e Identity | Controllers, regras de negocio, autenticacao por roles, carrinho, pedidos, lojista e admin. | Ja e a base do projeto, reduz complexidade e oferece padrao MVC adequado para apresentacao academica. |
+| Aplicação ASP.NET Core MVC | ASP.NET Core MVC, EF Core e Identity | Controllers, regras de negócio, autenticação por roles, carrinho, pedidos, lojista e admin. | Já é a base do projeto, reduz complexidade e oferece padrão MVC adequado para apresentação acadêmica. |
 | MySQL | Banco relacional | Modelo oficial de usuários, lojistas, produtos, pedidos, comissões e avaliações. | Adequado para dados transacionais, integridade referencial, PKs/FKs e consultas relacionais. |
 | SQLite local | Banco relacional embarcado | Execução local do protótipo. | Facilita demonstração sem instalar servidor de banco, mas não substitui o modelo MySQL da entrega. |
 | MongoDB | Banco de documentos | Avaliações com fotos, vídeos e atributos flexíveis de beleza. | Avaliações podem mudar de formato conforme categoria, mídia e perfil do consumidor. |
@@ -53,7 +53,7 @@ O diagrama de containers detalha os blocos executaveis e de armazenamento envolv
 | Correios/Transportadoras | API externa | Frete, prazo e rastreio. | Necessário para compra com lojistas diferentes e entrega por item. |
 | E-mail/notificações | API externa | Confirmações, avisos de pedido e recuperação de carrinho. | Apoia comunicação transacional e retenção do consumidor. |
 
-## 4. Diagrama C4 - Nivel Component (C3)
+## 4. Diagrama C4 - Nível Component (C3)
 
 Arquivo fonte do diagrama: `diagramas/c3-component-backend.puml`
 
@@ -108,20 +108,20 @@ O modelo relacional usa MySQL para representar entidades transacionais do market
 | produtos | Catálogo unificado com filtros de beleza, preço, estoque e lojista. |
 | pedidos | Cabeçalho da compra feita pelo consumidor. |
 | pedido_itens | Itens do pedido separados por produto e lojista, incluindo split e rastreio. |
-| avaliacoes | Prova social relacional basica vinculada a usuario e produto. |
+| avaliacoes | Prova social relacional básica vinculada a usuário e produto. |
 | lista_desejos_itens | Produtos salvos pelo consumidor para compra futura. |
 
 ### Relacionamentos
 
-- Um usuario pode ser consumidor, lojista ou administrador.
+- Um usuário pode ser consumidor, lojista ou administrador.
 - Um lojista pode ter muitos produtos.
 - Uma categoria pode ter muitos produtos.
 - Uma categoria possui uma configuração de comissão.
-- Um usuario consumidor pode ter muitos pedidos.
+- Um usuário consumidor pode ter muitos pedidos.
 - Um pedido possui muitos itens.
 - Cada item de pedido referencia produto e lojista para permitir split, repasse e rastreio por vendedor.
 - Um produto pode ter muitas avaliações.
-- Um usuario pode salvar muitos produtos na lista de desejos.
+- Um usuário pode salvar muitos produtos na lista de desejos.
 
 ### DER em formato textual
 
@@ -147,7 +147,7 @@ erDiagram
 
 Arquivo fonte: `nosql/mongodb-avaliacoes.json`
 
-Colecao: `avaliacoes_produto`
+Coleção: `avaliacoes_produto`
 
 Caso de uso: armazenar avaliações ricas com comentário, fotos, vídeos, atributos de beleza, status de moderação, compra verificada e curtidas.
 
@@ -160,14 +160,14 @@ Arquivo fonte: `nosql/redis-estruturas.md`
 Estruturas modeladas:
 
 - `cart:{usuarioId}` como Hash, com TTL de 30 minutos, para carrinho rápido.
-- `ranking:produtos:visualizados` como Sorted Set, para recomendacao simples por popularidade.
-- `cart:abandoned:{usuarioId}` como resumo temporario para recuperacao de carrinho abandonado.
+- `ranking:produtos:visualizados` como Sorted Set, para recomendação simples por popularidade.
+- `cart:abandoned:{usuarioId}` como resumo temporário para recuperação de carrinho abandonado.
 
 Justificativa: Redis reduz latência de operações frequentes e temporárias, evita carga desnecessária no MySQL e apoia fluxos de recomendação e recuperação de carrinho.
 
-## Checklist final dos criterios de avaliacao
+## Checklist final dos critérios de avaliação
 
-| Criterio | Atendimento |
+| Critério | Atendimento |
 | --- | --- |
 | Qualidade e completude dos diagramas C4 | C1, C2 e C3 criados em PlantUML, com descrições no relatório. |
 | Uso correto de Diagrams as Code | Fontes `.puml` incluídos no repositório. |

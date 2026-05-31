@@ -18,7 +18,7 @@
 - [x] OpenAPI disponível em `/swagger/v1/swagger.json`.
 - [x] Arquivo `api/openapi.json` gerado.
 - [x] Postman Collection criada em `api/postman_collection.json`.
-- [x] Mais de 10 endpoints documentados.
+- [x] OpenAPI documenta somente endpoints `/api` e mantém mais de 10 operações.
 - [x] Métodos HTTP, parâmetros, exemplos e status codes descritos.
 
 ## 4. Inteligência Artificial

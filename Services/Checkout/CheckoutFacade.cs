@@ -29,14 +29,14 @@ public sealed class CheckoutFacade : ICheckoutFacade
     public string CalcularPrazo(IReadOnlyCollection<CarrinhoItem> carrinho)
     {
         var lojistas = carrinho.Select(i => i.LojistaId).Distinct().Count();
-        return $"{Math.Max(2, lojistas + 2)} a {Math.Max(4, lojistas + 5)} dias uteis";
+        return $"{Math.Max(2, lojistas + 2)} a {Math.Max(4, lojistas + 5)} dias úteis";
     }
 
     public async Task<CheckoutResult> FinalizarAsync(string usuarioEmail, IReadOnlyCollection<CarrinhoItem> carrinho, CheckoutRequest request, CancellationToken cancellationToken)
     {
         if (!carrinho.Any())
         {
-            return new CheckoutResult(false, "Carrinho vazio.", null, 0m, "0 dias uteis");
+            return new CheckoutResult(false, "Carrinho vazio.", null, 0m, "0 dias úteis");
         }
 
         var ids = carrinho.Select(i => i.ProdutoId).ToList();
@@ -48,7 +48,7 @@ public sealed class CheckoutFacade : ICheckoutFacade
         {
             if (!produtos.TryGetValue(item.ProdutoId, out var produto) || produto.Estoque < item.Quantidade)
             {
-                return new CheckoutResult(false, $"Estoque insuficiente para {item.Nome}.", null, 0m, "0 dias uteis");
+                return new CheckoutResult(false, $"Estoque insuficiente para {item.Nome}.", null, 0m, "0 dias úteis");
             }
         }
 
@@ -79,7 +79,7 @@ public sealed class CheckoutFacade : ICheckoutFacade
                 ValorComissao = item.ValorComissao,
                 ValorRepasseLojista = item.ValorRepasseLojista,
                 CodigoRastreio = $"BM{DateTime.UtcNow:yyMMdd}{item.ProdutoId:0000}",
-                StatusEntrega = "Separacao pelo lojista"
+                StatusEntrega = "Separação pelo lojista"
             });
 
             produtos[item.ProdutoId].Estoque -= item.Quantidade;
@@ -91,4 +91,3 @@ public sealed class CheckoutFacade : ICheckoutFacade
         return new CheckoutResult(true, "Pedido confirmado.", pedido, frete, prazo);
     }
 }
-

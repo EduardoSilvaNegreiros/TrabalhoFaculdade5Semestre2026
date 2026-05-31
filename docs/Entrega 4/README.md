@@ -7,7 +7,7 @@ Pasta oficial da quarta entrega do Projeto Integrador.
 - `relatorio-entrega-4.pdf`: documento final para submissão.
 - `relatorio-entrega-4.md`: fonte editável do relatório.
 - `relatorio-entrega-4.html`: versão HTML para impressão.
-- `api/openapi.json`: especificação OpenAPI gerada pelo Swagger.
+- `api/openapi.json`: especificação OpenAPI gerada pelo Swagger, filtrada para endpoints `/api`.
 - `api/postman_collection.json`: coleção Postman com exemplos.
 - `padroes/uml/*.puml`: diagramas UML dos padrões GoF.
 - `padroes/uml/rendered/*.svg`: diagramas UML renderizados.

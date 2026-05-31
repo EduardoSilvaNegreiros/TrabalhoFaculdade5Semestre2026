@@ -21,7 +21,7 @@ public sealed class ApiProdutosController : ControllerBase
     }
 
     /// <summary>
-    /// Lista produtos do catalogo com filtros de beleza.
+    /// Lista produtos do catálogo com filtros de beleza.
     /// </summary>
     /// <remarks>
     /// Exemplo: GET /api/produtos?pele=Oleosa&amp;vegano=true&amp;precoMax=120
@@ -103,7 +103,7 @@ public sealed class ApiProdutosController : ControllerBase
     }
 
     /// <summary>
-    /// Lista avaliacoes de um produto.
+    /// Lista avaliações de um produto.
     /// </summary>
     [HttpGet("{id:int}/avaliacoes")]
     [ProducesResponseType(typeof(IEnumerable<AvaliacaoResponse>), StatusCodes.Status200OK)]
@@ -141,4 +141,3 @@ public sealed class ApiProdutosController : ControllerBase
             .Select(p => new ProdutoRecomendadoResponse(p.Id, p.Nome, p.Categoria, p.Marca, p.Preco, "Produto relacionado por perfil de beleza e categoria.")));
     }
 }
-

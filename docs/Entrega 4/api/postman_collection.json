@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Beauty Marketplace API - Entrega 4",
-    "description": "Colecao com endpoints documentados para catalogo, carrinho, checkout, pedidos e IA.",
+    "description": "Coleção com endpoints documentados para catálogo, carrinho, checkout, pedidos e IA.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -9,14 +9,14 @@
   ],
   "item": [
     {
-      "name": "Catalogo - listar produtos",
+      "name": "Catálogo - listar produtos",
       "request": { "method": "GET", "url": "{{baseUrl}}/api/produtos?pele=Oleosa&vegano=true&precoMax=120" },
       "response": [
         { "name": "200 OK", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/produtos" }, "status": "OK", "code": 200, "body": "[{\"id\":1,\"nome\":\"Gel de Limpeza Facial\",\"preco\":43.30}]" }
       ]
     },
     {
-      "name": "Catalogo - detalhes",
+      "name": "Catálogo - detalhes",
       "request": { "method": "GET", "url": "{{baseUrl}}/api/produtos/1" },
       "response": [
         { "name": "200 OK", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/produtos/1" }, "status": "OK", "code": 200, "body": "{\"id\":1,\"nome\":\"Gel de Limpeza Facial\",\"estoque\":20}" },
@@ -24,14 +24,14 @@
       ]
     },
     {
-      "name": "Catalogo - avaliacoes",
+      "name": "Catálogo - avaliações",
       "request": { "method": "GET", "url": "{{baseUrl}}/api/produtos/1/avaliacoes" },
       "response": [
-        { "name": "200 OK", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/produtos/1/avaliacoes" }, "status": "OK", "code": 200, "body": "[{\"nota\":5,\"comentario\":\"Chegou rapido.\"}]" }
+        { "name": "200 OK", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/produtos/1/avaliacoes" }, "status": "OK", "code": 200, "body": "[{\"nota\":5,\"comentario\":\"Chegou rápido.\"}]" }
       ]
     },
     {
-      "name": "Catalogo - recomendacoes por produto",
+      "name": "Catálogo - recomendações por produto",
       "request": { "method": "GET", "url": "{{baseUrl}}/api/produtos/1/recomendacoes" },
       "response": [
         { "name": "200 OK", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/produtos/1/recomendacoes" }, "status": "OK", "code": 200, "body": "[{\"id\":2,\"nome\":\"Produto recomendado\",\"justificativa\":\"Produto relacionado por perfil de beleza e categoria.\"}]" }
@@ -55,7 +55,7 @@
       },
       "response": [
         { "name": "200 OK", "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/carrinho/itens" }, "status": "OK", "code": 200, "body": "{\"quantidadeTotal\":2}" },
-        { "name": "400 Bad Request", "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/carrinho/itens" }, "status": "Bad Request", "code": 400, "body": "{\"mensagem\":\"Produto indisponivel.\"}" }
+        { "name": "400 Bad Request", "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/carrinho/itens" }, "status": "Bad Request", "code": 400, "body": "{\"mensagem\":\"Produto indisponível.\"}" }
       ]
     },
     {
@@ -106,7 +106,7 @@
       ]
     },
     {
-      "name": "IA - recomendacoes",
+      "name": "IA - recomendações",
       "request": {
         "method": "POST",
         "header": [{ "key": "Content-Type", "value": "application/json" }],
@@ -119,4 +119,3 @@
     }
   ]
 }
-

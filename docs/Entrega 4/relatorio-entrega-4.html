@@ -69,6 +69,7 @@
 
     <h2>3. Documentação de APIs</h2>
     <p>Swagger UI local: <code>http://localhost:5016/swagger</code>. OpenAPI JSON: <code>api/openapi.json</code>. Postman Collection: <code>api/postman_collection.json</code>.</p>
+    <p>O Swagger/OpenAPI final documenta somente endpoints cujo caminho começa com <code>/api</code>. As rotas MVC internas da interface web foram removidas da documentação oficial.</p>
     <table>
         <thead><tr><th>Endpoint</th><th>Método</th><th>Descrição</th><th>Status</th></tr></thead>
         <tbody>
@@ -86,6 +87,7 @@
             <tr><td>/api/ia/recomendacoes</td><td>POST</td><td>PoC de IA.</td><td>200, 400</td></tr>
         </tbody>
     </table>
+    <p><strong>Total documentado:</strong> 12 operações <code>/api</code>, acima do mínimo de 10 endpoints solicitado.</p>
     <pre>{
   "tipoPele": "Oleosa",
   "tipoCabelo": "Cacheado",
@@ -125,9 +127,9 @@
         <thead><tr><th>Critério</th><th>Atendimento</th></tr></thead>
         <tbody>
             <tr><td>Padrões GoF</td><td>Strategy, Facade e Factory Method aplicados e documentados.</td></tr>
-            <tr><td>APIs</td><td>Swagger/OpenAPI e Postman com mais de 10 endpoints.</td></tr>
+            <tr><td>APIs</td><td>Swagger/OpenAPI e Postman com 12 operações <code>/api</code>, métodos HTTP, parâmetros, exemplos e status codes.</td></tr>
             <tr><td>IA</td><td>PoC de recomendação com OpenAI planejado e fallback local funcional.</td></tr>
-            <tr><td>Checkpoint 2</td><td>Estado atual, pendências e links previstos documentados.</td></tr>
+            <tr><td>Checkpoint 2</td><td>Estado atual, pendências, GitHub, Kanban e commits conferidos.</td></tr>
         </tbody>
     </table>
 </main>
