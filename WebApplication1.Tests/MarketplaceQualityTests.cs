@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -189,6 +190,82 @@ public sealed class MarketplaceQualityTests
     }
 
     [Fact]
+    public void CatalogoSeed_tem_60_produtos_com_imagens_locais_unicas()
+    {
+        var root = EncontrarRaizRepositorio();
+        var produtos = LerCatalogoSeed(root);
+
+        Assert.Equal(60, produtos.Count);
+        Assert.Equal(20, produtos.Count(p => p.Categoria == "Maquiagem"));
+        Assert.Equal(20, produtos.Count(p => p.Categoria == "Cuidados com a Pele"));
+        Assert.Equal(20, produtos.Count(p => p.Categoria == "Cabelos"));
+
+        var imagens = produtos.Select(p => p.ImagemUrl).ToList();
+        Assert.Equal(imagens.Count, imagens.Distinct(StringComparer.OrdinalIgnoreCase).Count());
+
+        foreach (var produto in produtos)
+        {
+            Assert.Equal($"/images/produtos/reais/{produto.Slug}.jpg", produto.ImagemUrl);
+
+            var imagePath = Path.Combine(root, "wwwroot", produto.ImagemUrl.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
+            Assert.True(File.Exists(imagePath), $"Imagem local não encontrada: {produto.ImagemUrl}");
+
+            var (width, height) = LerDimensoesJpeg(imagePath);
+            Assert.True(Math.Min(width, height) >= 600, $"Imagem menor que 600px no menor lado: {produto.ImagemUrl} ({width}x{height})");
+        }
+    }
+
+    [Fact]
+    public void CatalogoSeed_tem_slugs_por_nome_e_sem_mojibake()
+    {
+        var produtos = LerCatalogoSeed(EncontrarRaizRepositorio());
+
+        foreach (var produto in produtos)
+        {
+            Assert.Equal(SlugHelper.Generate(produto.Nome), produto.Slug);
+
+            foreach (var texto in produto.Textos())
+            {
+                Assert.DoesNotContain("\u00C3", texto);
+                Assert.DoesNotContain("\u00C2", texto);
+                Assert.DoesNotContain("\uFFFD", texto);
+            }
+        }
+    }
+
+    [Fact]
+    public void CatalogoSeed_tem_filtros_coerentes_por_categoria()
+    {
+        var produtos = LerCatalogoSeed(EncontrarRaizRepositorio());
+        var categorias = new[] { "Maquiagem", "Cuidados com a Pele", "Cabelos" };
+        var tiposPele = new[] { "Todos", "Oleosa", "Seca", "Mista", "Sensível" };
+        var tiposCabelo = new[] { "Todos", "Cacheado", "Crespo", "Liso", "Ondulado", "Danificado", "Frágil" };
+        var tons = new[] { "Universal", "Claro", "Médio", "Escuro", "Preto", "Marrom" };
+        var acabamentos = new[] { "Natural", "Matte", "Glow", "Suave", "Hidratante", "Brilho", "Definição", "Nutritivo", "Toque seco", "Cremoso", "Volume" };
+
+        Assert.Contains(produtos, p => p.Vegano);
+
+        foreach (var produto in produtos)
+        {
+            Assert.Contains(produto.Categoria, categorias);
+            Assert.Contains(produto.TipoPele, tiposPele);
+            Assert.Contains(produto.TipoCabelo, tiposCabelo);
+            Assert.Contains(produto.Tom, tons);
+            Assert.Contains(produto.Acabamento, acabamentos);
+
+            if (produto.Categoria is "Maquiagem" or "Cuidados com a Pele")
+            {
+                Assert.Equal("Todos", produto.TipoCabelo);
+            }
+
+            if (produto.Categoria == "Cabelos")
+            {
+                Assert.Equal("Todos", produto.TipoPele);
+            }
+        }
+    }
+
+    [Fact]
     public async Task ProductImageService_rejeita_extensao_invalida()
     {
         var service = new ProductImageService(new FakeWebHostEnvironment());
@@ -287,6 +364,95 @@ public sealed class MarketplaceQualityTests
         return new FormFile(new MemoryStream(bytes), 0, bytes.Length, "Imagem", fileName);
     }
 
+    private static string EncontrarRaizRepositorio()
+    {
+        var directory = new DirectoryInfo(AppContext.BaseDirectory);
+        while (directory != null)
+        {
+            if (File.Exists(Path.Combine(directory.FullName, "WebApplication1.sln")) &&
+                File.Exists(Path.Combine(directory.FullName, "Data", "SeedCatalog", "produtos.json")))
+            {
+                return directory.FullName;
+            }
+
+            directory = directory.Parent;
+        }
+
+        throw new DirectoryNotFoundException("Não foi possível localizar a raiz do repositório.");
+    }
+
+    private static IReadOnlyList<CatalogSeedProduto> LerCatalogoSeed(string root)
+    {
+        var path = Path.Combine(root, "Data", "SeedCatalog", "produtos.json");
+        using var stream = File.OpenRead(path);
+        var produtos = JsonSerializer.Deserialize<List<CatalogSeedProduto>>(stream, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        });
+
+        return produtos ?? new List<CatalogSeedProduto>();
+    }
+
+    private static (int Width, int Height) LerDimensoesJpeg(string path)
+    {
+        using var stream = File.OpenRead(path);
+        if (stream.ReadByte() != 0xFF || stream.ReadByte() != 0xD8)
+        {
+            throw new InvalidDataException($"Arquivo não parece ser JPEG: {path}");
+        }
+
+        while (stream.Position < stream.Length)
+        {
+            int markerPrefix;
+            do
+            {
+                markerPrefix = stream.ReadByte();
+            }
+            while (markerPrefix != 0xFF && markerPrefix != -1);
+
+            var marker = stream.ReadByte();
+            while (marker == 0xFF)
+            {
+                marker = stream.ReadByte();
+            }
+
+            if (marker is -1 or 0xD9)
+            {
+                break;
+            }
+
+            var length = ReadBigEndianUInt16(stream);
+            if (length < 2)
+            {
+                throw new InvalidDataException($"Segmento JPEG inválido: {path}");
+            }
+
+            if (marker is 0xC0 or 0xC1 or 0xC2 or 0xC3 or 0xC5 or 0xC6 or 0xC7 or 0xC9 or 0xCA or 0xCB or 0xCD or 0xCE or 0xCF)
+            {
+                _ = stream.ReadByte();
+                var height = ReadBigEndianUInt16(stream);
+                var width = ReadBigEndianUInt16(stream);
+                return (width, height);
+            }
+
+            stream.Seek(length - 2, SeekOrigin.Current);
+        }
+
+        throw new InvalidDataException($"Dimensões JPEG não encontradas: {path}");
+    }
+
+    private static int ReadBigEndianUInt16(Stream stream)
+    {
+        var high = stream.ReadByte();
+        var low = stream.ReadByte();
+        if (high < 0 || low < 0)
+        {
+            throw new EndOfStreamException();
+        }
+
+        return (high << 8) + low;
+    }
+
     private static byte[] SmallPngBytes()
     {
         return Convert.FromBase64String("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADUlEQVR4nGNgYGD4DwABBAEAghlE7wAAAABJRU5ErkJggg==");
@@ -297,6 +463,42 @@ public sealed class MarketplaceQualityTests
         public Task<ProductImageSaveResult> SaveAsync(IFormFile image, int lojistaId, string productSlug, CancellationToken cancellationToken)
         {
             return Task.FromResult(new ProductImageSaveResult(true, $"/images/produtos/uploads/{lojistaId}/{productSlug}.png", null));
+        }
+    }
+
+    private sealed record CatalogSeedProduto(
+        string Slug,
+        string Nome,
+        string Descricao,
+        string Categoria,
+        string Marca,
+        decimal Preco,
+        int Estoque,
+        string TipoPele,
+        string TipoCabelo,
+        string CurvaturaCachos,
+        string Tom,
+        string Acabamento,
+        bool Vegano,
+        string Composicao,
+        string LojistaEmail,
+        string ImagemUrl)
+    {
+        public IEnumerable<string> Textos()
+        {
+            yield return Slug;
+            yield return Nome;
+            yield return Descricao;
+            yield return Categoria;
+            yield return Marca;
+            yield return TipoPele;
+            yield return TipoCabelo;
+            yield return CurvaturaCachos;
+            yield return Tom;
+            yield return Acabamento;
+            yield return Composicao;
+            yield return LojistaEmail;
+            yield return ImagemUrl;
         }
     }
 

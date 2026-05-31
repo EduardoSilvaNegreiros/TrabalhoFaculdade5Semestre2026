@@ -180,6 +180,9 @@ public static class MarketplaceSeeder
         var categorias = await db.Categorias.ToDictionaryAsync(c => c.Nome);
         var lojistas = await db.Lojistas.ToDictionaryAsync(l => l.Email);
         var lojistaFallback = await db.Lojistas.OrderBy(l => l.Id).FirstAsync();
+        var seedSlugs = produtosSeed.Select(p => SlugHelper.Generate(p.Slug)).ToHashSet();
+
+        await RemoverProdutosSeedAntigosAsync(db, seedSlugs);
 
         foreach (var seed in produtosSeed)
         {
@@ -212,6 +215,42 @@ public static class MarketplaceSeeder
             produto.Estoque = seed.Estoque;
             produto.LojistaId = lojista.Id;
         }
+    }
+
+    private static async Task RemoverProdutosSeedAntigosAsync(ApplicationDbContext db, HashSet<string> seedSlugs)
+    {
+        var produtosAntigos = await db.Produtos
+            .Where(p => p.ImagemUrl.StartsWith("/images/produtos/reais/") && !seedSlugs.Contains(p.Slug))
+            .ToListAsync();
+
+        if (!produtosAntigos.Any())
+        {
+            return;
+        }
+
+        var produtosAntigosIds = produtosAntigos.Select(p => p.Id).ToList();
+        var produtosComPedido = await db.PedidoItens
+            .Where(i => produtosAntigosIds.Contains(i.ProdutoId))
+            .Select(i => i.ProdutoId)
+            .Distinct()
+            .ToListAsync();
+
+        var produtosRemoviveis = produtosAntigos
+            .Where(p => !produtosComPedido.Contains(p.Id))
+            .ToList();
+
+        if (!produtosRemoviveis.Any())
+        {
+            return;
+        }
+
+        var idsRemoviveis = produtosRemoviveis.Select(p => p.Id).ToList();
+        var avaliacoes = await db.Avaliacoes.Where(a => idsRemoviveis.Contains(a.ProdutoId)).ToListAsync();
+        var desejos = await db.ListaDesejosItens.Where(i => idsRemoviveis.Contains(i.ProdutoId)).ToListAsync();
+
+        db.Avaliacoes.RemoveRange(avaliacoes);
+        db.ListaDesejosItens.RemoveRange(desejos);
+        db.Produtos.RemoveRange(produtosRemoviveis);
     }
 
     private static async Task<List<ProdutoSeed>> LerProdutosSeedAsync()
