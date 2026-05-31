@@ -1,0 +1,29 @@
+@startuml Strategy_Recomendacao
+title Strategy - Recomendacao de produtos
+
+interface IProductRecommendationStrategy {
+  +Nome: string
+  +Score(produto, request): int
+}
+
+class ProductRecommendationService {
+  -strategies: IEnumerable<IProductRecommendationStrategy>
+  +RecommendAsync(request, limit, cancellationToken)
+}
+
+class SkinHairRecommendationStrategy
+class CategoryRecommendationStrategy
+class VeganPriceRecommendationStrategy
+
+ProductRecommendationService o-- IProductRecommendationStrategy
+IProductRecommendationStrategy <|.. SkinHairRecommendationStrategy
+IProductRecommendationStrategy <|.. CategoryRecommendationStrategy
+IProductRecommendationStrategy <|.. VeganPriceRecommendationStrategy
+
+note right of ProductRecommendationService
+Combina estrategias e ordena produtos
+pelo score calculado.
+end note
+
+@enduml
+

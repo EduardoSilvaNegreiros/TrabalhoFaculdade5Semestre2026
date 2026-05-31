@@ -1,9 +1,14 @@
 using System.Globalization;
+using System.Reflection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.OpenApi;
 using WebApplication1.Data;
+using WebApplication1.Services.AI;
+using WebApplication1.Services.Checkout;
+using WebApplication1.Services.Recommendations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,9 +34,62 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Events.OnRedirectToLogin = context =>
+    {
+        if (context.Request.Path.StartsWithSegments("/api"))
+        {
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            return Task.CompletedTask;
+        }
+
+        context.Response.Redirect(context.RedirectUri);
+        return Task.CompletedTask;
+    };
+
+    options.Events.OnRedirectToAccessDenied = context =>
+    {
+        if (context.Request.Path.StartsWithSegments("/api"))
+        {
+            context.Response.StatusCode = StatusCodes.Status403Forbidden;
+            return Task.CompletedTask;
+        }
+
+        context.Response.Redirect(context.RedirectUri);
+        return Task.CompletedTask;
+    };
+});
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Beauty Marketplace API",
+        Version = "v1",
+        Description = "Documentacao OpenAPI da Entrega 4: catalogo, carrinho, checkout, pedidos e IA."
+    });
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    if (File.Exists(xmlPath))
+    {
+        options.IncludeXmlComments(xmlPath);
+    }
+});
+
+builder.Services.AddScoped<IProductRecommendationStrategy, SkinHairRecommendationStrategy>();
+builder.Services.AddScoped<IProductRecommendationStrategy, CategoryRecommendationStrategy>();
+builder.Services.AddScoped<IProductRecommendationStrategy, VeganPriceRecommendationStrategy>();
+builder.Services.AddScoped<IProductRecommendationService, ProductRecommendationService>();
+builder.Services.AddScoped<ICheckoutFacade, CheckoutFacade>();
+builder.Services.AddScoped<LocalAiRecommendationService>();
+builder.Services.AddHttpClient<OpenAiRecommendationService>();
+builder.Services.AddScoped<IAiRecommendationServiceFactory, AiRecommendationServiceFactory>();
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
@@ -66,6 +124,12 @@ else
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Beauty Marketplace API v1");
+});
 
 app.UseAuthentication();
 app.UseAuthorization();

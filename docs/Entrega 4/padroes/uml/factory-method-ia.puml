@@ -1,0 +1,35 @@
+@startuml Factory_Method_IA
+title Factory Method - Provedor de IA
+
+interface IAiRecommendationService {
+  +RecommendAsync(request, cancellationToken)
+}
+
+interface IAiRecommendationServiceFactory {
+  +Create(): IAiRecommendationService
+}
+
+class AiRecommendationServiceFactory {
+  -configuration: IConfiguration
+  -serviceProvider: IServiceProvider
+  +Create(): IAiRecommendationService
+}
+
+class LocalAiRecommendationService
+class OpenAiRecommendationService
+class ApiIaController
+
+IAiRecommendationService <|.. LocalAiRecommendationService
+IAiRecommendationService <|.. OpenAiRecommendationService
+IAiRecommendationServiceFactory <|.. AiRecommendationServiceFactory
+ApiIaController --> IAiRecommendationServiceFactory
+AiRecommendationServiceFactory ..> LocalAiRecommendationService
+AiRecommendationServiceFactory ..> OpenAiRecommendationService
+
+note right of AiRecommendationServiceFactory
+Escolhe OpenAI quando ha chave configurada
+e fallback local quando nao ha chave.
+end note
+
+@enduml
+

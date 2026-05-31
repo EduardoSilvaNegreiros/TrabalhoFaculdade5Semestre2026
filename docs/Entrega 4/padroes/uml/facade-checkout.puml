@@ -1,0 +1,35 @@
+@startuml Facade_Checkout
+title Facade - Checkout
+
+interface ICheckoutFacade {
+  +CalcularFrete(carrinho, cep): decimal
+  +CalcularPrazo(carrinho): string
+  +FinalizarAsync(usuarioEmail, carrinho, request, cancellationToken): CheckoutResult
+}
+
+class CheckoutFacade {
+  -context: ApplicationDbContext
+  +FinalizarAsync(...)
+}
+
+class ApiCheckoutController
+class CarrinhoItem
+class Pedido
+class PedidoItem
+class Produto
+
+ICheckoutFacade <|.. CheckoutFacade
+ApiCheckoutController --> ICheckoutFacade
+CheckoutFacade --> CarrinhoItem
+CheckoutFacade --> Produto
+CheckoutFacade --> Pedido
+CheckoutFacade --> PedidoItem
+
+note right of CheckoutFacade
+Centraliza validacao de carrinho,
+estoque, frete, split, pedido e
+baixa de estoque.
+end note
+
+@enduml
+

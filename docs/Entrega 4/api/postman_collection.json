@@ -1,0 +1,122 @@
+{
+  "info": {
+    "name": "Beauty Marketplace API - Entrega 4",
+    "description": "Colecao com endpoints documentados para catalogo, carrinho, checkout, pedidos e IA.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5016" }
+  ],
+  "item": [
+    {
+      "name": "Catalogo - listar produtos",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/produtos?pele=Oleosa&vegano=true&precoMax=120" },
+      "response": [
+        { "name": "200 OK", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/produtos" }, "status": "OK", "code": 200, "body": "[{\"id\":1,\"nome\":\"Gel de Limpeza Facial\",\"preco\":43.30}]" }
+      ]
+    },
+    {
+      "name": "Catalogo - detalhes",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/produtos/1" },
+      "response": [
+        { "name": "200 OK", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/produtos/1" }, "status": "OK", "code": 200, "body": "{\"id\":1,\"nome\":\"Gel de Limpeza Facial\",\"estoque\":20}" },
+        { "name": "404 Not Found", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/produtos/99999" }, "status": "Not Found", "code": 404, "body": "" }
+      ]
+    },
+    {
+      "name": "Catalogo - avaliacoes",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/produtos/1/avaliacoes" },
+      "response": [
+        { "name": "200 OK", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/produtos/1/avaliacoes" }, "status": "OK", "code": 200, "body": "[{\"nota\":5,\"comentario\":\"Chegou rapido.\"}]" }
+      ]
+    },
+    {
+      "name": "Catalogo - recomendacoes por produto",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/produtos/1/recomendacoes" },
+      "response": [
+        { "name": "200 OK", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/produtos/1/recomendacoes" }, "status": "OK", "code": 200, "body": "[{\"id\":2,\"nome\":\"Produto recomendado\",\"justificativa\":\"Produto relacionado por perfil de beleza e categoria.\"}]" }
+      ]
+    },
+    {
+      "name": "Carrinho - obter",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/carrinho" },
+      "response": [
+        { "name": "200 OK", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/carrinho" }, "status": "OK", "code": 200, "body": "{\"itens\":[],\"quantidadeTotal\":0,\"subtotal\":0}" },
+        { "name": "401 Unauthorized", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/carrinho" }, "status": "Unauthorized", "code": 401, "body": "" }
+      ]
+    },
+    {
+      "name": "Carrinho - adicionar item",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\"produtoId\":1,\"quantidade\":2}" },
+        "url": "{{baseUrl}}/api/carrinho/itens"
+      },
+      "response": [
+        { "name": "200 OK", "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/carrinho/itens" }, "status": "OK", "code": 200, "body": "{\"quantidadeTotal\":2}" },
+        { "name": "400 Bad Request", "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/carrinho/itens" }, "status": "Bad Request", "code": 400, "body": "{\"mensagem\":\"Produto indisponivel.\"}" }
+      ]
+    },
+    {
+      "name": "Carrinho - atualizar item",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\"quantidade\":3}" },
+        "url": "{{baseUrl}}/api/carrinho/itens/1"
+      },
+      "response": [
+        { "name": "200 OK", "originalRequest": { "method": "PUT", "url": "{{baseUrl}}/api/carrinho/itens/1" }, "status": "OK", "code": 200, "body": "{\"quantidadeTotal\":3}" }
+      ]
+    },
+    {
+      "name": "Carrinho - remover item",
+      "request": { "method": "DELETE", "url": "{{baseUrl}}/api/carrinho/itens/1" },
+      "response": [
+        { "name": "200 OK", "originalRequest": { "method": "DELETE", "url": "{{baseUrl}}/api/carrinho/itens/1" }, "status": "OK", "code": 200, "body": "{\"quantidadeTotal\":0}" }
+      ]
+    },
+    {
+      "name": "Checkout - finalizar",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\"metodoPagamento\":\"Pix\",\"cep\":\"01001000\"}" },
+        "url": "{{baseUrl}}/api/checkout"
+      },
+      "response": [
+        { "name": "201 Created", "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/checkout" }, "status": "Created", "code": 201, "body": "{\"pedidoId\":10,\"status\":\"Pedido confirmado\"}" },
+        { "name": "400 Bad Request", "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/checkout" }, "status": "Bad Request", "code": 400, "body": "{\"mensagem\":\"Carrinho vazio.\"}" }
+      ]
+    },
+    {
+      "name": "Pedidos - listar",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/pedidos" },
+      "response": [
+        { "name": "200 OK", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/pedidos" }, "status": "OK", "code": 200, "body": "[{\"id\":10,\"status\":\"Pedido confirmado\"}]" }
+      ]
+    },
+    {
+      "name": "Pedidos - detalhes",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/pedidos/10" },
+      "response": [
+        { "name": "200 OK", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/pedidos/10" }, "status": "OK", "code": 200, "body": "{\"id\":10,\"itens\":[{\"codigoRastreio\":\"BM2605310001\"}]}" },
+        { "name": "404 Not Found", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/pedidos/99999" }, "status": "Not Found", "code": 404, "body": "" }
+      ]
+    },
+    {
+      "name": "IA - recomendacoes",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\"tipoPele\":\"Oleosa\",\"tipoCabelo\":\"Cacheado\",\"objetivo\":\"hidratar\",\"vegano\":true,\"precoMax\":120}" },
+        "url": "{{baseUrl}}/api/ia/recomendacoes"
+      },
+      "response": [
+        { "name": "200 OK", "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/ia/recomendacoes" }, "status": "OK", "code": 200, "body": "{\"provedor\":\"Local demonstrativo\",\"produtos\":[]}" }
+      ]
+    }
+  ]
+}
+

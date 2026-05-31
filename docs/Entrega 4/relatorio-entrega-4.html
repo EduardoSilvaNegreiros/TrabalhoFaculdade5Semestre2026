@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <title>Beauty Marketplace - Entrega 4</title>
+    <style>
+        body { margin: 0; color: #28222a; font-family: "Segoe UI", Arial, sans-serif; line-height: 1.55; background: #fff; }
+        main { max-width: 1060px; margin: 0 auto; padding: 40px 48px; }
+        h1 { margin-top: 0; border-bottom: 4px solid #b0164e; padding-bottom: 12px; font-size: 34px; }
+        h2 { margin-top: 34px; font-size: 24px; }
+        h3 { margin-top: 22px; font-size: 18px; }
+        p, li { font-size: 14px; }
+        table { width: 100%; border-collapse: collapse; margin: 14px 0 24px; font-size: 13px; }
+        th, td { border: 1px solid #ead6df; padding: 9px 10px; vertical-align: top; }
+        th { background: #f7e9ef; text-align: left; }
+        code { background: #f7edf2; border-radius: 4px; padding: 1px 4px; font-family: Consolas, monospace; }
+        pre { white-space: pre-wrap; background: #201b22; color: #fff; border-radius: 8px; padding: 14px; font-size: 12px; }
+        .meta, .callout { border: 1px solid #ead6df; background: #fff7fa; border-radius: 8px; padding: 16px 18px; }
+        .diagram { page-break-inside: avoid; border: 1px solid #ead6df; border-radius: 8px; padding: 12px; margin: 12px 0 20px; }
+        .diagram img { display: block; width: 100%; height: auto; }
+        @media print { main { max-width: none; padding: 22mm 16mm; } h2 { page-break-after: avoid; } .diagram, table { page-break-inside: avoid; } }
+    </style>
+</head>
+<body>
+<main>
+    <h1>Beauty Marketplace - Entrega 4 - Padrões, APIs e IA</h1>
+    <section class="meta">
+        <h2>1. Identificação do grupo</h2>
+        <p><strong>Número do grupo:</strong> [preencher número do grupo]</p>
+        <p><strong>Integrante 1:</strong> [nome completo] - RA [RA]</p>
+        <p><strong>Integrante 2:</strong> [nome completo] - RA [RA]</p>
+        <p><strong>Integrante 3:</strong> [nome completo] - RA [RA]</p>
+        <p><strong>Integrante 4:</strong> [nome completo] - RA [RA]</p>
+    </section>
+
+    <h2>Objetivo</h2>
+    <p>Apresentar os padrões de projeto aplicados no Beauty Marketplace, a documentação das APIs do sistema e a prova de conceito de Inteligência Artificial para recomendação personalizada de produtos de beleza.</p>
+
+    <h2>2. Padrões de projeto GoF</h2>
+    <h3>Strategy - Recomendação de produtos</h3>
+    <p><strong>Categoria:</strong> Comportamental. O padrão separa os critérios de recomendação por perfil de pele, cabelo, categoria, preferência vegana e preço.</p>
+    <div class="diagram"><img src="padroes/uml/rendered/strategy-recomendacao.svg" alt="UML Strategy" /></div>
+    <pre>public interface IProductRecommendationStrategy
+{
+    string Nome { get; }
+    int Score(Produto produto, ProductRecommendationRequest request);
+}</pre>
+
+    <h3>Facade - Checkout</h3>
+    <p><strong>Categoria:</strong> Estrutural. O padrão centraliza validação de carrinho, estoque, frete, split, pedido e baixa de estoque.</p>
+    <div class="diagram"><img src="padroes/uml/rendered/facade-checkout.svg" alt="UML Facade" /></div>
+    <pre>public interface ICheckoutFacade
+{
+    decimal CalcularFrete(IReadOnlyCollection&lt;CarrinhoItem&gt; carrinho, string? cep);
+    string CalcularPrazo(IReadOnlyCollection&lt;CarrinhoItem&gt; carrinho);
+    Task&lt;CheckoutResult&gt; FinalizarAsync(string usuarioEmail, IReadOnlyCollection&lt;CarrinhoItem&gt; carrinho, CheckoutRequest request, CancellationToken ct);
+}</pre>
+
+    <h3>Factory Method - Provedor de IA</h3>
+    <p><strong>Categoria:</strong> Criacional. O padrão escolhe OpenAI quando há chave configurada e fallback local quando não há credencial externa.</p>
+    <div class="diagram"><img src="padroes/uml/rendered/factory-method-ia.svg" alt="UML Factory Method" /></div>
+    <pre>public IAiRecommendationService Create()
+{
+    var apiKey = _configuration["OpenAI:ApiKey"] ?? Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+    return string.IsNullOrWhiteSpace(apiKey)
+        ? _serviceProvider.GetRequiredService&lt;LocalAiRecommendationService&gt;()
+        : _serviceProvider.GetRequiredService&lt;OpenAiRecommendationService&gt;();
+}</pre>
+
+    <h2>3. Documentação de APIs</h2>
+    <p>Swagger UI local: <code>http://localhost:5016/swagger</code>. OpenAPI JSON: <code>api/openapi.json</code>. Postman Collection: <code>api/postman_collection.json</code>.</p>
+    <table>
+        <thead><tr><th>Endpoint</th><th>Método</th><th>Descrição</th><th>Status</th></tr></thead>
+        <tbody>
+            <tr><td>/api/produtos</td><td>GET</td><td>Lista produtos com filtros.</td><td>200</td></tr>
+            <tr><td>/api/produtos/{id}</td><td>GET</td><td>Detalhes de produto.</td><td>200, 404</td></tr>
+            <tr><td>/api/produtos/{id}/avaliacoes</td><td>GET</td><td>Avaliações do produto.</td><td>200</td></tr>
+            <tr><td>/api/produtos/{id}/recomendacoes</td><td>GET</td><td>Recomendações relacionadas.</td><td>200, 404</td></tr>
+            <tr><td>/api/carrinho</td><td>GET</td><td>Carrinho do consumidor.</td><td>200, 401</td></tr>
+            <tr><td>/api/carrinho/itens</td><td>POST</td><td>Adiciona item.</td><td>200, 400, 404</td></tr>
+            <tr><td>/api/carrinho/itens/{produtoId}</td><td>PUT</td><td>Atualiza item.</td><td>200, 404</td></tr>
+            <tr><td>/api/carrinho/itens/{produtoId}</td><td>DELETE</td><td>Remove item.</td><td>200</td></tr>
+            <tr><td>/api/checkout</td><td>POST</td><td>Finaliza compra.</td><td>201, 400, 401</td></tr>
+            <tr><td>/api/pedidos</td><td>GET</td><td>Lista pedidos.</td><td>200, 401</td></tr>
+            <tr><td>/api/pedidos/{id}</td><td>GET</td><td>Detalhes e rastreio.</td><td>200, 404</td></tr>
+            <tr><td>/api/ia/recomendacoes</td><td>POST</td><td>PoC de IA.</td><td>200, 400</td></tr>
+        </tbody>
+    </table>
+    <pre>{
+  "tipoPele": "Oleosa",
+  "tipoCabelo": "Cacheado",
+  "objetivo": "hidratar",
+  "vegano": true,
+  "precoMax": 120
+}</pre>
+
+    <h2>4. Inteligência Artificial na aplicação</h2>
+    <p>A IA será usada como recomendador personalizado. A ferramenta escolhida é a OpenAI Responses API, com fallback local para apresentações sem chave externa. Referências: <code>https://platform.openai.com/docs</code>, <code>https://platform.openai.com/docs/api-reference/responses</code> e <code>https://platform.openai.com/docs/guides/structured-outputs</code>.</p>
+    <p>A PoC está implementada em <code>POST /api/ia/recomendacoes</code> e retorna provedor usado, resumo, alerta de compatibilidade e produtos recomendados.</p>
+
+    <h2>5. Checkpoint 2 - Estado atual do projeto</h2>
+    <table>
+        <thead><tr><th>Concluído</th><th>Em andamento</th></tr></thead>
+        <tbody>
+            <tr>
+                <td>Marketplace com perfis, catálogo, carrinho multi-lojista, checkout, pedidos, lista de desejos, dashboard, admin, Entrega 3, APIs e PoC de IA.</td>
+                <td>Integração real de pagamento, frete, e-mail e IA externa.</td>
+            </tr>
+        </tbody>
+    </table>
+    <p><strong>GitHub:</strong> <a href="https://github.com/EduardoSilvaNegreiros/TrabalhoFaculdade5Semestre2026">https://github.com/EduardoSilvaNegreiros/TrabalhoFaculdade5Semestre2026</a></p>
+    <p><strong>Kanban:</strong> <a href="https://github.com/users/EduardoSilvaNegreiros/projects/2">https://github.com/users/EduardoSilvaNegreiros/projects/2</a></p>
+    <p><strong>Nome do Kanban:</strong> Kanban - Projeto 5 Semestre ADS</p>
+
+    <h3>Conferência de commits</h3>
+    <p>Conferência realizada em 31/05/2026. O repositório público e o Kanban foram conferidos. O histórico local visível mostra commits associados a:</p>
+    <ul>
+        <li><code>Eduardo &lt;edunegreiross@gmail.com&gt;</code></li>
+        <li><code>Eduardo Silva de Negreiros &lt;edunegreiross@gmail.com&gt;</code></li>
+    </ul>
+    <p>Observação: caso o professor exija evidência individual de todos os integrantes, os demais membros devem realizar commits no repositório ou serem incluídos como coautores nos commits.</p>
+
+    <h2>Critérios de avaliação</h2>
+    <table>
+        <thead><tr><th>Critério</th><th>Atendimento</th></tr></thead>
+        <tbody>
+            <tr><td>Padrões GoF</td><td>Strategy, Facade e Factory Method aplicados e documentados.</td></tr>
+            <tr><td>APIs</td><td>Swagger/OpenAPI e Postman com mais de 10 endpoints.</td></tr>
+            <tr><td>IA</td><td>PoC de recomendação com OpenAI planejado e fallback local funcional.</td></tr>
+            <tr><td>Checkpoint 2</td><td>Estado atual, pendências e links previstos documentados.</td></tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>
