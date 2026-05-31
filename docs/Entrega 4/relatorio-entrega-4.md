@@ -92,6 +92,8 @@ O projeto expõe documentação Swagger em:
 
 O Swagger/OpenAPI final foi filtrado para documentar somente endpoints cujo caminho começa com `/api`. As rotas MVC usadas pela interface web, como ações internas do carrinho, não entram na documentação oficial da Entrega 4.
 
+Os endpoints de carrinho, checkout e pedidos usam autenticação por cookie do ASP.NET Identity e exigem usuário com role `Consumidor`. Quando acessados sem login, retornam `401 Unauthorized`; quando acessados por perfil sem permissão, retornam `403 Forbidden`.
+
 ### Endpoints documentados
 
 | Endpoint | Método | Descrição | Status principais |
@@ -153,6 +155,8 @@ Referências oficiais:
 
 Endpoint: `POST /api/ia/recomendacoes`
 
+Além do endpoint JSON, o projeto possui uma tela para demonstração em `Consumidor > Recomendação IA`. Assim, durante a apresentação, o consumidor consegue testar a PoC sem depender do Postman.
+
 Fluxo:
 
 1. O endpoint recebe o perfil de beleza do consumidor.
@@ -173,6 +177,8 @@ Fluxo:
 - Entrega 3 organizada com C4, SQL, MongoDB e Redis.
 - APIs JSON com Swagger/OpenAPI filtrado para `/api`.
 - PoC de IA para recomendação.
+- Página de Recomendação IA para demonstração pelo perfil consumidor.
+- Testes automatizados cobrindo Strategy, Facade/checkout multi-lojista e roles de acesso.
 
 ### Em andamento
 
@@ -186,6 +192,13 @@ Fluxo:
 - Nome do Kanban: **Kanban - Projeto 5 Semestre ADS**
 - Swagger local: `http://localhost:5016/swagger`
 - Postman Collection: `docs/Entrega 4/api/postman_collection.json`
+
+### Validação técnica executada
+
+- `dotnet restore`: restauração concluída.
+- `dotnet build --no-restore`: compilação concluída com **0 erros e 0 warnings**.
+- `dotnet test --no-build`: **3 testes aprovados**.
+- `dotnet list package --vulnerable --include-transitive`: conferido sem vulnerabilidades conhecidas.
 
 ### Conferência de commits
 

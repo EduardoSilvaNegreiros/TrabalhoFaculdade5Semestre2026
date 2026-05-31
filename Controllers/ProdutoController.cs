@@ -86,14 +86,21 @@ namespace WebApplication1.Controllers
                 query = query.Where(p => p.Vegano);
             }
 
-            if (precoMin.HasValue)
+            if (precoMin.HasValue && precoMax.HasValue && precoMin.Value > precoMax.Value)
             {
-                query = query.Where(p => p.Preco >= precoMin.Value);
+                ViewBag.FiltroErro = "O preço mínimo não pode ser maior que o preço máximo.";
             }
-
-            if (precoMax.HasValue)
+            else
             {
-                query = query.Where(p => p.Preco <= precoMax.Value);
+                if (precoMin.HasValue)
+                {
+                    query = query.Where(p => p.Preco >= precoMin.Value);
+                }
+
+                if (precoMax.HasValue)
+                {
+                    query = query.Where(p => p.Preco <= precoMax.Value);
+                }
             }
 
             ViewBag.Categorias = await _context.Produtos.Select(p => p.Categoria).Distinct().OrderBy(c => c).ToListAsync();
@@ -105,17 +112,16 @@ namespace WebApplication1.Controllers
             ViewBag.Acabamentos = await _context.Produtos.Select(p => p.Acabamento).Distinct().OrderBy(c => c).ToListAsync();
             ViewBag.TotalProdutos = await query.CountAsync();
 
-            var produtos = await query.ToListAsync();
-            produtos = ordenacao switch
+            query = ordenacao switch
             {
-                "menor-preco" => produtos.OrderBy(p => p.Preco).ToList(),
-                "maior-preco" => produtos.OrderByDescending(p => p.Preco).ToList(),
-                "nome-desc" => produtos.OrderByDescending(p => p.Nome).ToList(),
-                "estoque" => produtos.OrderByDescending(p => p.Estoque).ToList(),
-                _ => produtos.OrderBy(p => p.Nome).ToList()
+                "menor-preco" => query.OrderBy(p => p.Preco).ThenBy(p => p.Nome),
+                "maior-preco" => query.OrderByDescending(p => p.Preco).ThenBy(p => p.Nome),
+                "nome-desc" => query.OrderByDescending(p => p.Nome),
+                "estoque" => query.OrderByDescending(p => p.Estoque).ThenBy(p => p.Nome),
+                _ => query.OrderBy(p => p.Nome)
             };
 
-            return View(produtos);
+            return View(await query.ToListAsync());
         }
 
         public async Task<IActionResult> Detalhes(int id)

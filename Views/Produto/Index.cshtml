@@ -10,6 +10,57 @@
     var tons = ViewBag.Tons as List<string> ?? new();
     var acabamentos = ViewBag.Acabamentos as List<string> ?? new();
     var totalProdutos = ViewBag.TotalProdutos as int? ?? Model.Count;
+    var filtroErro = ViewBag.FiltroErro as string;
+    var filtrosAtivos = new List<(string Key, string Label)>();
+
+    void AddFilter(string key, string label, string? value)
+    {
+        if (!string.IsNullOrWhiteSpace(value))
+        {
+            filtrosAtivos.Add((key, $"{label}: {value}"));
+        }
+    }
+
+    AddFilter("busca", "Busca", Context.Request.Query["busca"]);
+    AddFilter("category", "Categoria", Context.Request.Query["category"]);
+    AddFilter("pele", "Pele", Context.Request.Query["pele"]);
+    AddFilter("cabelo", "Cabelo", Context.Request.Query["cabelo"]);
+    AddFilter("marca", "Marca", Context.Request.Query["marca"]);
+    AddFilter("lojista", "Lojista", Context.Request.Query["lojista"]);
+    AddFilter("tom", "Tom", Context.Request.Query["tom"]);
+    AddFilter("acabamento", "Acabamento", Context.Request.Query["acabamento"]);
+    AddFilter("precoMin", "Preço mín.", Context.Request.Query["precoMin"]);
+    AddFilter("precoMax", "Preço máx.", Context.Request.Query["precoMax"]);
+    AddFilter("ordenacao", "Ordem", Context.Request.Query["ordenacao"]);
+
+    if (Context.Request.Query["vegano"] == "true")
+    {
+        filtrosAtivos.Add(("vegano", "Somente veganos"));
+    }
+
+    string RemoveFilterUrl(string key)
+    {
+        var parts = new List<string>();
+        foreach (var query in Context.Request.Query)
+        {
+            if (query.Key == key)
+            {
+                continue;
+            }
+
+            foreach (var value in query.Value)
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    var encodedKey = System.Text.Encodings.Web.UrlEncoder.Default.Encode(query.Key);
+                    var encodedValue = System.Text.Encodings.Web.UrlEncoder.Default.Encode(value);
+                    parts.Add($"{encodedKey}={encodedValue}");
+                }
+            }
+        }
+
+        return Url.Action("Index", "Produto") + (parts.Any() ? $"?{string.Join("&", parts)}" : string.Empty);
+    }
 }
 
 <section class="market-hero">
@@ -133,15 +184,32 @@
     <a class="btn btn-outline-secondary" asp-controller="Produto" asp-action="Index">Limpar</a>
 </form>
 
+@if (!string.IsNullOrWhiteSpace(filtroErro))
+{
+    <div class="alert alert-warning">@filtroErro</div>
+}
+
+@if (filtrosAtivos.Any())
+{
+    <div class="active-filters mb-3" aria-label="Filtros ativos">
+        @foreach (var filtro in filtrosAtivos)
+        {
+            <a class="filter-chip" href="@RemoveFilterUrl(filtro.Key)">
+                @filtro.Label <span aria-hidden="true">x</span>
+            </a>
+        }
+    </div>
+}
+
 <div class="catalog-toolbar mb-3">
     <strong>@totalProdutos produto(s) encontrado(s)</strong>
-    <span class="text-muted">Os produtos universais também aparecem quando você filtra por pele, cabelo ou tom.</span>
+    <span class="text-muted">Produtos universais também aparecem quando você filtra por pele, cabelo ou tom.</span>
 </div>
 
 @if (!Model.Any())
 {
     <div class="alert alert-info">
-        Nenhum produto encontrado com esses filtros. Tente remover algum critério ou buscar por marca/categoria.
+        Nenhum produto encontrado com esses filtros. Remova um filtro ativo, ajuste a faixa de preço ou busque por marca/categoria.
     </div>
 }
 

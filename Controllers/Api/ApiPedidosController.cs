@@ -39,7 +39,7 @@ public sealed class ApiPedidosController : ControllerBase
     }
 
     /// <summary>
-    /// Consulta um pedido especifico do consumidor logado.
+    /// Consulta um pedido específico do consumidor logado.
     /// </summary>
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(PedidoResponse), StatusCodes.Status200OK)]
@@ -59,4 +59,3 @@ public sealed class ApiPedidosController : ControllerBase
         return User.FindFirstValue(ClaimTypes.Email) ?? User.Identity?.Name ?? string.Empty;
     }
 }
-

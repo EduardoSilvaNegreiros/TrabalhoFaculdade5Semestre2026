@@ -34,7 +34,7 @@ public sealed class OpenAiRecommendationService : IAiRecommendationService
             var payload = new
             {
                 model = _configuration["OpenAI:Model"] ?? "gpt-5-mini",
-                input = $"Recomende produtos de beleza para pele={request.TipoPele}, cabelo={request.TipoCabelo}, objetivo={request.Objetivo}, categoria={request.Categoria}, vegano={request.Vegano}, precoMax={request.PrecoMax}. Responda em portugues com uma frase curta."
+                input = $"Recomende produtos de beleza para pele={request.TipoPele}, cabelo={request.TipoCabelo}, objetivo={request.Objetivo}, categoria={request.Categoria}, vegano={request.Vegano}, precoMax={request.PrecoMax}. Responda em português com uma frase curta."
             };
 
             message.Content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");

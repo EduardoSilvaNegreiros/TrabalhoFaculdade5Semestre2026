@@ -23,5 +23,10 @@ namespace WebApplication1.Controllers
             ViewBag.TotalDesejos = await _context.ListaDesejosItens.CountAsync(i => i.UsuarioEmail == email);
             return View();
         }
+
+        public IActionResult RecomendacaoIa()
+        {
+            return View();
+        }
     }
 }

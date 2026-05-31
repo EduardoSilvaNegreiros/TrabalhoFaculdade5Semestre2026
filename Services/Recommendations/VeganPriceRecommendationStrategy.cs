@@ -4,7 +4,7 @@ namespace WebApplication1.Services.Recommendations;
 
 public sealed class VeganPriceRecommendationStrategy : IProductRecommendationStrategy
 {
-    public string Nome => "Preferencia vegana e preco";
+    public string Nome => "Preferência vegana e preço";
 
     public int Score(Produto produto, ProductRecommendationRequest request)
     {
@@ -23,4 +23,3 @@ public sealed class VeganPriceRecommendationStrategy : IProductRecommendationStr
         return score;
     }
 }
-

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 
 public class IdentityMensagensEmPortugues : IdentityErrorDescriber
 {
@@ -23,17 +23,17 @@ public class IdentityMensagensEmPortugues : IdentityErrorDescriber
     public override IdentityError PasswordRequiresUpper()
         => new IdentityError { Code = nameof(PasswordRequiresUpper), Description = "A senha deve conter pelo menos uma letra maiúscula." };
 
-    public override IdentityError DuplicateUserName(string userName)
-        => new IdentityError { Code = nameof(DuplicateUserName), Description = $"O nome de usuário '{userName}' já está em uso." };
+    public override IdentityError DuplicateUserName(string? userName)
+        => new IdentityError { Code = nameof(DuplicateUserName), Description = $"O nome de usuário '{userName ?? "informado"}' já está em uso." };
 
-    public override IdentityError DuplicateEmail(string email)
-        => new IdentityError { Code = nameof(DuplicateEmail), Description = $"O email '{email}' já está em uso." };
+    public override IdentityError DuplicateEmail(string? email)
+        => new IdentityError { Code = nameof(DuplicateEmail), Description = $"O email '{email ?? "informado"}' já está em uso." };
 
-    public override IdentityError InvalidEmail(string email)
-        => new IdentityError { Code = nameof(InvalidEmail), Description = $"O email '{email}' é inválido." };
+    public override IdentityError InvalidEmail(string? email)
+        => new IdentityError { Code = nameof(InvalidEmail), Description = $"O email '{email ?? "informado"}' é inválido." };
 
-    public override IdentityError InvalidUserName(string userName)
-        => new IdentityError { Code = nameof(InvalidUserName), Description = $"O nome de usuário '{userName}' é inválido." };
+    public override IdentityError InvalidUserName(string? userName)
+        => new IdentityError { Code = nameof(InvalidUserName), Description = $"O nome de usuário '{userName ?? "informado"}' é inválido." };
 
     public override IdentityError UserAlreadyHasPassword()
         => new IdentityError { Code = nameof(UserAlreadyHasPassword), Description = "O usuário já possui uma senha definida." };

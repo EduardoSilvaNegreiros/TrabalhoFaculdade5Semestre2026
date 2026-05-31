@@ -56,7 +56,7 @@ public sealed class ApiCarrinhoController : ControllerBase
 
         if (produto.Estoque <= 0)
         {
-            return BadRequest(new { mensagem = "Produto indisponivel." });
+            return BadRequest(new { mensagem = "Produto indisponível." });
         }
 
         var carrinho = ObterCarrinho();
@@ -167,4 +167,3 @@ public sealed class ApiCarrinhoController : ControllerBase
         HttpContext.Session.SetObjectAsJson($"Carrinho_{ObterEmail()}", carrinho);
     }
 }
-

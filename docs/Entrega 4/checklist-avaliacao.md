@@ -20,6 +20,7 @@
 - [x] Postman Collection criada em `api/postman_collection.json`.
 - [x] OpenAPI documenta somente endpoints `/api` e mantém mais de 10 operações.
 - [x] Métodos HTTP, parâmetros, exemplos e status codes descritos.
+- [x] Endpoints protegidos documentados com exigência de login como `Consumidor` e retorno `401/403`.
 
 ## 4. Inteligência Artificial
 
@@ -31,6 +32,7 @@
 ## 5. Checkpoint 2
 
 - [x] Estado atual do projeto documentado.
+- [x] Validação técnica registrada: build com 0 warnings/erros e 3 testes automatizados aprovados.
 - [x] Link do GitHub preenchido.
 - [x] Link do Kanban/GitHub Projects preenchido.
 - [x] Commits dos integrantes conferidos no GitHub.

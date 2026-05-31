@@ -24,6 +24,7 @@
                         @if (User.IsInRole("Consumidor"))
                         {
                             <li class="nav-item"><a class="nav-link" asp-controller="Consumidor" asp-action="Index">Minha área</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-controller="Consumidor" asp-action="RecomendacaoIa">Recomendação IA</a></li>
                             <li class="nav-item"><a class="nav-link" asp-controller="Pedidos" asp-action="Index">Pedidos</a></li>
                             <li class="nav-item"><a class="nav-link" asp-controller="ListaDesejos" asp-action="Index">Lista de Desejos</a></li>
                         }

@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Beauty Marketplace API - Entrega 4",
-    "description": "Coleção com endpoints documentados para catálogo, carrinho, checkout, pedidos e IA.",
+    "description": "Coleção com endpoints documentados para catálogo, carrinho, checkout, pedidos e IA. Endpoints de carrinho, checkout e pedidos exigem login como Consumidor no site antes da chamada; sem autenticação retornam 401/403.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [

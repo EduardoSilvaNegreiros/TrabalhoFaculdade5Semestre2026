@@ -1,4 +1,4 @@
-{
+﻿{
   "openapi": "3.0.4",
   "info": {
     "title": "Beauty Marketplace API",
@@ -250,7 +250,7 @@
         "tags": [
           "ApiIa"
         ],
-        "summary": "Gera recomendacoes de produtos com IA ou fallback local.",
+        "summary": "Gera recomendações de produtos com IA ou fallback local.",
         "description": "Exemplo de request: { \"tipoPele\": \"Oleosa\", \"tipoCabelo\": \"Cacheado\", \"objetivo\": \"hidratar\", \"vegano\": true, \"precoMax\": 120 }",
         "requestBody": {
           "content": {
@@ -333,7 +333,7 @@
         "tags": [
           "ApiPedidos"
         ],
-        "summary": "Consulta um pedido especifico do consumidor logado.",
+        "summary": "Consulta um pedido específico do consumidor logado.",
         "parameters": [
           {
             "name": "id",

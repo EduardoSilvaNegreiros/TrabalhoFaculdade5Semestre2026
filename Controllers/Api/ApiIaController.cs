@@ -17,7 +17,7 @@ public sealed class ApiIaController : ControllerBase
     }
 
     /// <summary>
-    /// Gera recomendacoes de produtos com IA ou fallback local.
+    /// Gera recomendações de produtos com IA ou fallback local.
     /// </summary>
     /// <remarks>
     /// Exemplo de request: { "tipoPele": "Oleosa", "tipoCabelo": "Cacheado", "objetivo": "hidratar", "vegano": true, "precoMax": 120 }

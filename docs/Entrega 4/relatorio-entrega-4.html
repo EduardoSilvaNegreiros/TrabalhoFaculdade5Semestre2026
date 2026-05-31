@@ -70,6 +70,7 @@
     <h2>3. Documentação de APIs</h2>
     <p>Swagger UI local: <code>http://localhost:5016/swagger</code>. OpenAPI JSON: <code>api/openapi.json</code>. Postman Collection: <code>api/postman_collection.json</code>.</p>
     <p>O Swagger/OpenAPI final documenta somente endpoints cujo caminho começa com <code>/api</code>. As rotas MVC internas da interface web foram removidas da documentação oficial.</p>
+    <p>Os endpoints de carrinho, checkout e pedidos usam autenticação por cookie do ASP.NET Identity e exigem usuário com role <code>Consumidor</code>. Sem login retornam <code>401 Unauthorized</code>; com perfil sem permissão retornam <code>403 Forbidden</code>.</p>
     <table>
         <thead><tr><th>Endpoint</th><th>Método</th><th>Descrição</th><th>Status</th></tr></thead>
         <tbody>
@@ -99,13 +100,14 @@
     <h2>4. Inteligência Artificial na aplicação</h2>
     <p>A IA será usada como recomendador personalizado. A ferramenta escolhida é a OpenAI Responses API, com fallback local para apresentações sem chave externa. Referências: <code>https://platform.openai.com/docs</code>, <code>https://platform.openai.com/docs/api-reference/responses</code> e <code>https://platform.openai.com/docs/guides/structured-outputs</code>.</p>
     <p>A PoC está implementada em <code>POST /api/ia/recomendacoes</code> e retorna provedor usado, resumo, alerta de compatibilidade e produtos recomendados.</p>
+    <p>Além do endpoint JSON, o perfil consumidor possui a tela <code>Consumidor &gt; Recomendação IA</code>, permitindo demonstrar a PoC no próprio site sem depender do Postman.</p>
 
     <h2>5. Checkpoint 2 - Estado atual do projeto</h2>
     <table>
         <thead><tr><th>Concluído</th><th>Em andamento</th></tr></thead>
         <tbody>
             <tr>
-                <td>Marketplace com perfis, catálogo, carrinho multi-lojista, checkout, pedidos, lista de desejos, dashboard, admin, Entrega 3, APIs e PoC de IA.</td>
+                <td>Marketplace com perfis, catálogo, carrinho multi-lojista, checkout, pedidos, lista de desejos, dashboard, admin, Entrega 3, APIs, PoC de IA com tela para consumidor e testes automatizados.</td>
                 <td>Integração real de pagamento, frete, e-mail e IA externa.</td>
             </tr>
         </tbody>
@@ -113,6 +115,14 @@
     <p><strong>GitHub:</strong> <a href="https://github.com/EduardoSilvaNegreiros/TrabalhoFaculdade5Semestre2026">https://github.com/EduardoSilvaNegreiros/TrabalhoFaculdade5Semestre2026</a></p>
     <p><strong>Kanban:</strong> <a href="https://github.com/users/EduardoSilvaNegreiros/projects/2">https://github.com/users/EduardoSilvaNegreiros/projects/2</a></p>
     <p><strong>Nome do Kanban:</strong> Kanban - Projeto 5 Semestre ADS</p>
+
+    <h3>Validação técnica executada</h3>
+    <ul>
+        <li><code>dotnet restore</code>: restauração concluída.</li>
+        <li><code>dotnet build --no-restore</code>: compilação concluída com 0 erros e 0 warnings.</li>
+        <li><code>dotnet test --no-build</code>: 3 testes aprovados.</li>
+        <li><code>dotnet list package --vulnerable --include-transitive</code>: conferido sem vulnerabilidades conhecidas.</li>
+    </ul>
 
     <h3>Conferência de commits</h3>
     <p>Conferência realizada em 31/05/2026. O repositório público e o Kanban foram conferidos. O histórico local visível mostra commits associados a:</p>

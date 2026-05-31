@@ -50,11 +50,11 @@ public sealed class LocalAiRecommendationService : IAiRecommendationService
 
         if (request.Vegano == true)
         {
-            motivos.Add("preferencia por produtos veganos");
+            motivos.Add("preferência por produtos veganos");
         }
 
         return motivos.Any()
             ? $"Produto sugerido por {string.Join(", ", motivos)}."
-            : $"Produto versatil para pele {tipoPeleProduto} e cabelo {tipoCabeloProduto}.";
+            : $"Produto versátil para pele {tipoPeleProduto} e cabelo {tipoCabeloProduto}.";
     }
 }

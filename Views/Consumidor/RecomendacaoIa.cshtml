@@ -1,0 +1,118 @@
+@{
+    ViewData["Title"] = "Recomendação IA";
+}
+
+<h1>Recomendação IA</h1>
+<p class="lead">Informe seu perfil de beleza para receber sugestões personalizadas do catálogo.</p>
+
+<section class="ai-panel">
+    <form id="ai-form" class="filter-panel">
+        <div>
+            <label class="form-label" for="tipoPele">Tipo de pele</label>
+            <select id="tipoPele" name="tipoPele" class="form-select">
+                <option value="">Todos</option>
+                <option>Oleosa</option>
+                <option>Seca</option>
+                <option>Mista</option>
+                <option>Sensível</option>
+            </select>
+        </div>
+
+        <div>
+            <label class="form-label" for="tipoCabelo">Tipo de cabelo</label>
+            <select id="tipoCabelo" name="tipoCabelo" class="form-select">
+                <option value="">Todos</option>
+                <option>Cacheado</option>
+                <option>Danificado</option>
+                <option>Frágil</option>
+                <option>Todos</option>
+            </select>
+        </div>
+
+        <div>
+            <label class="form-label" for="categoria">Categoria</label>
+            <select id="categoria" name="categoria" class="form-select">
+                <option value="">Todas</option>
+                <option>Cuidados com a Pele</option>
+                <option>Cabelos</option>
+                <option>Maquiagem</option>
+            </select>
+        </div>
+
+        <div>
+            <label class="form-label" for="precoMax">Preço máximo</label>
+            <input id="precoMax" name="precoMax" type="number" min="0" step="1" class="form-control" placeholder="R$ 120" />
+        </div>
+
+        <div class="filter-wide">
+            <label class="form-label" for="objetivo">Objetivo</label>
+            <input id="objetivo" name="objetivo" class="form-control" placeholder="Ex: hidratar, controlar oleosidade, definir cachos" />
+        </div>
+
+        <label class="form-check filter-check">
+            <input class="form-check-input" type="checkbox" name="vegano" />
+            <span class="form-check-label">Priorizar veganos</span>
+        </label>
+
+        <button class="btn btn-primary" type="submit">Gerar recomendação</button>
+    </form>
+
+    <div id="ai-result" class="ai-result mt-4" hidden></div>
+</section>
+
+@section Scripts {
+    <script>
+        const form = document.getElementById("ai-form");
+        const result = document.getElementById("ai-result");
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            result.hidden = false;
+            result.innerHTML = "<div class='alert alert-info'>Gerando recomendação...</div>";
+
+            const formData = new FormData(form);
+            const payload = {
+                tipoPele: formData.get("tipoPele") || null,
+                tipoCabelo: formData.get("tipoCabelo") || null,
+                categoria: formData.get("categoria") || null,
+                objetivo: formData.get("objetivo") || null,
+                vegano: formData.get("vegano") === "on",
+                precoMax: formData.get("precoMax") ? Number(formData.get("precoMax")) : null
+            };
+
+            const response = await fetch("/api/ia/recomendacoes", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                result.innerHTML = "<div class='alert alert-warning'>Não foi possível gerar a recomendação agora.</div>";
+                return;
+            }
+
+            const data = await response.json();
+            const produtos = data.produtos || data.Produtos || [];
+            const resumo = data.resumo || data.Resumo || "";
+            const alerta = data.alertaCompatibilidade || data.AlertaCompatibilidade || "";
+
+            result.innerHTML = `
+                <div class="summary-box">
+                    <h2>Resultado</h2>
+                    <p><span>Resumo</span><strong>${resumo}</strong></p>
+                    <p><span>Aviso</span><strong>${alerta}</strong></p>
+                </div>
+                <div class="row g-3 mt-2">
+                    ${produtos.map(produto => `
+                        <div class="col-md-6">
+                            <div class="feature-block h-100">
+                                <h3>${produto.nome || produto.Nome}</h3>
+                                <p>${produto.motivo || produto.Motivo}</p>
+                                <strong>${Number(produto.preco || produto.Preco).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</strong>
+                            </div>
+                        </div>
+                    `).join("")}
+                </div>`;
+        });
+    </script>
+}
