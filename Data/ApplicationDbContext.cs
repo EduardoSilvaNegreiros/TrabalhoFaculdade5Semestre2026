@@ -36,6 +36,11 @@ public class ApplicationDbContext : IdentityDbContext
             .HasForeignKey(p => p.CategoriaId)
             .OnDelete(DeleteBehavior.SetNull);
 
+        builder.Entity<Produto>()
+            .HasIndex(p => p.Slug)
+            .IsUnique();
+
+        builder.Entity<Produto>().Property(p => p.Slug).HasMaxLength(140);
         builder.Entity<Produto>().Property(p => p.Preco).HasPrecision(10, 2);
         builder.Entity<Categoria>().Property(c => c.PercentualComissao).HasPrecision(5, 2);
         builder.Entity<ComissaoCategoria>().Property(c => c.Percentual).HasPrecision(5, 2);

@@ -31,7 +31,7 @@ Caso o professor exija evidência individual de todos os integrantes, os demais 
 
 - `dotnet restore`: restauração concluída.
 - `dotnet build --no-restore`: compilação concluída com 0 erros e 0 warnings.
-- `dotnet test --no-build`: 3 testes aprovados, cobrindo recomendação, checkout multi-lojista e roles de acesso.
+- `dotnet test --no-build`: 7 testes aprovados, cobrindo recomendação, checkout multi-lojista, roles de acesso, slugs, upload de imagem e proteção de produto por lojista.
 - `dotnet list package --vulnerable --include-transitive`: conferido sem vulnerabilidades conhecidas.
 - Swagger/OpenAPI: documentação filtrada para rotas `/api`, mantendo mais de 10 operações.
 

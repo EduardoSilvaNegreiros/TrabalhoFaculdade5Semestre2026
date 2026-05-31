@@ -199,7 +199,7 @@
             <tr><td>CarrinhoController</td><td>Carrinho multi-lojista, estoque, checkout, frete, split e rastreio.</td></tr>
             <tr><td>PedidosController</td><td>Histórico e rastreamento por item/lojista.</td></tr>
             <tr><td>ListaDesejosController</td><td>Produtos salvos para compra futura.</td></tr>
-            <tr><td>LojistaController</td><td>Dashboard, vendas, notificações e estoque do lojista.</td></tr>
+            <tr><td>LojistaController</td><td>Dashboard, vendas, notificações, cadastro/edição de produtos, upload de imagem e estoque do lojista.</td></tr>
             <tr><td>AdminController</td><td>Aprovação de lojistas, comissões e mapa de atendimento.</td></tr>
             <tr><td>ASP.NET Identity</td><td>Login, cadastro e roles Consumidor, Lojista e Administrador.</td></tr>
             <tr><td>ApplicationDbContext</td><td>Mapeamento relacional e acesso ao banco via EF Core.</td></tr>
@@ -212,12 +212,12 @@
 
     <h2>6. Modelagem de dados - SQL (MySQL)</h2>
     <p>Arquivo fonte: <code>sql/mysql-schema.sql</code></p>
-    <p>O modelo relacional possui 9 tabelas com chaves primárias, estrangeiras, checks e índices: usuarios, lojistas, categorias, comissoes_categoria, produtos, pedidos, pedido_itens, avaliacoes e lista_desejos_itens.</p>
+    <p>O modelo relacional possui 9 tabelas com chaves primárias, estrangeiras, checks e índices: usuarios, lojistas, categorias, comissoes_categoria, produtos, pedidos, pedido_itens, avaliacoes e lista_desejos_itens. A tabela produtos possui slug único para seed/upsert e URLs estáveis.</p>
     <table>
         <thead><tr><th>Relacionamento</th><th>Descrição</th></tr></thead>
         <tbody>
             <tr><td>usuarios -> pedidos</td><td>Um consumidor pode realizar muitos pedidos.</td></tr>
-            <tr><td>lojistas -> produtos</td><td>Um lojista vende muitos produtos.</td></tr>
+            <tr><td>lojistas -> produtos</td><td>Um lojista vende muitos produtos, cadastrados manualmente no painel ou carregados por catálogo JSON.</td></tr>
             <tr><td>categorias -> produtos</td><td>Uma categoria classifica muitos produtos.</td></tr>
             <tr><td>categorias -> comissoes_categoria</td><td>Cada categoria possui percentual de comissão vigente.</td></tr>
             <tr><td>pedidos -> pedido_itens</td><td>Um pedido possui itens separados por produto e lojista.</td></tr>

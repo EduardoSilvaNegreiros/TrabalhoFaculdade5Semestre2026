@@ -67,7 +67,7 @@ O container detalhado no C3 é a Aplicação ASP.NET Core MVC, pois concentra as
 | CarrinhoController | Gerencia carrinho do consumidor, itens de múltiplos lojistas, validação de estoque, checkout, frete e split. |
 | PedidosController | Exibe histórico de pedidos e rastreamento por item/lojista. |
 | ListaDesejosController | Permite salvar e remover produtos da lista de desejos. |
-| LojistaController | Mostra dashboard do lojista, vendas, notificações de pedidos e atualização de estoque. |
+| LojistaController | Mostra dashboard do lojista, vendas, notificações de pedidos, cadastro/edição de produtos, upload de imagem e atualização de estoque. |
 | AdminController | Aprova/reprova lojistas, altera comissões por categoria e mostra o mapa de atendimento dos requisitos. |
 | ASP.NET Identity | Controla login, cadastro e roles Consumidor, Lojista e Administrador. |
 | ApplicationDbContext | Mapeia entidades relacionais e centraliza acesso ao banco via EF Core. |
@@ -105,7 +105,7 @@ O modelo relacional usa MySQL para representar entidades transacionais do market
 | lojistas | Dados comerciais, CNPJ, documentos e status de aprovação. |
 | categorias | Categorias comerciais, como skincare, maquiagem e cabelo. |
 | comissoes_categoria | Percentual de comissão vigente por categoria. |
-| produtos | Catálogo unificado com filtros de beleza, preço, estoque e lojista. |
+| produtos | Catálogo unificado com slug único, filtros de beleza, preço, estoque, imagem e lojista. |
 | pedidos | Cabeçalho da compra feita pelo consumidor. |
 | pedido_itens | Itens do pedido separados por produto e lojista, incluindo split e rastreio. |
 | avaliacoes | Prova social relacional básica vinculada a usuário e produto. |
@@ -114,7 +114,7 @@ O modelo relacional usa MySQL para representar entidades transacionais do market
 ### Relacionamentos
 
 - Um usuário pode ser consumidor, lojista ou administrador.
-- Um lojista pode ter muitos produtos.
+- Um lojista pode ter muitos produtos, cadastrados manualmente no painel ou carregados pelo catálogo seedado em JSON.
 - Uma categoria pode ter muitos produtos.
 - Uma categoria possui uma configuração de comissão.
 - Um usuário consumidor pode ter muitos pedidos.

@@ -56,6 +56,7 @@ CREATE TABLE comissoes_categoria (
 
 CREATE TABLE produtos (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    slug VARCHAR(160) NOT NULL UNIQUE,
     lojista_id INT NOT NULL,
     categoria_id INT NOT NULL,
     nome VARCHAR(160) NOT NULL,

@@ -202,7 +202,9 @@ a {
 
 .product-card .card-img-top {
     height: 240px;
-    object-fit: cover;
+    padding: 1rem;
+    background: #fff;
+    object-fit: contain;
 }
 
 .product-tags {
@@ -229,7 +231,9 @@ a {
 .detail-image {
     width: 100%;
     max-height: 540px;
-    object-fit: cover;
+    padding: 1rem;
+    background: #fff;
+    object-fit: contain;
     border-radius: 8px;
 }
 
@@ -261,7 +265,9 @@ a {
 .cart-item img {
     width: 100%;
     height: 130px;
-    object-fit: cover;
+    padding: 0.5rem;
+    background: #fff;
+    object-fit: contain;
 }
 
 .review-image {
@@ -273,6 +279,57 @@ a {
 
 .stock-input {
     max-width: 96px;
+}
+
+.seller-product-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 240px;
+}
+
+.seller-product-cell img {
+    width: 56px;
+    height: 56px;
+    padding: 0.3rem;
+    border: 1px solid #ead3de;
+    border-radius: 6px;
+    background: #fff;
+    object-fit: contain;
+}
+
+.product-form {
+    display: grid;
+    gap: 1rem;
+}
+
+.form-section {
+    padding: 1rem;
+    border: 1px solid #f1d9e3;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.form-section h2 {
+    margin-bottom: 1rem;
+    font-size: 1.15rem;
+    font-weight: 750;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.product-form-preview {
+    width: 160px;
+    height: 160px;
+    padding: 0.75rem;
+    border: 1px solid #ead3de;
+    border-radius: 8px;
+    background: #fff;
+    object-fit: contain;
 }
 
 .cart-quantity-form {
@@ -333,6 +390,7 @@ footer {
 
 @media (max-width: 991px) {
     .filter-panel,
+    .form-grid,
     .dashboard-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -345,6 +403,7 @@ footer {
 
 @media (max-width: 575px) {
     .filter-panel,
+    .form-grid,
     .dashboard-grid {
         grid-template-columns: 1fr;
     }

@@ -169,7 +169,8 @@ Fluxo:
 ### Concluído
 
 - Marketplace com separação de perfis: consumidor, lojista e administrador.
-- Catálogo com filtros de beleza.
+- Catálogo com filtros de beleza, slug único e 60 produtos seedados por JSON.
+- Painel do lojista com cadastro/edição de produtos e upload validado de imagem.
 - Carrinho multi-lojista.
 - Checkout com split, frete, rastreio e baixa de estoque.
 - Lista de desejos, avaliações, pedidos e dashboard do lojista.
@@ -197,7 +198,7 @@ Fluxo:
 
 - `dotnet restore`: restauração concluída.
 - `dotnet build --no-restore`: compilação concluída com **0 erros e 0 warnings**.
-- `dotnet test --no-build`: **3 testes aprovados**.
+- `dotnet test --no-build`: **7 testes aprovados**.
 - `dotnet list package --vulnerable --include-transitive`: conferido sem vulnerabilidades conhecidas.
 
 ### Conferência de commits

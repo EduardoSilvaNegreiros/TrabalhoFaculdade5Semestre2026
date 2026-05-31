@@ -8,6 +8,7 @@ using Microsoft.OpenApi;
 using WebApplication1.Data;
 using WebApplication1.Services.AI;
 using WebApplication1.Services.Checkout;
+using WebApplication1.Services.ProductImages;
 using WebApplication1.Services.Recommendations;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -89,6 +90,7 @@ builder.Services.AddScoped<IProductRecommendationStrategy, CategoryRecommendatio
 builder.Services.AddScoped<IProductRecommendationStrategy, VeganPriceRecommendationStrategy>();
 builder.Services.AddScoped<IProductRecommendationService, ProductRecommendationService>();
 builder.Services.AddScoped<ICheckoutFacade, CheckoutFacade>();
+builder.Services.AddScoped<IProductImageService, ProductImageService>();
 builder.Services.AddScoped<LocalAiRecommendationService>();
 builder.Services.AddHttpClient<OpenAiRecommendationService>();
 builder.Services.AddScoped<IAiRecommendationServiceFactory, AiRecommendationServiceFactory>();

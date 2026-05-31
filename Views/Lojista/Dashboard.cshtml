@@ -6,8 +6,13 @@
     var notificacoes = ViewBag.Notificacoes as List<WebApplication1.Models.PedidoItem> ?? new();
 }
 
-<h1>Painel do lojista</h1>
-<p class="lead">@Model.NomeFantasia - status @Model.Status</p>
+<div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
+    <div>
+        <h1>Painel do lojista</h1>
+        <p class="lead">@Model.NomeFantasia - status @Model.Status</p>
+    </div>
+    <a class="btn btn-primary" asp-controller="Lojista" asp-action="NovoProduto">Novo produto</a>
+</div>
 
 <div class="dashboard-grid">
     <div class="metric"><span>Produtos cadastrados</span><strong>@Model.Produtos.Count</strong></div>
@@ -41,7 +46,10 @@
 </section>
 
 <section id="estoque" class="mt-4">
-    <h2>Inventário e estoque físico</h2>
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+        <h2 class="mb-0">Inventário e estoque físico</h2>
+        <a class="btn btn-outline-primary btn-sm" asp-controller="Lojista" asp-action="NovoProduto">Cadastrar produto</a>
+    </div>
     <div class="table-responsive">
         <table class="table align-middle">
             <thead>
@@ -50,14 +58,23 @@
                     <th>Categoria</th>
                     <th>Estoque</th>
                     <th>Preço</th>
-                    <th>Atualizar</th>
+                    <th>Atualizar estoque</th>
+                    <th>Editar</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var produto in Model.Produtos.OrderBy(p => p.Nome))
                 {
                     <tr>
-                        <td>@produto.Nome</td>
+                        <td>
+                            <div class="seller-product-cell">
+                                <img src="@produto.ImagemUrl" alt="@produto.Nome" />
+                                <div>
+                                    <strong>@produto.Nome</strong>
+                                    <small class="d-block text-muted">@produto.Marca</small>
+                                </div>
+                            </div>
+                        </td>
                         <td>@produto.Categoria</td>
                         <td>@produto.Estoque</td>
                         <td>@((produto.Preco).ToString("C"))</td>
@@ -67,6 +84,9 @@
                                 <input class="form-control form-control-sm stock-input" type="number" min="0" name="estoque" value="@produto.Estoque" />
                                 <button class="btn btn-sm btn-outline-primary">Salvar</button>
                             </form>
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-outline-secondary" asp-controller="Lojista" asp-action="EditarProduto" asp-route-id="@produto.Id">Editar</a>
                         </td>
                     </tr>
                 }

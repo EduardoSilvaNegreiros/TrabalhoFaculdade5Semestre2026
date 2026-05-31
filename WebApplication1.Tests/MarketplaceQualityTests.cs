@@ -1,12 +1,18 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using WebApplication1.Controllers;
 using WebApplication1.Controllers.Api;
 using WebApplication1.Data;
 using WebApplication1.Dtos.Api;
+using WebApplication1.Helpers;
 using WebApplication1.Models;
 using WebApplication1.Services.Checkout;
+using WebApplication1.Services.ProductImages;
 using WebApplication1.Services.Recommendations;
 
 namespace WebApplication1.Tests;
@@ -23,6 +29,7 @@ public sealed class MarketplaceQualityTests
         context.Produtos.AddRange(
             new Produto
             {
+                Slug = "creme-cachos-vegano",
                 Nome = "Creme de Cachos Vegano",
                 Descricao = "Creme para hidratar e definir cachos.",
                 Categoria = "Cabelos",
@@ -30,7 +37,7 @@ public sealed class MarketplaceQualityTests
                 TipoPele = "Oleosa",
                 TipoCabelo = "Cacheado",
                 Tom = "Universal",
-                Acabamento = "Definição",
+                Acabamento = "Definicao",
                 Vegano = true,
                 Composicao = "Manteigas vegetais para hidratar.",
                 Preco = 79.90m,
@@ -39,13 +46,14 @@ public sealed class MarketplaceQualityTests
             },
             new Produto
             {
+                Slug = "base-matte-tradicional",
                 Nome = "Base Matte Tradicional",
                 Descricao = "Base facial de alta cobertura.",
                 Categoria = "Maquiagem",
                 Marca = "Beauty Kit",
                 TipoPele = "Seca",
                 TipoCabelo = "Liso",
-                Tom = "Médio",
+                Tom = "Medio",
                 Acabamento = "Matte",
                 Vegano = false,
                 Composicao = "Pigmentos minerais.",
@@ -83,11 +91,12 @@ public sealed class MarketplaceQualityTests
 
         var produtoA = new Produto
         {
-            Nome = "Água Micelar",
-            Descricao = "Skincare para rotina diária.",
+            Slug = "agua-micelar-teste",
+            Nome = "Agua Micelar",
+            Descricao = "Skincare para rotina diaria.",
             Categoria = "Cuidados com a Pele",
             Marca = "Nivea",
-            TipoPele = "Sensível",
+            TipoPele = "Sensivel",
             TipoCabelo = "Todos",
             Tom = "Universal",
             Acabamento = "Suave",
@@ -97,7 +106,8 @@ public sealed class MarketplaceQualityTests
         };
         var produtoB = new Produto
         {
-            Nome = "Máscara Capilar",
+            Slug = "mascara-capilar-teste",
+            Nome = "Mascara Capilar",
             Descricao = "Tratamento nutritivo.",
             Categoria = "Cabelos",
             Marca = "Lola",
@@ -171,6 +181,78 @@ public sealed class MarketplaceQualityTests
         AssertControllerRole<AdminController>("Administrador");
     }
 
+    [Fact]
+    public void SlugHelper_gera_slug_limpo_para_produto()
+    {
+        Assert.Equal("protetor-solar-toque-seco-fps50", SlugHelper.Generate("Protetor Solar Toque Seco FPS50"));
+        Assert.Equal("mascara-de-cilios-volume", SlugHelper.Generate("Máscara de Cílios Volume"));
+    }
+
+    [Fact]
+    public async Task ProductImageService_rejeita_extensao_invalida()
+    {
+        var service = new ProductImageService(new FakeWebHostEnvironment());
+        var file = CreateFormFile("produto.exe", new byte[] { 1, 2, 3 });
+
+        var result = await service.SaveAsync(file, 1, "produto-teste", CancellationToken.None);
+
+        Assert.False(result.Success);
+        Assert.Contains("JPG", result.ErrorMessage);
+    }
+
+    [Fact]
+    public async Task ProductImageService_rejeita_imagem_pequena()
+    {
+        var service = new ProductImageService(new FakeWebHostEnvironment());
+        var file = CreateFormFile("produto.png", SmallPngBytes());
+
+        var result = await service.SaveAsync(file, 1, "produto-teste", CancellationToken.None);
+
+        Assert.False(result.Success);
+        Assert.Contains("600", result.ErrorMessage);
+    }
+
+    [Fact]
+    public async Task LojistaController_nao_edita_produto_de_outro_lojista()
+    {
+        await using var database = await TestDatabase.CreateAsync();
+        var context = database.Context;
+        var lojistaLogado = await CriarLojistaAsync(context, "Glow Brasil", "lojista@beautymarket.com");
+        var outroLojista = await CriarLojistaAsync(context, "Bella Derm", "vendas@belladerm.com");
+        var produtoOutroLojista = new Produto
+        {
+            Slug = "produto-outro-lojista",
+            Nome = "Produto de outro lojista",
+            Descricao = "Produto que nao pertence ao usuario logado.",
+            Categoria = "Maquiagem",
+            Marca = "Bella Derm",
+            ImagemUrl = "/images/produtos/seed/fallback-maquiagem.png",
+            Preco = 39.90m,
+            Estoque = 5,
+            LojistaId = outroLojista.Id
+        };
+        context.Produtos.Add(produtoOutroLojista);
+        await context.SaveChangesAsync();
+
+        var controller = new LojistaController(context, new FakeProductImageService())
+        {
+            ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = new ClaimsPrincipal(
+                        new ClaimsIdentity(
+                            new[] { new Claim(ClaimTypes.Email, lojistaLogado.Email) },
+                            "TestAuth"))
+                }
+            }
+        };
+
+        var result = await controller.EditarProduto(produtoOutroLojista.Id);
+
+        Assert.IsType<NotFoundResult>(result);
+    }
+
     private static void AssertControllerRole<TController>(string expectedRole)
     {
         var attribute = typeof(TController)
@@ -191,13 +273,41 @@ public sealed class MarketplaceQualityTests
             Cnpj = Guid.NewGuid().ToString("N")[..14],
             Email = email,
             Status = "Aprovado",
-            Cidade = "São Paulo",
+            Cidade = "Sao Paulo",
             Estado = "SP"
         };
 
         context.Lojistas.Add(lojista);
         await context.SaveChangesAsync();
         return lojista;
+    }
+
+    private static IFormFile CreateFormFile(string fileName, byte[] bytes)
+    {
+        return new FormFile(new MemoryStream(bytes), 0, bytes.Length, "Imagem", fileName);
+    }
+
+    private static byte[] SmallPngBytes()
+    {
+        return Convert.FromBase64String("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADUlEQVR4nGNgYGD4DwABBAEAghlE7wAAAABJRU5ErkJggg==");
+    }
+
+    private sealed class FakeProductImageService : IProductImageService
+    {
+        public Task<ProductImageSaveResult> SaveAsync(IFormFile image, int lojistaId, string productSlug, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(new ProductImageSaveResult(true, $"/images/produtos/uploads/{lojistaId}/{productSlug}.png", null));
+        }
+    }
+
+    private sealed class FakeWebHostEnvironment : Microsoft.AspNetCore.Hosting.IWebHostEnvironment
+    {
+        public string ApplicationName { get; set; } = "Tests";
+        public IFileProvider WebRootFileProvider { get; set; } = new NullFileProvider();
+        public string WebRootPath { get; set; } = Path.Combine(Path.GetTempPath(), "beauty-market-tests");
+        public string EnvironmentName { get; set; } = "Development";
+        public string ContentRootPath { get; set; } = Directory.GetCurrentDirectory();
+        public IFileProvider ContentRootFileProvider { get; set; } = new NullFileProvider();
     }
 
     private sealed class TestDatabase : IAsyncDisposable
