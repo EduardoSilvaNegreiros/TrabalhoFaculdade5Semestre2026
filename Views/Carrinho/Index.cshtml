@@ -4,9 +4,26 @@
     ViewData["Title"] = "Carrinho";
     var subtotal = Model.Sum(i => i.Subtotal);
     var frete = ViewBag.FreteEstimado as decimal? ?? 0m;
+    var total = subtotal + frete;
+    var quantidadeItens = Model.Sum(i => i.Quantidade);
+    var totalLojistas = Model.Select(i => i.LojistaId).Distinct().Count();
 }
 
-<h1>Meu carrinho</h1>
+<section class="cart-hero mb-4">
+    <div>
+        <p class="eyebrow">Compra unificada</p>
+        <h1>Meu carrinho</h1>
+        <p>Finalize produtos de diferentes lojistas em um único pagamento, com split e repasse demonstrados por vendedor.</p>
+    </div>
+    @if (Model.Any())
+    {
+        <div class="cart-hero-summary">
+            <span>@quantidadeItens item(ns)</span>
+            <strong>@total.ToString("C")</strong>
+            <small>@totalLojistas lojista(s) no carrinho</small>
+        </div>
+    }
+</section>
 
 @if (TempData["ErroCarrinho"] is string erroCarrinho)
 {
@@ -22,7 +39,11 @@
 
 @if (!Model.Any())
 {
-    <div class="alert alert-info">Seu carrinho está vazio. <a asp-controller="Produto" asp-action="Index">Continue comprando</a>.</div>
+    <div class="empty-state">
+        <h2>Seu carrinho está vazio</h2>
+        <p>Explore o catálogo, escolha produtos de diferentes lojistas e volte aqui para concluir em um pagamento único.</p>
+        <a class="btn btn-primary" asp-controller="Produto" asp-action="Index">Ver catálogo</a>
+    </div>
 }
 else
 {
@@ -30,8 +51,19 @@ else
         <div class="col-lg-8">
             @foreach (var grupo in Model.GroupBy(i => new { i.LojistaId, i.NomeLojista }))
             {
+                var subtotalLojista = grupo.Sum(i => i.Subtotal);
+                var comissaoLojista = grupo.Sum(i => i.ValorComissao);
+                var repasseLojista = grupo.Sum(i => i.ValorRepasseLojista);
+
                 <section class="seller-group mb-4">
-                    <h2>@grupo.Key.NomeLojista</h2>
+                    <div class="seller-group-header">
+                        <div>
+                            <span class="eyebrow">Lojista parceiro</span>
+                            <h2>@grupo.Key.NomeLojista</h2>
+                        </div>
+                        <strong>@subtotalLojista.ToString("C")</strong>
+                    </div>
+
                     @foreach (var item in grupo)
                     {
                         <div class="card cart-item mb-3">
@@ -43,7 +75,7 @@ else
                                     <div class="card-body">
                                         <h3>@item.Nome</h3>
                                         <p class="text-muted mb-1">@item.Categoria</p>
-                                        <p class="fw-bold">@((item.Preco).ToString("C")) x @item.Quantidade</p>
+                                        <p class="fw-bold mb-0">@item.Preco.ToString("C") x @item.Quantidade</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3 text-md-end p-3">
@@ -61,21 +93,33 @@ else
                             </div>
                         </div>
                     }
-                    <div class="split-box">
-                        <span>Subtotal do lojista: @((grupo.Sum(i => i.Subtotal)).ToString("C"))</span>
-                        <span>Comissão da plataforma: @((grupo.Sum(i => i.ValorComissao)).ToString("C"))</span>
-                        <span>Repasse ao lojista: @((grupo.Sum(i => i.ValorRepasseLojista)).ToString("C"))</span>
+
+                    <div class="split-box split-box-grid">
+                        <div>
+                            <span>Subtotal do lojista</span>
+                            <strong>@subtotalLojista.ToString("C")</strong>
+                        </div>
+                        <div>
+                            <span>Comissão da plataforma</span>
+                            <strong>@comissaoLojista.ToString("C")</strong>
+                        </div>
+                        <div>
+                            <span>Repasse ao lojista</span>
+                            <strong>@repasseLojista.ToString("C")</strong>
+                        </div>
                     </div>
                 </section>
             }
         </div>
         <aside class="col-lg-4">
-            <div class="summary-box">
+            <div class="summary-box sticky-summary">
+                <span class="eyebrow">Resumo</span>
                 <h2>Pagamento único</h2>
-                <p><span>Itens</span><strong>@Model.Sum(i => i.Quantidade)</strong></p>
-                <p><span>Subtotal</span><strong>@((subtotal).ToString("C"))</strong></p>
-                <p><span>Frete</span><strong>@((frete).ToString("C"))</strong></p>
-                <p class="total"><span>Total estimado</span><strong>@((subtotal + frete).ToString("C"))</strong></p>
+                <p><span>Lojistas</span><strong>@totalLojistas</strong></p>
+                <p><span>Itens</span><strong>@quantidadeItens</strong></p>
+                <p><span>Subtotal</span><strong>@subtotal.ToString("C")</strong></p>
+                <p><span>Frete estimado</span><strong>@frete.ToString("C")</strong></p>
+                <p class="total"><span>Total estimado</span><strong>@total.ToString("C")</strong></p>
                 <a class="btn btn-success btn-lg w-100" asp-controller="Carrinho" asp-action="EscolherPagamento">Finalizar compra</a>
                 <a class="btn btn-outline-secondary w-100 mt-2" asp-controller="Produto" asp-action="Index">Continuar comprando</a>
             </div>

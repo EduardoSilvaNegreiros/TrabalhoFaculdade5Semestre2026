@@ -1,108 +1,228 @@
 {
   "info": {
     "name": "Beauty Marketplace API - Entrega 4",
-    "description": "Coleção com endpoints documentados para catálogo, carrinho, checkout, pedidos e IA. Endpoints de carrinho, checkout e pedidos exigem login como Consumidor no site antes da chamada; sem autenticação retornam 401/403.",
+    "description": "Coleção com endpoints documentados para catálogo, carrinho, checkout, pedidos e IA. Endpoints de carrinho, checkout e pedidos exigem login como Consumidor no site antes da chamada; sem autenticação retornam 401 e perfis sem permissão retornam 403.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
-    { "key": "baseUrl", "value": "http://localhost:5016" }
+    { "key": "baseUrl", "value": "http://localhost:5016" },
+    { "key": "produtoId", "value": "1" },
+    { "key": "pedidoId", "value": "1" }
   ],
   "item": [
     {
-      "name": "Catálogo - listar produtos",
-      "request": { "method": "GET", "url": "{{baseUrl}}/api/produtos?pele=Oleosa&vegano=true&precoMax=120" },
+      "name": "Catálogo - listar produtos filtrados",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/produtos?pele=Oleosa&categoria=Maquiagem&precoMax=120"
+      },
       "response": [
-        { "name": "200 OK", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/produtos" }, "status": "OK", "code": 200, "body": "[{\"id\":1,\"nome\":\"Gel de Limpeza Facial\",\"preco\":43.30}]" }
+        {
+          "name": "200 OK",
+          "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/produtos?pele=Oleosa&categoria=Maquiagem&precoMax=120" },
+          "status": "OK",
+          "code": 200,
+          "body": "[{\"id\":1,\"nome\":\"Base Líquida Maybelline NY Fit Me Matte FPS22\",\"categoria\":\"Maquiagem\",\"marca\":\"Maybelline\",\"preco\":51.30,\"estoque\":18}]"
+        }
       ]
     },
     {
-      "name": "Catálogo - detalhes",
-      "request": { "method": "GET", "url": "{{baseUrl}}/api/produtos/1" },
+      "name": "Catálogo - detalhes do produto",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/produtos/{{produtoId}}" },
       "response": [
-        { "name": "200 OK", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/produtos/1" }, "status": "OK", "code": 200, "body": "{\"id\":1,\"nome\":\"Gel de Limpeza Facial\",\"estoque\":20}" },
-        { "name": "404 Not Found", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/produtos/99999" }, "status": "Not Found", "code": 404, "body": "" }
+        {
+          "name": "200 OK",
+          "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/produtos/1" },
+          "status": "OK",
+          "code": 200,
+          "body": "{\"id\":1,\"nome\":\"Base Líquida Maybelline NY Fit Me Matte FPS22\",\"marca\":\"Maybelline\",\"preco\":51.30,\"estoque\":18,\"imagemUrl\":\"/images/produtos/reais/base-liquida-maybelline-ny-fit-me-matte-fps22.jpg\"}"
+        },
+        {
+          "name": "404 Not Found",
+          "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/produtos/99999" },
+          "status": "Not Found",
+          "code": 404,
+          "body": ""
+        }
       ]
     },
     {
       "name": "Catálogo - avaliações",
-      "request": { "method": "GET", "url": "{{baseUrl}}/api/produtos/1/avaliacoes" },
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/produtos/{{produtoId}}/avaliacoes" },
       "response": [
-        { "name": "200 OK", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/produtos/1/avaliacoes" }, "status": "OK", "code": 200, "body": "[{\"nota\":5,\"comentario\":\"Chegou rápido.\"}]" }
+        {
+          "name": "200 OK",
+          "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/produtos/1/avaliacoes" },
+          "status": "OK",
+          "code": 200,
+          "body": "[{\"nota\":5,\"comentario\":\"Produto chegou bem embalado e a cor ficou fiel na pele.\",\"fotoUrl\":\"/images/produtos/reais/base-liquida-maybelline-ny-fit-me-matte-fps22.jpg\"}]"
+        }
       ]
     },
     {
       "name": "Catálogo - recomendações por produto",
-      "request": { "method": "GET", "url": "{{baseUrl}}/api/produtos/1/recomendacoes" },
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/produtos/{{produtoId}}/recomendacoes" },
       "response": [
-        { "name": "200 OK", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/produtos/1/recomendacoes" }, "status": "OK", "code": 200, "body": "[{\"id\":2,\"nome\":\"Produto recomendado\",\"justificativa\":\"Produto relacionado por perfil de beleza e categoria.\"}]" }
+        {
+          "name": "200 OK",
+          "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/produtos/1/recomendacoes" },
+          "status": "OK",
+          "code": 200,
+          "body": "[{\"id\":2,\"nome\":\"Base Multifuncional Boca Rosa - Stick Pele\",\"justificativa\":\"Produto relacionado por perfil de beleza e categoria.\"}]"
+        }
       ]
     },
     {
       "name": "Carrinho - obter",
-      "request": { "method": "GET", "url": "{{baseUrl}}/api/carrinho" },
+      "request": {
+        "method": "GET",
+        "description": "Exige login como Consumidor no site.",
+        "url": "{{baseUrl}}/api/carrinho"
+      },
       "response": [
-        { "name": "200 OK", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/carrinho" }, "status": "OK", "code": 200, "body": "{\"itens\":[],\"quantidadeTotal\":0,\"subtotal\":0}" },
-        { "name": "401 Unauthorized", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/carrinho" }, "status": "Unauthorized", "code": 401, "body": "" }
+        {
+          "name": "200 OK",
+          "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/carrinho" },
+          "status": "OK",
+          "code": 200,
+          "body": "{\"itens\":[],\"quantidadeTotal\":0,\"subtotal\":0,\"frete\":0,\"total\":0}"
+        },
+        {
+          "name": "401 Unauthorized",
+          "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/carrinho" },
+          "status": "Unauthorized",
+          "code": 401,
+          "body": ""
+        }
       ]
     },
     {
       "name": "Carrinho - adicionar item",
       "request": {
         "method": "POST",
+        "description": "Exige login como Consumidor no site.",
         "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": { "mode": "raw", "raw": "{\"produtoId\":1,\"quantidade\":2}" },
         "url": "{{baseUrl}}/api/carrinho/itens"
       },
       "response": [
-        { "name": "200 OK", "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/carrinho/itens" }, "status": "OK", "code": 200, "body": "{\"quantidadeTotal\":2}" },
-        { "name": "400 Bad Request", "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/carrinho/itens" }, "status": "Bad Request", "code": 400, "body": "{\"mensagem\":\"Produto indisponível.\"}" }
+        {
+          "name": "200 OK",
+          "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/carrinho/itens" },
+          "status": "OK",
+          "code": 200,
+          "body": "{\"quantidadeTotal\":2,\"subtotal\":102.60,\"frete\":16.90,\"total\":119.50}"
+        },
+        {
+          "name": "400 Bad Request",
+          "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/carrinho/itens" },
+          "status": "Bad Request",
+          "code": 400,
+          "body": "{\"mensagem\":\"Produto indisponível.\"}"
+        }
       ]
     },
     {
       "name": "Carrinho - atualizar item",
       "request": {
         "method": "PUT",
+        "description": "Exige login como Consumidor no site.",
         "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": { "mode": "raw", "raw": "{\"quantidade\":3}" },
-        "url": "{{baseUrl}}/api/carrinho/itens/1"
+        "url": "{{baseUrl}}/api/carrinho/itens/{{produtoId}}"
       },
       "response": [
-        { "name": "200 OK", "originalRequest": { "method": "PUT", "url": "{{baseUrl}}/api/carrinho/itens/1" }, "status": "OK", "code": 200, "body": "{\"quantidadeTotal\":3}" }
+        {
+          "name": "200 OK",
+          "originalRequest": { "method": "PUT", "url": "{{baseUrl}}/api/carrinho/itens/1" },
+          "status": "OK",
+          "code": 200,
+          "body": "{\"quantidadeTotal\":3,\"subtotal\":153.90}"
+        }
       ]
     },
     {
       "name": "Carrinho - remover item",
-      "request": { "method": "DELETE", "url": "{{baseUrl}}/api/carrinho/itens/1" },
+      "request": {
+        "method": "DELETE",
+        "description": "Exige login como Consumidor no site.",
+        "url": "{{baseUrl}}/api/carrinho/itens/{{produtoId}}"
+      },
       "response": [
-        { "name": "200 OK", "originalRequest": { "method": "DELETE", "url": "{{baseUrl}}/api/carrinho/itens/1" }, "status": "OK", "code": 200, "body": "{\"quantidadeTotal\":0}" }
+        {
+          "name": "200 OK",
+          "originalRequest": { "method": "DELETE", "url": "{{baseUrl}}/api/carrinho/itens/1" },
+          "status": "OK",
+          "code": 200,
+          "body": "{\"quantidadeTotal\":0,\"subtotal\":0}"
+        }
       ]
     },
     {
       "name": "Checkout - finalizar",
       "request": {
         "method": "POST",
+        "description": "Exige login como Consumidor e carrinho com itens.",
         "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": { "mode": "raw", "raw": "{\"metodoPagamento\":\"Pix\",\"cep\":\"01001000\"}" },
         "url": "{{baseUrl}}/api/checkout"
       },
       "response": [
-        { "name": "201 Created", "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/checkout" }, "status": "Created", "code": 201, "body": "{\"pedidoId\":10,\"status\":\"Pedido confirmado\"}" },
-        { "name": "400 Bad Request", "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/checkout" }, "status": "Bad Request", "code": 400, "body": "{\"mensagem\":\"Carrinho vazio.\"}" }
+        {
+          "name": "201 Created",
+          "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/checkout" },
+          "status": "Created",
+          "code": 201,
+          "body": "{\"pedidoId\":1,\"status\":\"Pedido confirmado\",\"prazo\":\"5 dias úteis\"}"
+        },
+        {
+          "name": "400 Bad Request",
+          "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/checkout" },
+          "status": "Bad Request",
+          "code": 400,
+          "body": "{\"mensagem\":\"Carrinho vazio.\"}"
+        }
       ]
     },
     {
       "name": "Pedidos - listar",
-      "request": { "method": "GET", "url": "{{baseUrl}}/api/pedidos" },
+      "request": {
+        "method": "GET",
+        "description": "Exige login como Consumidor.",
+        "url": "{{baseUrl}}/api/pedidos"
+      },
       "response": [
-        { "name": "200 OK", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/pedidos" }, "status": "OK", "code": 200, "body": "[{\"id\":10,\"status\":\"Pedido confirmado\"}]" }
+        {
+          "name": "200 OK",
+          "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/pedidos" },
+          "status": "OK",
+          "code": 200,
+          "body": "[{\"id\":1,\"status\":\"Pedido confirmado\",\"total\":119.50}]"
+        }
       ]
     },
     {
       "name": "Pedidos - detalhes",
-      "request": { "method": "GET", "url": "{{baseUrl}}/api/pedidos/10" },
+      "request": {
+        "method": "GET",
+        "description": "Exige login como Consumidor.",
+        "url": "{{baseUrl}}/api/pedidos/{{pedidoId}}"
+      },
       "response": [
-        { "name": "200 OK", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/pedidos/10" }, "status": "OK", "code": 200, "body": "{\"id\":10,\"itens\":[{\"codigoRastreio\":\"BM2605310001\"}]}" },
-        { "name": "404 Not Found", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/pedidos/99999" }, "status": "Not Found", "code": 404, "body": "" }
+        {
+          "name": "200 OK",
+          "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/pedidos/1" },
+          "status": "OK",
+          "code": 200,
+          "body": "{\"id\":1,\"itens\":[{\"nomeProduto\":\"Base Líquida Maybelline NY Fit Me Matte FPS22\",\"codigoRastreio\":\"BM2606020001\",\"statusEntrega\":\"Em separação\"}]}"
+        },
+        {
+          "name": "404 Not Found",
+          "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/pedidos/99999" },
+          "status": "Not Found",
+          "code": 404,
+          "body": ""
+        }
       ]
     },
     {
@@ -110,11 +230,17 @@
       "request": {
         "method": "POST",
         "header": [{ "key": "Content-Type", "value": "application/json" }],
-        "body": { "mode": "raw", "raw": "{\"tipoPele\":\"Oleosa\",\"tipoCabelo\":\"Cacheado\",\"objetivo\":\"hidratar\",\"vegano\":true,\"precoMax\":120}" },
+        "body": { "mode": "raw", "raw": "{\"tipoPele\":\"Oleosa\",\"tipoCabelo\":\"Cacheado\",\"categoria\":\"Maquiagem\",\"objetivo\":\"controlar oleosidade e manter acabamento matte\",\"vegano\":false,\"precoMax\":120}" },
         "url": "{{baseUrl}}/api/ia/recomendacoes"
       },
       "response": [
-        { "name": "200 OK", "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/ia/recomendacoes" }, "status": "OK", "code": 200, "body": "{\"provedor\":\"Local demonstrativo\",\"produtos\":[]}" }
+        {
+          "name": "200 OK",
+          "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/ia/recomendacoes" },
+          "status": "OK",
+          "code": 200,
+          "body": "{\"provedor\":\"Local demonstrativo\",\"resumo\":\"Recomendação gerada por regras locais para apresentação sem chave externa.\",\"produtos\":[{\"nome\":\"Base Líquida Maybelline NY Fit Me Matte FPS22\",\"motivo\":\"Combina com pele oleosa e acabamento matte.\"}]}"
+        }
       ]
     }
   ]

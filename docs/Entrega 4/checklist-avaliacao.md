@@ -32,8 +32,9 @@
 ## 5. Checkpoint 2
 
 - [x] Estado atual do projeto documentado.
-- [x] Validação técnica registrada: build com 0 warnings/erros e 7 testes automatizados aprovados.
+- [x] Validação técnica registrada: build sem erros e 10 testes automatizados aprovados.
 - [x] Checkpoint atualizado com painel do lojista para cadastro/edição de produtos e upload validado de imagem.
+- [x] Catálogo realista com 60 produtos, imagens locais rastreadas e preços compatíveis com o mercado brasileiro.
 - [x] Link do GitHub preenchido.
 - [x] Link do Kanban/GitHub Projects preenchido.
 - [x] Commits dos integrantes conferidos no GitHub.

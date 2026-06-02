@@ -1,52 +1,57 @@
 @{
     ViewData["Title"] = "Mapa de Atendimento";
+    var requisitos = new[]
+    {
+        new { Item = "RF01 - Multi-vendedores e split", Tela = "Carrinho / Checkout", Evidencia = "Itens agrupados por lojista, comissão da plataforma e repasse ao vendedor." },
+        new { Item = "RF02 - Onboarding de lojista", Tela = "Administração", Evidencia = "Aprovação e reprovação de lojistas cadastrados." },
+        new { Item = "RF03 - Catálogo unificado", Tela = "Catálogo / Detalhes", Evidencia = "Fotos reais, descrição, composição, estoque e lojista responsável." },
+        new { Item = "RF04 - Filtros de beleza", Tela = "Catálogo", Evidencia = "Filtros por pele, cabelo, tom, acabamento, marca, preço e produto vegano." },
+        new { Item = "RF05 - Painel do lojista", Tela = "Painel do Lojista", Evidencia = "Faturamento, pedidos, repasse, inventário e cadastro/edição de produto." },
+        new { Item = "RF06 - Avaliações e prova social", Tela = "Detalhe do produto", Evidencia = "Nota, comentário, perfil e foto enviada por cliente." },
+        new { Item = "RF07 - Recomendação inteligente", Tela = "Detalhe / Recomendação IA", Evidencia = "Produtos recomendados por perfil, categoria e preferência do consumidor." },
+        new { Item = "RF08 - Recuperação de carrinho", Tela = "Carrinho", Evidencia = "Itens preservados na sessão para continuar a compra depois." },
+        new { Item = "RF09 - Frete integrado", Tela = "Checkout", Evidencia = "CEP, preço de frete e prazo de entrega exibidos antes da conclusão." },
+        new { Item = "RF10 - Histórico e rastreio", Tela = "Pedidos", Evidencia = "Código de rastreio e status por item do pedido." }
+    };
 }
 
-<h1>Mapa de Atendimento dos Requisitos</h1>
-<p class="lead">Esta área ajuda a demonstrar para a banca onde cada requisito aparece no sistema.</p>
+<section class="admin-hero mb-4">
+    <div>
+        <p class="eyebrow">Rastreabilidade</p>
+        <h1>Mapa de atendimento dos requisitos</h1>
+        <p>Visão rápida para demonstrar onde cada RF e história de usuário aparece no sistema.</p>
+    </div>
+    <a class="btn btn-outline-light" asp-controller="Admin" asp-action="Lojistas">Voltar para administração</a>
+</section>
 
-<div class="table-responsive">
-    <table class="table align-middle requirement-map">
-        <thead>
-            <tr>
-                <th>Item</th>
-                <th>Demonstrado em</th>
-                <th>Evidência no sistema</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>RF01 - Multi-vendedores e split</td><td>Carrinho / Checkout</td><td>Itens agrupados por lojista, comissão e repasse.</td></tr>
-            <tr><td>RF02 - Onboarding de lojista</td><td>Administração</td><td>Aprovação e reprovação de lojistas cadastrados.</td></tr>
-            <tr><td>RF03 - Catálogo unificado</td><td>Catálogo / Detalhes</td><td>Fotos, descrição, composição, estoque e lojista.</td></tr>
-            <tr><td>RF04 - Filtros de beleza</td><td>Catálogo</td><td>Filtros por pele, cabelo, marca, preço e vegano.</td></tr>
-            <tr><td>RF05 - Painel do lojista</td><td>Painel do Lojista</td><td>Faturamento, pedidos, repasse e inventário.</td></tr>
-            <tr><td>RF06 - Avaliações e prova social</td><td>Detalhe do produto</td><td>Nota, comentário, perfil e foto enviada por cliente.</td></tr>
-            <tr><td>RF07 - Recomendação inteligente</td><td>Detalhe do produto</td><td>Produtos recomendados por categoria e perfil.</td></tr>
-            <tr><td>RF08 - Recuperação de carrinho</td><td>Carrinho</td><td>Itens preservados por sessão para continuar depois.</td></tr>
-            <tr><td>RF09 - Frete integrado</td><td>Checkout</td><td>CEP, preço de frete e prazo de entrega.</td></tr>
-            <tr><td>RF10 - Histórico e rastreio</td><td>Pedidos</td><td>Código de rastreio e status por item.</td></tr>
-        </tbody>
-    </table>
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="feature-block h-100">
+            <h2>Consumidor</h2>
+            <p>Filtra produtos, compra de múltiplos vendedores, salva desejos, vê avaliações, testa IA e acompanha rastreio.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="feature-block h-100">
+            <h2>Lojista</h2>
+            <p>Acompanha vendas, recebe notificações de pedidos e gerencia estoque e produtos próprios.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="feature-block h-100">
+            <h2>Administrador</h2>
+            <p>Aprova lojistas, controla procedência, define comissões e consulta a aderência aos requisitos.</p>
+        </div>
+    </div>
 </div>
 
-<h2>Histórias de usuário por perfil</h2>
-<div class="row g-3">
-    <div class="col-md-4">
-        <div class="feature-block h-100">
-            <h3>Consumidor</h3>
-            <p>Filtra produtos, compra de múltiplos vendedores, salva desejos, vê avaliações e acompanha rastreio.</p>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="feature-block h-100">
-            <h3>Lojista</h3>
-            <p>Acompanha vendas, recebe notificações de pedidos e gerencia o estoque dos próprios produtos.</p>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="feature-block h-100">
-            <h3>Administrador</h3>
-            <p>Aprova lojistas, controla procedência e define comissões por categoria.</p>
-        </div>
-    </div>
+<div class="requirement-grid">
+    @foreach (var requisito in requisitos)
+    {
+        <article class="requirement-card">
+            <span>@requisito.Item</span>
+            <h2>@requisito.Tela</h2>
+            <p>@requisito.Evidencia</p>
+        </article>
+    }
 </div>

@@ -90,7 +90,7 @@ O projeto expõe documentação Swagger em:
 - Arquivo versionado: `api/openapi.json`
 - Postman Collection: `api/postman_collection.json`
 
-O Swagger/OpenAPI final foi filtrado para documentar somente endpoints cujo caminho começa com `/api`. As rotas MVC usadas pela interface web, como ações internas do carrinho, não entram na documentação oficial da Entrega 4.
+O Swagger/OpenAPI final foi filtrado para documentar somente endpoints cujo caminho começa com `/api`. As rotas MVC usadas pela interface web, como ações internas do carrinho, não entram na documentação oficial da Entrega 4. A especificação também inclui um esquema informativo de autenticação por cookie do ASP.NET Identity, mantendo o mecanismo atual de login do site.
 
 Os endpoints de carrinho, checkout e pedidos usam autenticação por cookie do ASP.NET Identity e exigem usuário com role `Consumidor`. Quando acessados sem login, retornam `401 Unauthorized`; quando acessados por perfil sem permissão, retornam `403 Forbidden`.
 
@@ -169,7 +169,7 @@ Fluxo:
 ### Concluído
 
 - Marketplace com separação de perfis: consumidor, lojista e administrador.
-- Catálogo com filtros de beleza, slug único e 60 produtos seedados por JSON.
+- Catálogo com filtros de beleza, slug único, 60 produtos seedados por JSON, imagens reais locais e curadoria de preços compatível com o mercado brasileiro.
 - Painel do lojista com cadastro/edição de produtos e upload validado de imagem.
 - Carrinho multi-lojista.
 - Checkout com split, frete, rastreio e baixa de estoque.
@@ -198,7 +198,7 @@ Fluxo:
 
 - `dotnet restore`: restauração concluída.
 - `dotnet build --no-restore`: compilação concluída com **0 erros e 0 warnings**.
-- `dotnet test --no-build`: **7 testes aprovados**.
+- `dotnet test --no-build`: **10 testes aprovados**, cobrindo recomendação, checkout multi-lojista, roles, catálogo, imagens locais, upload e proteção de produto por lojista.
 - `dotnet list package --vulnerable --include-transitive`: conferido sem vulnerabilidades conhecidas.
 
 ### Conferência de commits

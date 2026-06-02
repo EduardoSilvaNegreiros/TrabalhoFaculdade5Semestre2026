@@ -4,25 +4,39 @@
     ViewData["Title"] = "Painel do lojista";
     var vendas = ViewBag.ItensVendidos as List<WebApplication1.Models.PedidoItem> ?? new();
     var notificacoes = ViewBag.Notificacoes as List<WebApplication1.Models.PedidoItem> ?? new();
+    var estoqueBaixo = Model.Produtos.Count(p => p.Estoque > 0 && p.Estoque <= 5);
+    var semEstoque = Model.Produtos.Count(p => p.Estoque <= 0);
+    var faturamento = vendas.Sum(v => v.PrecoUnitario * v.Quantidade);
+    var repasse = vendas.Sum(v => v.ValorRepasseLojista);
 }
 
-<div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
+<section class="dashboard-hero mb-4">
     <div>
+        <p class="eyebrow">Área do lojista</p>
         <h1>Painel do lojista</h1>
-        <p class="lead">@Model.NomeFantasia - status @Model.Status</p>
+        <p>@Model.NomeFantasia - status @Model.Status</p>
     </div>
     <a class="btn btn-primary" asp-controller="Lojista" asp-action="NovoProduto">Novo produto</a>
-</div>
+</section>
 
 <div class="dashboard-grid">
     <div class="metric"><span>Produtos cadastrados</span><strong>@Model.Produtos.Count</strong></div>
     <div class="metric"><span>Itens vendidos</span><strong>@vendas.Sum(v => v.Quantidade)</strong></div>
-    <div class="metric"><span>Faturamento</span><strong>@((vendas.Sum(v => v.PrecoUnitario * v.Quantidade)).ToString("C"))</strong></div>
-    <div class="metric"><span>Repasse</span><strong>@((vendas.Sum(v => v.ValorRepasseLojista)).ToString("C"))</strong></div>
+    <div class="metric"><span>Faturamento</span><strong>@faturamento.ToString("C")</strong></div>
+    <div class="metric"><span>Repasse</span><strong>@repasse.ToString("C")</strong></div>
+    <div class="metric metric-alert"><span>Estoque baixo</span><strong>@estoqueBaixo</strong></div>
+    <div class="metric metric-alert"><span>Sem estoque</span><strong>@semEstoque</strong></div>
 </div>
 
 <section id="pedidos" class="mt-4">
-    <h2>Notificações de novos pedidos</h2>
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">Operação</p>
+            <h2>Notificações de novos pedidos</h2>
+        </div>
+        <span class="badge text-bg-light">@notificacoes.Count pedido(s)</span>
+    </div>
+
     @if (!notificacoes.Any())
     {
         <div class="alert alert-info">Nenhum pedido novo aguardando separação.</div>
@@ -33,11 +47,12 @@
             @foreach (var item in notificacoes)
             {
                 <div class="col-md-6">
-                    <div class="card p-3 h-100">
-                        <strong>@item.NomeProduto</strong>
-                        <span>Quantidade: @item.Quantidade</span>
-                        <span>Status: @item.StatusEntrega</span>
-                        <span>Rastreio: @item.CodigoRastreio</span>
+                    <div class="feature-block notification-card h-100">
+                        <span class="badge text-bg-primary">Separação</span>
+                        <h3>@item.NomeProduto</h3>
+                        <p><span>Quantidade</span><strong>@item.Quantidade</strong></p>
+                        <p><span>Status</span><strong>@item.StatusEntrega</strong></p>
+                        <p><span>Rastreio</span><strong>@item.CodigoRastreio</strong></p>
                     </div>
                 </div>
             }
@@ -46,12 +61,15 @@
 </section>
 
 <section id="estoque" class="mt-4">
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
-        <h2 class="mb-0">Inventário e estoque físico</h2>
+    <div class="section-heading mb-2">
+        <div>
+            <p class="eyebrow">Inventário</p>
+            <h2>Estoque físico e catálogo</h2>
+        </div>
         <a class="btn btn-outline-primary btn-sm" asp-controller="Lojista" asp-action="NovoProduto">Cadastrar produto</a>
     </div>
-    <div class="table-responsive">
-        <table class="table align-middle">
+    <div class="table-responsive data-panel">
+        <table class="table align-middle mb-0">
             <thead>
                 <tr>
                     <th>Produto</th>
@@ -65,6 +83,9 @@
             <tbody>
                 @foreach (var produto in Model.Produtos.OrderBy(p => p.Nome))
                 {
+                    var statusEstoque = produto.Estoque <= 0 ? "Sem estoque" : produto.Estoque <= 5 ? "Baixo" : "Disponível";
+                    var statusClass = produto.Estoque <= 0 ? "stock-out" : produto.Estoque <= 5 ? "stock-low" : "stock-ok";
+
                     <tr>
                         <td>
                             <div class="seller-product-cell">
@@ -76,8 +97,11 @@
                             </div>
                         </td>
                         <td>@produto.Categoria</td>
-                        <td>@produto.Estoque</td>
-                        <td>@((produto.Preco).ToString("C"))</td>
+                        <td>
+                            <span class="stock-badge @statusClass">@statusEstoque</span>
+                            <small class="d-block text-muted mt-1">@produto.Estoque unidade(s)</small>
+                        </td>
+                        <td>@produto.Preco.ToString("C")</td>
                         <td>
                             <form class="d-flex gap-2" asp-controller="Lojista" asp-action="AtualizarEstoque" method="post">
                                 <input type="hidden" name="produtoId" value="@produto.Id" />

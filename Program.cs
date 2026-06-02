@@ -68,6 +68,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
+    const string cookieAuthenticationScheme = "IdentityCookie";
+
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "Beauty Marketplace API",
@@ -83,6 +85,14 @@ builder.Services.AddSwaggerGen(options =>
     {
         options.IncludeXmlComments(xmlPath);
     }
+
+    options.AddSecurityDefinition(cookieAuthenticationScheme, new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.ApiKey,
+        In = ParameterLocation.Cookie,
+        Name = ".AspNetCore.Identity.Application",
+        Description = "Autenticação por cookie do ASP.NET Identity. Faça login no site com o perfil adequado antes de chamar endpoints protegidos."
+    });
 });
 
 builder.Services.AddScoped<IProductRecommendationStrategy, SkinHairRecommendationStrategy>();

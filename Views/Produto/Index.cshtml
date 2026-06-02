@@ -11,6 +11,9 @@
     var acabamentos = ViewBag.Acabamentos as List<string> ?? new();
     var totalProdutos = ViewBag.TotalProdutos as int? ?? Model.Count;
     var filtroErro = ViewBag.FiltroErro as string;
+    var totalEstoque = Model.Sum(p => p.Estoque);
+    var marcasEncontradas = Model.Select(p => p.Marca).Where(m => !string.IsNullOrWhiteSpace(m)).Distinct().Count();
+    var lojistasEncontrados = Model.Select(p => p.Lojista?.NomeFantasia).Where(l => !string.IsNullOrWhiteSpace(l)).Distinct().Count();
     var filtrosAtivos = new List<(string Key, string Label)>();
 
     void AddFilter(string key, string label, string? value)
@@ -63,13 +66,32 @@
     }
 }
 
-<section class="market-hero">
+<section class="market-hero catalog-hero">
     <div>
         <p class="eyebrow">Marketplace de beleza</p>
-        <h1>Produtos de diferentes lojistas em um checkout único.</h1>
-        <p>Busque por produto, marca, benefício, composição ou lojista e refine pelos filtros de beleza.</p>
+        <h1>Produtos reais, filtros de beleza e checkout único.</h1>
+        <p>Encontre maquiagem, skincare e cuidados capilares por perfil, marca, acabamento, faixa de preço e lojista.</p>
     </div>
 </section>
+
+<div class="stat-strip mb-4" aria-label="Resumo do catálogo">
+    <div>
+        <span>Produtos encontrados</span>
+        <strong>@totalProdutos</strong>
+    </div>
+    <div>
+        <span>Marcas na seleção</span>
+        <strong>@marcasEncontradas</strong>
+    </div>
+    <div>
+        <span>Lojistas parceiros</span>
+        <strong>@lojistasEncontrados</strong>
+    </div>
+    <div>
+        <span>Unidades em estoque</span>
+        <strong>@totalEstoque</strong>
+    </div>
+</div>
 
 <form method="get" class="filter-panel mb-4">
     <div class="filter-wide">
@@ -208,40 +230,60 @@
 
 @if (!Model.Any())
 {
-    <div class="alert alert-info">
-        Nenhum produto encontrado com esses filtros. Remova um filtro ativo, ajuste a faixa de preço ou busque por marca/categoria.
+    <div class="empty-state">
+        <h2>Nenhum produto encontrado</h2>
+        <p>Remova um filtro ativo, amplie a faixa de preço ou busque por marca, categoria ou benefício.</p>
+        <a class="btn btn-primary" asp-controller="Produto" asp-action="Index">Ver catálogo completo</a>
     </div>
 }
 
 <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
     @foreach (var produto in Model)
     {
+        var estoqueBaixo = produto.Estoque > 0 && produto.Estoque <= 5;
+
         <div class="col">
             <article class="card product-card h-100">
-                <a asp-controller="Produto" asp-action="Detalhes" asp-route-id="@produto.Id">
+                <a asp-controller="Produto" asp-action="Detalhes" asp-route-id="@produto.Id" class="product-image-link">
                     <img src="@produto.ImagemUrl" class="card-img-top" alt="@produto.Nome" />
                 </a>
                 <div class="card-body d-flex flex-column">
-                    <div class="d-flex justify-content-between gap-2">
+                    <div class="product-badge-row">
                         <span class="badge text-bg-light">@produto.Categoria</span>
                         @if (produto.Vegano)
                         {
                             <span class="badge text-bg-success">Vegano</span>
                         }
+                        @if (estoqueBaixo)
+                        {
+                            <span class="badge text-bg-warning">Estoque baixo</span>
+                        }
                     </div>
+
                     <h2 class="product-title">@produto.Nome</h2>
-                    <p class="text-muted mb-2">@produto.Marca - @produto.Lojista?.NomeFantasia</p>
-                    <p class="small flex-grow-1">@produto.Descricao</p>
-                    <div class="product-tags">
+                    <p class="product-meta">
+                        <strong>@produto.Marca</strong>
+                        <span>@(produto.Lojista?.NomeFantasia ?? "Lojista parceiro")</span>
+                    </p>
+                    <p class="small product-description flex-grow-1">@produto.Descricao</p>
+
+                    <div class="product-tags" aria-label="Filtros do produto">
                         <span>Pele: @produto.TipoPele</span>
                         <span>Cabelo: @produto.TipoCabelo</span>
                         <span>Tom: @produto.Tom</span>
                         <span>@produto.Acabamento</span>
                     </div>
-                    <div class="d-flex justify-content-between align-items-end gap-2">
-                        <p class="price mb-0">@((produto.Preco).ToString("C"))</p>
-                        <small class="text-muted">@produto.Estoque em estoque</small>
+
+                    <div class="product-purchase-row">
+                        <div>
+                            <span class="price-label">Preço</span>
+                            <p class="price mb-0">@produto.Preco.ToString("C")</p>
+                        </div>
+                        <span class="stock-badge @(produto.Estoque <= 0 ? "stock-out" : estoqueBaixo ? "stock-low" : "stock-ok")">
+                            @(produto.Estoque <= 0 ? "Sem estoque" : $"{produto.Estoque} em estoque")
+                        </span>
                     </div>
+
                     <div class="d-flex gap-2 mt-3">
                         @if (produto.Estoque <= 0)
                         {

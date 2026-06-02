@@ -3,21 +3,39 @@
 @{
     ViewData["Title"] = "Administração";
     var comissoes = ViewBag.Comissoes as List<WebApplication1.Models.ComissaoCategoria> ?? new();
+    var pendentes = Model.Count(l => l.Status == "Pendente");
+    var aprovados = Model.Count(l => l.Status == "Aprovado");
+    var reprovados = Model.Count(l => l.Status == "Reprovado");
 }
 
-<h1>Administração do marketplace</h1>
+<section class="admin-hero mb-4">
+    <div>
+        <p class="eyebrow">Administração</p>
+        <h1>Governança do marketplace</h1>
+        <p>Aprove lojistas, controle a procedência dos vendedores e ajuste comissões por categoria.</p>
+    </div>
+    <a class="btn btn-primary" asp-controller="Admin" asp-action="MapaAtendimento">Mapa de atendimento</a>
+</section>
+
+<div class="dashboard-grid mb-4">
+    <div class="metric"><span>Lojistas cadastrados</span><strong>@Model.Count</strong></div>
+    <div class="metric metric-alert"><span>Pendentes</span><strong>@pendentes</strong></div>
+    <div class="metric"><span>Aprovados</span><strong>@aprovados</strong></div>
+    <div class="metric"><span>Reprovados</span><strong>@reprovados</strong></div>
+</div>
 
 <section class="mb-4">
-    <div class="d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-center">
+    <div class="section-heading">
         <div>
+            <p class="eyebrow">Procedência</p>
             <h2>Aprovação de lojistas</h2>
-            <p class="text-muted mb-0">Controle a procedência dos vendedores antes que eles operem na plataforma.</p>
         </div>
-        <a class="btn btn-outline-primary" asp-controller="Admin" asp-action="MapaAtendimento">Ver mapa de atendimento</a>
+        <span class="badge text-bg-light">@pendentes pendente(s)</span>
     </div>
+    <p class="text-muted">Controle quais vendedores podem operar na plataforma antes de expor seus produtos ao consumidor.</p>
 
-    <div class="table-responsive mt-3">
-        <table class="table align-middle">
+    <div class="table-responsive data-panel mt-3">
+        <table class="table align-middle mb-0">
             <thead>
                 <tr>
                     <th>Lojista</th>
@@ -30,13 +48,23 @@
             <tbody>
                 @foreach (var lojista in Model)
                 {
+                    var statusClass = lojista.Status switch
+                    {
+                        "Aprovado" => "text-bg-success",
+                        "Reprovado" => "text-bg-danger",
+                        _ => "text-bg-warning"
+                    };
+
                     <tr>
-                        <td>@lojista.NomeFantasia<br /><small>@lojista.Email</small></td>
+                        <td>
+                            <strong>@lojista.NomeFantasia</strong>
+                            <small class="d-block text-muted">@lojista.Email</small>
+                        </td>
                         <td>@lojista.Cnpj</td>
                         <td>@lojista.Cidade/@lojista.Estado</td>
-                        <td><span class="badge text-bg-light">@lojista.Status</span></td>
+                        <td><span class="badge @statusClass">@lojista.Status</span></td>
                         <td>
-                            <form class="d-flex gap-2" asp-controller="Admin" asp-action="AlterarStatus" method="post">
+                            <form class="d-flex flex-wrap gap-2" asp-controller="Admin" asp-action="AlterarStatus" method="post">
                                 <input type="hidden" name="id" value="@lojista.Id" />
                                 <button class="btn btn-sm btn-success" name="status" value="Aprovado">Aprovar</button>
                                 <button class="btn btn-sm btn-outline-danger" name="status" value="Reprovado">Reprovar</button>
@@ -50,15 +78,22 @@
 </section>
 
 <section id="comissoes">
-    <h2>Comissões por categoria</h2>
-    <p class="text-muted">Defina percentuais diferentes para otimizar a lucratividade da plataforma.</p>
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">Lucratividade</p>
+            <h2>Comissões por categoria</h2>
+        </div>
+        <span class="badge text-bg-light">@comissoes.Count categoria(s)</span>
+    </div>
+    <p class="text-muted">Defina percentuais diferentes para otimizar a lucratividade da plataforma sem misturar essa função com a experiência de compra.</p>
     <div class="row g-3">
         @foreach (var comissao in comissoes)
         {
             <div class="col-md-4">
-                <form class="metric" asp-controller="Admin" asp-action="AtualizarComissao" method="post">
+                <form class="metric commission-card h-100" asp-controller="Admin" asp-action="AtualizarComissao" method="post">
                     <input type="hidden" name="id" value="@comissao.Id" />
                     <span>@comissao.Categoria</span>
+                    <strong>@comissao.Percentual.ToString("0.##")%</strong>
                     <div class="input-group">
                         <input class="form-control" type="number" step="0.1" min="0" max="100" name="percentual" value="@comissao.Percentual.ToString("0.##")" />
                         <span class="input-group-text">%</span>

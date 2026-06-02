@@ -73,6 +73,12 @@ a {
     margin-bottom: 1.5rem;
 }
 
+.catalog-hero {
+    background:
+        linear-gradient(90deg, rgba(25, 18, 24, 0.84), rgba(25, 18, 24, 0.28)),
+        url("/images/home/CuidadosComAPele.png.png") center/cover;
+}
+
 .home-hero > div,
 .market-hero > div {
     max-width: 720px;
@@ -96,12 +102,47 @@ a {
 .architecture-callout,
 .summary-box,
 .seller-group,
-.success-panel {
+.success-panel,
+.empty-state,
+.data-panel {
     background: #fff;
     border: 1px solid #f1d9e3;
     border-radius: 8px;
     padding: 1.25rem;
     box-shadow: 0 10px 24px rgba(80, 36, 56, 0.08);
+}
+
+.empty-state {
+    display: grid;
+    justify-items: start;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.stat-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.stat-strip > div {
+    display: grid;
+    gap: 0.2rem;
+    padding: 1rem;
+    border: 1px solid #ead3de;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.stat-strip span {
+    color: #6f6470;
+    font-size: 0.85rem;
+    font-weight: 650;
+}
+
+.stat-strip strong {
+    color: #7b284d;
+    font-size: 1.35rem;
 }
 
 .feature-block img {
@@ -198,6 +239,12 @@ a {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 10px 24px rgba(80, 36, 56, 0.08);
+    transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px rgba(80, 36, 56, 0.12);
 }
 
 .product-card .card-img-top {
@@ -205,6 +252,47 @@ a {
     padding: 1rem;
     background: #fff;
     object-fit: contain;
+}
+
+.product-image-link {
+    display: block;
+    background: #fff;
+}
+
+.product-badge-row,
+.product-purchase-row,
+.seller-group-header,
+.section-heading,
+.dashboard-hero,
+.admin-hero,
+.cart-hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.product-badge-row {
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    min-height: 28px;
+}
+
+.product-meta {
+    display: grid;
+    gap: 0.1rem;
+    margin-bottom: 0.65rem;
+    color: #6f6470;
+    font-size: 0.9rem;
+}
+
+.product-meta strong {
+    color: #3c353d;
+}
+
+.product-description {
+    color: #4c454e;
 }
 
 .product-tags {
@@ -226,6 +314,37 @@ a {
     color: #b0164e;
     font-weight: 800;
     font-size: 1.25rem;
+}
+
+.price-label {
+    display: block;
+    color: #6f6470;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.stock-badge {
+    align-self: end;
+    padding: 0.35rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.stock-ok {
+    background: #e8f4ed;
+    color: #1f6b3a;
+}
+
+.stock-low {
+    background: #fff3cd;
+    color: #8a5b00;
+}
+
+.stock-out {
+    background: #f8d7da;
+    color: #842029;
 }
 
 .detail-image {
@@ -336,9 +455,133 @@ a {
     min-width: 150px;
 }
 
+.cart-hero,
+.dashboard-hero,
+.admin-hero {
+    padding: 1.25rem;
+    border: 1px solid #ead3de;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 10px 24px rgba(80, 36, 56, 0.08);
+}
+
+.admin-hero {
+    color: #fff;
+    background:
+        linear-gradient(90deg, rgba(25, 18, 24, 0.9), rgba(87, 31, 58, 0.72)),
+        url("/images/home/Maquiagem.jpeg.jpeg") center/cover;
+}
+
+.admin-hero .eyebrow,
+.admin-hero p {
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.cart-hero-summary {
+    display: grid;
+    min-width: 220px;
+    gap: 0.2rem;
+    padding: 1rem;
+    border-radius: 8px;
+    background: #fff8fb;
+    text-align: right;
+}
+
+.cart-hero-summary strong {
+    color: #b0164e;
+    font-size: 1.4rem;
+}
+
+.seller-group-header {
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.seller-group-header h2,
+.section-heading h2,
+.cart-hero h1,
+.dashboard-hero h1,
+.admin-hero h1 {
+    margin-bottom: 0;
+}
+
+.split-box-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.split-box-grid div {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    background: #fff8fb;
+}
+
+.split-box-grid span {
+    color: #6f6470;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.split-box-grid strong {
+    color: #7b284d;
+}
+
+.sticky-summary {
+    position: sticky;
+    top: 1rem;
+}
+
 .requirement-map td:first-child {
     font-weight: 700;
     color: #7b284d;
+}
+
+.requirement-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.requirement-card {
+    display: grid;
+    gap: 0.45rem;
+    padding: 1rem;
+    border: 1px solid #ead3de;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.requirement-card span {
+    color: #7b284d;
+    font-size: 0.85rem;
+    font-weight: 800;
+}
+
+.requirement-card h2 {
+    margin: 0;
+    font-size: 1.05rem;
+}
+
+.commission-card strong {
+    font-size: 1.4rem;
+}
+
+.notification-card {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.notification-card h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.notification-card p {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.75rem;
+    margin-bottom: 0;
 }
 
 .split-box,
@@ -383,6 +626,10 @@ a {
     color: #b0164e;
 }
 
+.metric-alert strong {
+    color: #8a5b00;
+}
+
 footer {
     padding: 1.5rem 0;
     color: #6c6470;
@@ -391,7 +638,9 @@ footer {
 @media (max-width: 991px) {
     .filter-panel,
     .form-grid,
-    .dashboard-grid {
+    .dashboard-grid,
+    .stat-strip,
+    .requirement-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
@@ -399,12 +648,28 @@ footer {
         align-items: flex-start;
         flex-direction: column;
     }
+
+    .cart-hero,
+    .dashboard-hero,
+    .admin-hero,
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .cart-hero-summary {
+        width: 100%;
+        text-align: left;
+    }
 }
 
 @media (max-width: 575px) {
     .filter-panel,
     .form-grid,
-    .dashboard-grid {
+    .dashboard-grid,
+    .stat-strip,
+    .requirement-grid,
+    .split-box-grid {
         grid-template-columns: 1fr;
     }
 
