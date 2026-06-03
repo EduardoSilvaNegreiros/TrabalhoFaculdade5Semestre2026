@@ -28,11 +28,16 @@
 - [x] Ferramenta escolhida: OpenAI Responses API com fallback local.
 - [x] Justificativa documentada.
 - [x] PoC implementada em `POST /api/ia/recomendacoes`.
+- [x] Tela de demonstração com cards de produto, imagem, preço, motivo, detalhes e botão de carrinho.
 
 ## 5. Checkpoint 2
 
 - [x] Estado atual do projeto documentado.
-- [x] Validação técnica registrada: build sem erros e 10 testes automatizados aprovados.
+- [x] Validação técnica registrada: build sem erros e 15 testes automatizados aprovados.
+- [x] Checkout transacional aplicado via `CheckoutFacade`.
+- [x] Carrinho persistente por 7 dias implementado.
+- [x] Moderação de produtos implementada para separar produtos pendentes/aprovados/reprovados.
+- [x] Lojista consegue atualizar status de envio dos próprios itens de pedido.
 - [x] Checkpoint atualizado com painel do lojista para cadastro/edição de produtos e upload validado de imagem.
 - [x] Catálogo realista com 60 produtos, imagens locais rastreadas e preços compatíveis com o mercado brasileiro.
 - [x] Link do GitHub preenchido.

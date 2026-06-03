@@ -12,6 +12,8 @@ using WebApplication1.Data;
 using WebApplication1.Dtos.Api;
 using WebApplication1.Helpers;
 using WebApplication1.Models;
+using WebApplication1.Services.AI;
+using WebApplication1.Services.Cart;
 using WebApplication1.Services.Checkout;
 using WebApplication1.Services.ProductImages;
 using WebApplication1.Services.Recommendations;
@@ -330,6 +332,172 @@ public sealed class MarketplaceQualityTests
         Assert.IsType<NotFoundResult>(result);
     }
 
+    [Fact]
+    public async Task CartService_persiste_carrinho_e_nao_duplica_produto()
+    {
+        await using var database = await TestDatabase.CreateAsync();
+        var context = database.Context;
+        var lojista = await CriarLojistaAsync(context, "Glow Brasil", "lojista@beautymarket.com");
+        var produto = new Produto
+        {
+            Slug = "base-persistida",
+            Nome = "Base Persistida",
+            Descricao = "Produto aprovado para carrinho persistente.",
+            Categoria = "Maquiagem",
+            Marca = "Maybelline",
+            TipoPele = "Oleosa",
+            TipoCabelo = "Todos",
+            Tom = "Médio",
+            Acabamento = "Matte",
+            ImagemUrl = "/images/produtos/seed/fallback-maquiagem.png",
+            Preco = 59.90m,
+            Estoque = 5,
+            LojistaId = lojista.Id,
+            StatusModeracao = ProdutoStatusModeracao.Aprovado
+        };
+        context.Produtos.Add(produto);
+        await context.SaveChangesAsync();
+
+        var service = new CartService(context);
+        var email = "cliente@beautymarket.com";
+        var httpContext = CreateHttpContextWithSession();
+
+        var primeiraAdicao = await service.AddAsync(httpContext, email, produto.Id, 1, CancellationToken.None);
+        var segundaAdicao = await service.AddAsync(httpContext, email, produto.Id, 1, CancellationToken.None);
+        var novoHttpContext = CreateHttpContextWithSession();
+        var restaurado = await service.GetAsync(novoHttpContext, email, CancellationToken.None);
+
+        Assert.True(primeiraAdicao.Success);
+        Assert.True(segundaAdicao.Success);
+        Assert.Single(await context.CarrinhoPersistidoItens.Where(i => i.UsuarioEmail == email).ToListAsync());
+        Assert.Single(restaurado);
+        Assert.Equal(2, restaurado[0].Quantidade);
+    }
+
+    [Fact]
+    public async Task Produto_pendente_nao_aparece_no_catalogo_api()
+    {
+        await using var database = await TestDatabase.CreateAsync();
+        var context = database.Context;
+        var lojista = await CriarLojistaAsync(context, "Glow Brasil", "lojista@beautymarket.com");
+
+        context.Produtos.AddRange(
+            CriarProdutoCatalogo("produto-aprovado", "Produto Aprovado", lojista.Id, ProdutoStatusModeracao.Aprovado),
+            CriarProdutoCatalogo("produto-pendente", "Produto Pendente", lojista.Id, ProdutoStatusModeracao.Pendente));
+        await context.SaveChangesAsync();
+
+        var controller = new ApiProdutosController(
+            context,
+            new ProductRecommendationService(context, Array.Empty<IProductRecommendationStrategy>()));
+
+        var result = await controller.Listar(null, null, null, null, null, null, null, CancellationToken.None);
+        var ok = Assert.IsType<OkObjectResult>(result.Result);
+        var produtos = Assert.IsAssignableFrom<IEnumerable<ProdutoResumoResponse>>(ok.Value);
+
+        Assert.Contains(produtos, p => p.Nome == "Produto Aprovado");
+        Assert.DoesNotContain(produtos, p => p.Nome == "Produto Pendente");
+    }
+
+    [Fact]
+    public async Task AdminController_aprova_produto_pendente()
+    {
+        await using var database = await TestDatabase.CreateAsync();
+        var context = database.Context;
+        var lojista = await CriarLojistaAsync(context, "Glow Brasil", "lojista@beautymarket.com");
+        var produto = CriarProdutoCatalogo("produto-para-aprovar", "Produto para aprovar", lojista.Id, ProdutoStatusModeracao.Pendente);
+        context.Produtos.Add(produto);
+        await context.SaveChangesAsync();
+
+        var controller = new AdminController(context);
+        var result = await controller.AlterarStatusProduto(produto.Id, ProdutoStatusModeracao.Aprovado);
+
+        Assert.IsType<RedirectToActionResult>(result);
+        Assert.Equal(ProdutoStatusModeracao.Aprovado, (await context.Produtos.FindAsync(produto.Id))!.StatusModeracao);
+    }
+
+    [Fact]
+    public async Task LojistaController_nao_altera_status_entrega_de_outro_lojista()
+    {
+        await using var database = await TestDatabase.CreateAsync();
+        var context = database.Context;
+        var lojistaLogado = await CriarLojistaAsync(context, "Glow Brasil", "lojista@beautymarket.com");
+        var outroLojista = await CriarLojistaAsync(context, "Bella Derm", "vendas@belladerm.com");
+        var produtoOutroLojista = CriarProdutoCatalogo("produto-outro-lojista", "Produto de outro lojista", outroLojista.Id, ProdutoStatusModeracao.Aprovado);
+        context.Produtos.Add(produtoOutroLojista);
+        await context.SaveChangesAsync();
+
+        var pedido = new Pedido
+        {
+            UsuarioEmail = "cliente@beautymarket.com",
+            MetodoPagamento = "Pix",
+            CepEntrega = "01001000",
+            Status = "Pedido confirmado",
+            Itens =
+            {
+                new PedidoItem
+                {
+                    ProdutoId = produtoOutroLojista.Id,
+                    LojistaId = outroLojista.Id,
+                    NomeProduto = "Produto de outro lojista",
+                    NomeLojista = outroLojista.NomeFantasia,
+                    Quantidade = 1,
+                    PrecoUnitario = 39.90m,
+                    CodigoRastreio = "BM2606020001",
+                    StatusEntrega = PedidoStatusEntrega.Separacao
+                }
+            }
+        };
+        context.Pedidos.Add(pedido);
+        await context.SaveChangesAsync();
+
+        var controller = new LojistaController(context, new FakeProductImageService())
+        {
+            ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = new ClaimsPrincipal(
+                        new ClaimsIdentity(
+                            new[] { new Claim(ClaimTypes.Email, lojistaLogado.Email) },
+                            "TestAuth"))
+                }
+            }
+        };
+
+        var result = await controller.AtualizarStatusEntrega(pedido.Itens[0].Id, PedidoStatusEntrega.Enviado, CancellationToken.None);
+
+        Assert.IsType<NotFoundResult>(result);
+        Assert.Equal(PedidoStatusEntrega.Separacao, (await context.PedidoItens.FindAsync(pedido.Itens[0].Id))!.StatusEntrega);
+    }
+
+    [Fact]
+    public async Task LocalAiRecommendationService_retorna_imagem_e_link_para_cards()
+    {
+        await using var database = await TestDatabase.CreateAsync();
+        var context = database.Context;
+        var lojista = await CriarLojistaAsync(context, "Glow Brasil", "lojista@beautymarket.com");
+        context.Produtos.Add(CriarProdutoCatalogo("serum-com-imagem", "Sérum com imagem", lojista.Id, ProdutoStatusModeracao.Aprovado));
+        await context.SaveChangesAsync();
+
+        var recommendationService = new ProductRecommendationService(
+            context,
+            new IProductRecommendationStrategy[]
+            {
+                new SkinHairRecommendationStrategy(),
+                new CategoryRecommendationStrategy(),
+                new VeganPriceRecommendationStrategy()
+            });
+        var ai = new LocalAiRecommendationService(recommendationService);
+
+        var response = await ai.RecommendAsync(
+            new AiRecommendationRequest("Oleosa", "Todos", "controlar oleosidade", "Maquiagem", false, 120m),
+            CancellationToken.None);
+
+        var produto = Assert.Single(response.Produtos);
+        Assert.False(string.IsNullOrWhiteSpace(produto.ImagemUrl));
+        Assert.Equal($"/Produto/Detalhes/{produto.ProdutoId}", produto.DetalhesUrl);
+    }
+
     private static void AssertControllerRole<TController>(string expectedRole)
     {
         var attribute = typeof(TController)
@@ -357,6 +525,38 @@ public sealed class MarketplaceQualityTests
         context.Lojistas.Add(lojista);
         await context.SaveChangesAsync();
         return lojista;
+    }
+
+    private static Produto CriarProdutoCatalogo(string slug, string nome, int lojistaId, string statusModeracao)
+    {
+        return new Produto
+        {
+            Slug = slug,
+            Nome = nome,
+            Descricao = "Produto de teste para catálogo.",
+            Categoria = "Maquiagem",
+            Marca = "Marca Teste",
+            TipoPele = "Oleosa",
+            TipoCabelo = "Todos",
+            CurvaturaCachos = "Todos",
+            Tom = "Médio",
+            Acabamento = "Matte",
+            Vegano = false,
+            Composicao = "Composição de teste.",
+            ImagemUrl = "/images/produtos/seed/fallback-maquiagem.png",
+            Preco = 59.90m,
+            Estoque = 5,
+            LojistaId = lojistaId,
+            StatusModeracao = statusModeracao
+        };
+    }
+
+    private static DefaultHttpContext CreateHttpContextWithSession()
+    {
+        return new DefaultHttpContext
+        {
+            Session = new TestSession()
+        };
     }
 
     private static IFormFile CreateFormFile(string fileName, byte[] bytes)
@@ -464,6 +664,22 @@ public sealed class MarketplaceQualityTests
         {
             return Task.FromResult(new ProductImageSaveResult(true, $"/images/produtos/uploads/{lojistaId}/{productSlug}.png", null));
         }
+    }
+
+    private sealed class TestSession : ISession
+    {
+        private readonly Dictionary<string, byte[]> _values = new();
+
+        public bool IsAvailable => true;
+        public string Id { get; } = Guid.NewGuid().ToString("N");
+        public IEnumerable<string> Keys => _values.Keys;
+
+        public void Clear() => _values.Clear();
+        public Task CommitAsync(CancellationToken cancellationToken = default) => Task.CompletedTask;
+        public Task LoadAsync(CancellationToken cancellationToken = default) => Task.CompletedTask;
+        public void Remove(string key) => _values.Remove(key);
+        public void Set(string key, byte[] value) => _values[key] = value;
+        public bool TryGetValue(string key, out byte[] value) => _values.TryGetValue(key, out value!);
     }
 
     private sealed record CatalogSeedProduto(

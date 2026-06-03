@@ -1,147 +1,229 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="utf-8" />
-    <title>Beauty Marketplace - Entrega 4</title>
+    <title>Beauty Marketplace - Entrega 4 - Padr&#245;es, APIs e IA</title>
     <style>
-        body { margin: 0; color: #28222a; font-family: "Segoe UI", Arial, sans-serif; line-height: 1.55; background: #fff; }
-        main { max-width: 1060px; margin: 0 auto; padding: 40px 48px; }
-        h1 { margin-top: 0; border-bottom: 4px solid #b0164e; padding-bottom: 12px; font-size: 34px; }
-        h2 { margin-top: 34px; font-size: 24px; }
-        h3 { margin-top: 22px; font-size: 18px; }
-        p, li { font-size: 14px; }
-        table { width: 100%; border-collapse: collapse; margin: 14px 0 24px; font-size: 13px; }
-        th, td { border: 1px solid #ead6df; padding: 9px 10px; vertical-align: top; }
-        th { background: #f7e9ef; text-align: left; }
-        code { background: #f7edf2; border-radius: 4px; padding: 1px 4px; font-family: Consolas, monospace; }
-        pre { white-space: pre-wrap; background: #201b22; color: #fff; border-radius: 8px; padding: 14px; font-size: 12px; }
-        .meta, .callout { border: 1px solid #ead6df; background: #fff7fa; border-radius: 8px; padding: 16px 18px; }
-        .diagram { page-break-inside: avoid; border: 1px solid #ead6df; border-radius: 8px; padding: 12px; margin: 12px 0 20px; }
-        .diagram img { display: block; width: 100%; height: auto; }
-        @media print { main { max-width: none; padding: 22mm 16mm; } h2 { page-break-after: avoid; } .diagram, table { page-break-inside: avoid; } }
+body { margin: 0; color: #28222a; font-family: "Segoe UI", Arial, sans-serif; line-height: 1.55; background: #fff; }
+main { max-width: 1060px; margin: 0 auto; padding: 40px 48px; }
+h1 { margin-top: 0; border-bottom: 4px solid #b0164e; padding-bottom: 12px; font-size: 34px; }
+h2 { margin-top: 34px; font-size: 24px; }
+h3 { margin-top: 22px; font-size: 18px; }
+p, li { font-size: 14px; }
+table { width: 100%; border-collapse: collapse; margin: 14px 0 24px; font-size: 13px; }
+th, td { border: 1px solid #ead6df; padding: 9px 10px; vertical-align: top; }
+th { background: #f7e9ef; text-align: left; }
+code { background: #f7edf2; border-radius: 4px; padding: 1px 4px; font-family: Consolas, monospace; }
+pre { white-space: pre-wrap; background: #201b22; color: #fff; border-radius: 8px; padding: 14px; font-size: 12px; }
+.diagram { page-break-inside: avoid; border: 1px solid #ead6df; border-radius: 8px; padding: 12px; margin: 12px 0 20px; }
+.diagram img { display: block; width: 100%; height: auto; }
+a { color: #9b1242; }
+@media print { main { max-width: none; padding: 22mm 16mm; } h2 { page-break-after: avoid; } .diagram, table { page-break-inside: avoid; } }
     </style>
 </head>
 <body>
 <main>
-    <h1>Beauty Marketplace - Entrega 4 - Padrões, APIs e IA</h1>
-    <section class="meta">
-        <h2>1. Identificação do grupo</h2>
-        <p><strong>Número do grupo:</strong> [preencher número do grupo]</p>
-        <p><strong>Integrante 1:</strong> [nome completo] - RA [RA]</p>
-        <p><strong>Integrante 2:</strong> [nome completo] - RA [RA]</p>
-        <p><strong>Integrante 3:</strong> [nome completo] - RA [RA]</p>
-        <p><strong>Integrante 4:</strong> [nome completo] - RA [RA]</p>
-    </section>
-
-    <h2>Objetivo</h2>
-    <p>Apresentar os padrões de projeto aplicados no Beauty Marketplace, a documentação das APIs do sistema e a prova de conceito de Inteligência Artificial para recomendação personalizada de produtos de beleza.</p>
-
-    <h2>2. Padrões de projeto GoF</h2>
-    <h3>Strategy - Recomendação de produtos</h3>
-    <p><strong>Categoria:</strong> Comportamental. O padrão separa os critérios de recomendação por perfil de pele, cabelo, categoria, preferência vegana e preço.</p>
-    <div class="diagram"><img src="padroes/uml/rendered/strategy-recomendacao.svg" alt="UML Strategy" /></div>
-    <pre>public interface IProductRecommendationStrategy
+<h1>Beauty Marketplace - Entrega 4 - Padr&#245;es, APIs e IA</h1>
+<h2>1. Identifica&#231;&#227;o do grupo</h2>
+<ul>
+<li>N&#250;mero do grupo: <strong>[preencher n&#250;mero do grupo]</strong></li>
+<li>Integrante 1: <strong>[nome completo]</strong> - RA <strong>[RA]</strong></li>
+<li>Integrante 2: <strong>[nome completo]</strong> - RA <strong>[RA]</strong></li>
+<li>Integrante 3: <strong>[nome completo]</strong> - RA <strong>[RA]</strong></li>
+<li>Integrante 4: <strong>[nome completo]</strong> - RA <strong>[RA]</strong></li>
+</ul>
+<h2>Objetivo</h2>
+<p>Apresentar os padr&#245;es de projeto aplicados no Beauty Marketplace, a documenta&#231;&#227;o das APIs do sistema e a prova de conceito de Intelig&#234;ncia Artificial para recomenda&#231;&#227;o personalizada de produtos de beleza.</p>
+<h2>2. Padr&#245;es de projeto GoF</h2>
+<h3>2.1 Strategy - Recomenda&#231;&#227;o de produtos</h3>
+<ul>
+<li><strong>Categoria:</strong> Comportamental.</li>
+<li><strong>Problema resolvido:</strong> a recomenda&#231;&#227;o precisa combinar crit&#233;rios diferentes, como tipo de pele, tipo de cabelo, categoria, produto vegano e pre&#231;o, sem deixar todo o c&#225;lculo concentrado em um &#250;nico m&#233;todo.</li>
+<li><strong>Aplica&#231;&#227;o no projeto:</strong> <code>IProductRecommendationStrategy</code>, <code>SkinHairRecommendationStrategy</code>, <code>CategoryRecommendationStrategy</code>, <code>VeganPriceRecommendationStrategy</code> e <code>ProductRecommendationService</code>.</li>
+<li><strong>Diagrama UML:</strong> <code>padroes/uml/strategy-recomendacao.puml</code>.</li>
+</ul>
+<figure class="diagram"><img src="padroes/uml/rendered/strategy-recomendacao.svg" alt="Diagrama" /></figure>
+<p>Trecho de c&#243;digo:</p>
+<pre><code>public interface IProductRecommendationStrategy
 {
     string Nome { get; }
     int Score(Produto produto, ProductRecommendationRequest request);
-}</pre>
+}
 
-    <h3>Facade - Checkout</h3>
-    <p><strong>Categoria:</strong> Estrutural. O padrão centraliza validação de carrinho, estoque, frete, split, pedido e baixa de estoque.</p>
-    <div class="diagram"><img src="padroes/uml/rendered/facade-checkout.svg" alt="UML Facade" /></div>
-    <pre>public interface ICheckoutFacade
+public sealed class ProductRecommendationService
+{
+    private readonly IEnumerable&lt;IProductRecommendationStrategy&gt; _strategies;
+
+    public Task&lt;IReadOnlyList&lt;Produto&gt;&gt; RecommendAsync(ProductRecommendationRequest request, int limit, CancellationToken ct)
+    {
+        // Cada Strategy calcula parte do score de recomenda&#231;&#227;o.
+    }
+}</code></pre>
+<h3>2.2 Facade - Checkout</h3>
+<ul>
+<li><strong>Categoria:</strong> Estrutural.</li>
+<li><strong>Problema resolvido:</strong> finalizar uma compra envolve validar carrinho, conferir estoque, calcular frete, gerar split, criar pedido, criar itens e baixar estoque. Sem uma fachada, essa regra ficaria espalhada pelos controllers.</li>
+<li><strong>Aplica&#231;&#227;o no projeto:</strong> <code>ICheckoutFacade</code> e <code>CheckoutFacade</code>, usados pelo endpoint <code>POST /api/checkout</code> e pelo checkout MVC. A finaliza&#231;&#227;o roda dentro de transa&#231;&#227;o EF Core, validando estoque, criando pedido, baixando estoque e liberando a limpeza do carrinho somente ap&#243;s sucesso.</li>
+<li><strong>Diagrama UML:</strong> <code>padroes/uml/facade-checkout.puml</code>.</li>
+</ul>
+<figure class="diagram"><img src="padroes/uml/rendered/facade-checkout.svg" alt="Diagrama" /></figure>
+<p>Trecho de c&#243;digo:</p>
+<pre><code>public interface ICheckoutFacade
 {
     decimal CalcularFrete(IReadOnlyCollection&lt;CarrinhoItem&gt; carrinho, string? cep);
     string CalcularPrazo(IReadOnlyCollection&lt;CarrinhoItem&gt; carrinho);
     Task&lt;CheckoutResult&gt; FinalizarAsync(string usuarioEmail, IReadOnlyCollection&lt;CarrinhoItem&gt; carrinho, CheckoutRequest request, CancellationToken ct);
-}</pre>
-
-    <h3>Factory Method - Provedor de IA</h3>
-    <p><strong>Categoria:</strong> Criacional. O padrão escolhe OpenAI quando há chave configurada e fallback local quando não há credencial externa.</p>
-    <div class="diagram"><img src="padroes/uml/rendered/factory-method-ia.svg" alt="UML Factory Method" /></div>
-    <pre>public IAiRecommendationService Create()
+}</code></pre>
+<h3>2.3 Factory Method - Provedor de IA</h3>
+<ul>
+<li><strong>Categoria:</strong> Criacional.</li>
+<li><strong>Problema resolvido:</strong> o sistema precisa usar OpenAI quando houver chave configurada, mas tamb&#233;m funcionar em apresenta&#231;&#227;o acad&#234;mica sem credenciais externas.</li>
+<li><strong>Aplica&#231;&#227;o no projeto:</strong> <code>IAiRecommendationServiceFactory</code>, <code>AiRecommendationServiceFactory</code>, <code>OpenAiRecommendationService</code> e <code>LocalAiRecommendationService</code>.</li>
+<li><strong>Diagrama UML:</strong> <code>padroes/uml/factory-method-ia.puml</code>.</li>
+</ul>
+<figure class="diagram"><img src="padroes/uml/rendered/factory-method-ia.svg" alt="Diagrama" /></figure>
+<p>Trecho de c&#243;digo:</p>
+<pre><code>public sealed class AiRecommendationServiceFactory : IAiRecommendationServiceFactory
 {
-    var apiKey = _configuration["OpenAI:ApiKey"] ?? Environment.GetEnvironmentVariable("OPENAI_API_KEY");
-    return string.IsNullOrWhiteSpace(apiKey)
-        ? _serviceProvider.GetRequiredService&lt;LocalAiRecommendationService&gt;()
-        : _serviceProvider.GetRequiredService&lt;OpenAiRecommendationService&gt;();
-}</pre>
-
-    <h2>3. Documentação de APIs</h2>
-    <p>Swagger UI local: <code>http://localhost:5016/swagger</code>. OpenAPI JSON: <code>api/openapi.json</code>. Postman Collection: <code>api/postman_collection.json</code>.</p>
-    <p>O Swagger/OpenAPI final documenta somente endpoints cujo caminho começa com <code>/api</code>. As rotas MVC internas da interface web foram removidas da documentação oficial. A especificação inclui um esquema informativo de autenticação por cookie do ASP.NET Identity, sem alterar o login atual do site.</p>
-    <p>Os endpoints de carrinho, checkout e pedidos usam autenticação por cookie do ASP.NET Identity e exigem usuário com role <code>Consumidor</code>. Sem login retornam <code>401 Unauthorized</code>; com perfil sem permissão retornam <code>403 Forbidden</code>.</p>
-    <table>
-        <thead><tr><th>Endpoint</th><th>Método</th><th>Descrição</th><th>Status</th></tr></thead>
-        <tbody>
-            <tr><td>/api/produtos</td><td>GET</td><td>Lista produtos com filtros.</td><td>200</td></tr>
-            <tr><td>/api/produtos/{id}</td><td>GET</td><td>Detalhes de produto.</td><td>200, 404</td></tr>
-            <tr><td>/api/produtos/{id}/avaliacoes</td><td>GET</td><td>Avaliações do produto.</td><td>200</td></tr>
-            <tr><td>/api/produtos/{id}/recomendacoes</td><td>GET</td><td>Recomendações relacionadas.</td><td>200, 404</td></tr>
-            <tr><td>/api/carrinho</td><td>GET</td><td>Carrinho do consumidor.</td><td>200, 401</td></tr>
-            <tr><td>/api/carrinho/itens</td><td>POST</td><td>Adiciona item.</td><td>200, 400, 404</td></tr>
-            <tr><td>/api/carrinho/itens/{produtoId}</td><td>PUT</td><td>Atualiza item.</td><td>200, 404</td></tr>
-            <tr><td>/api/carrinho/itens/{produtoId}</td><td>DELETE</td><td>Remove item.</td><td>200</td></tr>
-            <tr><td>/api/checkout</td><td>POST</td><td>Finaliza compra.</td><td>201, 400, 401</td></tr>
-            <tr><td>/api/pedidos</td><td>GET</td><td>Lista pedidos.</td><td>200, 401</td></tr>
-            <tr><td>/api/pedidos/{id}</td><td>GET</td><td>Detalhes e rastreio.</td><td>200, 404</td></tr>
-            <tr><td>/api/ia/recomendacoes</td><td>POST</td><td>PoC de IA.</td><td>200, 400</td></tr>
-        </tbody>
-    </table>
-    <p><strong>Total documentado:</strong> 12 operações <code>/api</code>, acima do mínimo de 10 endpoints solicitado.</p>
-    <pre>{
-  "tipoPele": "Oleosa",
-  "tipoCabelo": "Cacheado",
-  "objetivo": "hidratar",
-  "vegano": true,
-  "precoMax": 120
-}</pre>
-
-    <h2>4. Inteligência Artificial na aplicação</h2>
-    <p>A IA será usada como recomendador personalizado. A ferramenta escolhida é a OpenAI Responses API, com fallback local para apresentações sem chave externa. Referências: <code>https://platform.openai.com/docs</code>, <code>https://platform.openai.com/docs/api-reference/responses</code> e <code>https://platform.openai.com/docs/guides/structured-outputs</code>.</p>
-    <p>A PoC está implementada em <code>POST /api/ia/recomendacoes</code> e retorna provedor usado, resumo, alerta de compatibilidade e produtos recomendados.</p>
-    <p>Além do endpoint JSON, o perfil consumidor possui a tela <code>Consumidor &gt; Recomendação IA</code>, permitindo demonstrar a PoC no próprio site sem depender do Postman.</p>
-
-    <h2>5. Checkpoint 2 - Estado atual do projeto</h2>
-    <table>
-        <thead><tr><th>Concluído</th><th>Em andamento</th></tr></thead>
-        <tbody>
-            <tr>
-                <td>Marketplace com perfis, catálogo com 60 produtos seedados por JSON, imagens reais locais, curadoria de preços, cadastro/edição de produtos no painel do lojista, carrinho multi-lojista, checkout, pedidos, lista de desejos, dashboard, admin, Entrega 3, APIs, PoC de IA com tela para consumidor e testes automatizados.</td>
-                <td>Integração real de pagamento, frete, e-mail e IA externa.</td>
-            </tr>
-        </tbody>
-    </table>
-    <p><strong>GitHub:</strong> <a href="https://github.com/EduardoSilvaNegreiros/TrabalhoFaculdade5Semestre2026">https://github.com/EduardoSilvaNegreiros/TrabalhoFaculdade5Semestre2026</a></p>
-    <p><strong>Kanban:</strong> <a href="https://github.com/users/EduardoSilvaNegreiros/projects/2">https://github.com/users/EduardoSilvaNegreiros/projects/2</a></p>
-    <p><strong>Nome do Kanban:</strong> Kanban - Projeto 5 Semestre ADS</p>
-
-    <h3>Validação técnica executada</h3>
-    <ul>
-        <li><code>dotnet restore</code>: restauração concluída.</li>
-        <li><code>dotnet build --no-restore</code>: compilação concluída com 0 erros e 0 warnings.</li>
-        <li><code>dotnet test --no-build</code>: 10 testes aprovados, cobrindo recomendação, checkout multi-lojista, roles, catálogo, imagens locais, upload e proteção de produto por lojista.</li>
-        <li><code>dotnet list package --vulnerable --include-transitive</code>: conferido sem vulnerabilidades conhecidas.</li>
-    </ul>
-
-    <h3>Conferência de commits</h3>
-    <p>Conferência realizada em 31/05/2026. O repositório público e o Kanban foram conferidos. O histórico local visível mostra commits associados a:</p>
-    <ul>
-        <li><code>Eduardo &lt;edunegreiross@gmail.com&gt;</code></li>
-        <li><code>Eduardo Silva de Negreiros &lt;edunegreiross@gmail.com&gt;</code></li>
-    </ul>
-    <p>Observação: caso o professor exija evidência individual de todos os integrantes, os demais membros devem realizar commits no repositório ou serem incluídos como coautores nos commits.</p>
-
-    <h2>Critérios de avaliação</h2>
-    <table>
-        <thead><tr><th>Critério</th><th>Atendimento</th></tr></thead>
-        <tbody>
-            <tr><td>Padrões GoF</td><td>Strategy, Facade e Factory Method aplicados e documentados.</td></tr>
-            <tr><td>APIs</td><td>Swagger/OpenAPI e Postman com 12 operações <code>/api</code>, métodos HTTP, parâmetros, exemplos e status codes.</td></tr>
-            <tr><td>IA</td><td>PoC de recomendação com OpenAI planejado e fallback local funcional.</td></tr>
-            <tr><td>Checkpoint 2</td><td>Estado atual, pendências, GitHub, Kanban e commits conferidos.</td></tr>
-        </tbody>
-    </table>
+    public IAiRecommendationService Create()
+    {
+        var apiKey = _configuration[&quot;OpenAI:ApiKey&quot;] ?? Environment.GetEnvironmentVariable(&quot;OPENAI_API_KEY&quot;);
+        return string.IsNullOrWhiteSpace(apiKey)
+            ? _serviceProvider.GetRequiredService&lt;LocalAiRecommendationService&gt;()
+            : _serviceProvider.GetRequiredService&lt;OpenAiRecommendationService&gt;();
+    }
+}</code></pre>
+<h2>3. Documenta&#231;&#227;o de APIs</h2>
+<p>O projeto exp&#245;e documenta&#231;&#227;o Swagger em:</p>
+<ul>
+<li>Swagger UI local: <code><a href="http://localhost:5016/swagger">http://localhost:5016/swagger</a></code></li>
+<li>OpenAPI JSON local: <code><a href="http://localhost:5016/swagger/v1/swagger.json">http://localhost:5016/swagger/v1/swagger.json</a></code></li>
+<li>Arquivo versionado: <code>api/openapi.json</code></li>
+<li>Postman Collection: <code>api/postman_collection.json</code></li>
+</ul>
+<p>O Swagger/OpenAPI final foi filtrado para documentar somente endpoints cujo caminho come&#231;a com <code>/api</code>. As rotas MVC usadas pela interface web, como a&#231;&#245;es internas do carrinho, n&#227;o entram na documenta&#231;&#227;o oficial da Entrega 4. A especifica&#231;&#227;o tamb&#233;m inclui um esquema informativo de autentica&#231;&#227;o por cookie do ASP.NET Identity, mantendo o mecanismo atual de login do site.</p>
+<p>Os endpoints de carrinho, checkout e pedidos usam autentica&#231;&#227;o por cookie do ASP.NET Identity e exigem usu&#225;rio com role <code>Consumidor</code>. Quando acessados sem login, retornam <code>401 Unauthorized</code>; quando acessados por perfil sem permiss&#227;o, retornam <code>403 Forbidden</code>.</p>
+<h3>Endpoints documentados</h3>
+<table>
+<thead><tr><th>Endpoint</th><th>M&#233;todo</th><th>Descri&#231;&#227;o</th><th>Status principais</th></tr></thead>
+<tbody>
+<tr><td><code>/api/produtos</code></td><td>GET</td><td>Lista produtos com filtros de beleza.</td><td>200</td></tr>
+<tr><td><code>/api/produtos/{id}</code></td><td>GET</td><td>Consulta detalhes de produto.</td><td>200, 404</td></tr>
+<tr><td><code>/api/produtos/{id}/avaliacoes</code></td><td>GET</td><td>Lista avalia&#231;&#245;es do produto.</td><td>200, 404</td></tr>
+<tr><td><code>/api/produtos/{id}/recomendacoes</code></td><td>GET</td><td>Lista produtos recomendados.</td><td>200, 404</td></tr>
+<tr><td><code>/api/carrinho</code></td><td>GET</td><td>Retorna carrinho do consumidor.</td><td>200, 401</td></tr>
+<tr><td><code>/api/carrinho/itens</code></td><td>POST</td><td>Adiciona item ao carrinho.</td><td>200, 400, 404</td></tr>
+<tr><td><code>/api/carrinho/itens/{produtoId}</code></td><td>PUT</td><td>Atualiza quantidade do item.</td><td>200, 404</td></tr>
+<tr><td><code>/api/carrinho/itens/{produtoId}</code></td><td>DELETE</td><td>Remove item do carrinho.</td><td>200</td></tr>
+<tr><td><code>/api/checkout</code></td><td>POST</td><td>Finaliza compra do carrinho.</td><td>201, 400, 401</td></tr>
+<tr><td><code>/api/pedidos</code></td><td>GET</td><td>Lista pedidos do consumidor.</td><td>200, 401</td></tr>
+<tr><td><code>/api/pedidos/{id}</code></td><td>GET</td><td>Consulta pedido com rastreio.</td><td>200, 404</td></tr>
+<tr><td><code>/api/ia/recomendacoes</code></td><td>POST</td><td>Executa PoC de recomenda&#231;&#227;o por IA.</td><td>200, 400</td></tr>
+</tbody></table>
+<p>Total documentado: <strong>12 opera&#231;&#245;es <code>/api</code></strong>, acima do m&#237;nimo de 10 endpoints solicitado.</p>
+<p>Exemplo de request para IA:</p>
+<pre><code>{
+  &quot;tipoPele&quot;: &quot;Oleosa&quot;,
+  &quot;tipoCabelo&quot;: &quot;Cacheado&quot;,
+  &quot;objetivo&quot;: &quot;hidratar&quot;,
+  &quot;vegano&quot;: true,
+  &quot;precoMax&quot;: 120
+}</code></pre>
+<p>Exemplo de response:</p>
+<pre><code>{
+  &quot;provedor&quot;: &quot;Local demonstrativo&quot;,
+  &quot;resumo&quot;: &quot;Recomenda&#231;&#227;o gerada por regras locais que simulam a camada de IA para apresenta&#231;&#227;o sem chave externa.&quot;,
+  &quot;alertaCompatibilidade&quot;: &quot;As sugest&#245;es n&#227;o substituem avalia&#231;&#227;o dermatol&#243;gica ou profissional.&quot;,
+  &quot;produtos&quot;: [
+    {
+      &quot;produtoId&quot;: 1,
+      &quot;nome&quot;: &quot;Base L&#237;quida Maybelline NY Fit Me Matte FPS22&quot;,
+      &quot;marca&quot;: &quot;Maybelline&quot;,
+      &quot;categoria&quot;: &quot;Maquiagem&quot;,
+      &quot;preco&quot;: 51.30,
+      &quot;imagemUrl&quot;: &quot;/images/produtos/reais/base-liquida-maybelline-ny-fit-me-matte-fps22.jpg&quot;,
+      &quot;detalhesUrl&quot;: &quot;/Produto/Detalhes/1&quot;,
+      &quot;motivo&quot;: &quot;Combina com pele oleosa e acabamento matte.&quot;
+    }
+  ]
+}</code></pre>
+<h2>4. Intelig&#234;ncia Artificial na aplica&#231;&#227;o</h2>
+<p>A IA ser&#225; usada para recomenda&#231;&#227;o personalizada de produtos de beleza. O consumidor informa tipo de pele, tipo de cabelo, objetivo, prefer&#234;ncia vegana e faixa de pre&#231;o. A aplica&#231;&#227;o retorna produtos compat&#237;veis com justificativa, imagem e link de detalhes, permitindo renderizar cards diretamente na interface.</p>
+<h3>Ferramenta escolhida</h3>
+<ul>
+<li><strong>OpenAI Responses API:</strong> escolhida por permitir gera&#231;&#227;o de texto e respostas estruturadas em uma API atual para aplica&#231;&#245;es com IA.</li>
+<li><strong>Fallback local:</strong> usado quando n&#227;o h&#225; chave <code>OPENAI_API_KEY</code>, garantindo que a PoC funcione durante apresenta&#231;&#227;o.</li>
+</ul>
+<p>Refer&#234;ncias oficiais:</p>
+<ul>
+<li>OpenAI Platform: <a href="https://platform.openai.com/docs">https://platform.openai.com/docs</a></li>
+<li>Responses API: <a href="https://platform.openai.com/docs/api-reference/responses">https://platform.openai.com/docs/api-reference/responses</a></li>
+<li>Structured Outputs: <a href="https://platform.openai.com/docs/guides/structured-outputs">https://platform.openai.com/docs/guides/structured-outputs</a></li>
+</ul>
+<h3>PoC implementada</h3>
+<p>Endpoint: <code>POST /api/ia/recomendacoes</code></p>
+<p>Al&#233;m do endpoint JSON, o projeto possui uma tela para demonstra&#231;&#227;o em <code>Consumidor &gt; Recomenda&#231;&#227;o IA</code>. Assim, durante a apresenta&#231;&#227;o, o consumidor consegue testar a PoC sem depender do Postman e visualizar cards com imagem, marca, pre&#231;o, motivo da recomenda&#231;&#227;o, bot&#227;o de detalhes e bot&#227;o de carrinho.</p>
+<p>Fluxo:</p>
+<ol>
+<li>O endpoint recebe o perfil de beleza do consumidor.</li>
+<li>A f&#225;brica escolhe OpenAI quando existe chave configurada.</li>
+<li>Sem chave, o fallback local usa as estrat&#233;gias de recomenda&#231;&#227;o.</li>
+<li>A resposta retorna produtos aprovados, justificativa, imagem, link de detalhes, provedor usado e alerta de compatibilidade.</li>
+</ol>
+<h2>5. Checkpoint 2 - Estado atual do projeto</h2>
+<h3>Conclu&#237;do</h3>
+<ul>
+<li>Marketplace com separa&#231;&#227;o de perfis: consumidor, lojista e administrador.</li>
+<li>Cat&#225;logo com filtros de beleza, slug &#250;nico, 60 produtos seedados por JSON, imagens reais locais e curadoria de pre&#231;os compat&#237;vel com o mercado brasileiro.</li>
+<li>Painel do lojista com cadastro/edi&#231;&#227;o de produtos e upload validado de imagem.</li>
+<li>Carrinho multi-lojista com persist&#234;ncia por 7 dias, sincronizando sess&#227;o e banco local.</li>
+<li>Checkout transacional via Facade, com split, frete, rastreio e baixa de estoque.</li>
+<li>Lista de desejos, avalia&#231;&#245;es, pedidos e dashboard do lojista.</li>
+<li>Lojista pode atualizar status de envio dos pr&#243;prios itens de pedido.</li>
+<li>&#193;rea administrativa para aprova&#231;&#227;o de lojistas, modera&#231;&#227;o de produtos e comiss&#245;es.</li>
+<li>Cat&#225;logo, API e IA exibem apenas produtos aprovados.</li>
+<li>Entrega 3 organizada com C4, SQL, MongoDB e Redis.</li>
+<li>APIs JSON com Swagger/OpenAPI filtrado para <code>/api</code>.</li>
+<li>PoC de IA para recomenda&#231;&#227;o.</li>
+<li>P&#225;gina de Recomenda&#231;&#227;o IA para demonstra&#231;&#227;o pelo perfil consumidor.</li>
+<li>Testes automatizados cobrindo Strategy, Facade/checkout, carrinho persistente, modera&#231;&#227;o, IA e prote&#231;&#227;o por perfil.</li>
+</ul>
+<h3>Em andamento</h3>
+<ul>
+<li>Evolu&#231;&#227;o de integra&#231;&#245;es reais de pagamento, frete, e-mail e IA externa.</li>
+<li>Testes manuais finais para apresenta&#231;&#227;o.</li>
+</ul>
+<h3>Links</h3>
+<ul>
+<li>Reposit&#243;rio GitHub: <strong><a href="https://github.com/EduardoSilvaNegreiros/TrabalhoFaculdade5Semestre2026">https://github.com/EduardoSilvaNegreiros/TrabalhoFaculdade5Semestre2026</a></strong></li>
+<li>GitHub Projects/Kanban: <strong><a href="https://github.com/users/EduardoSilvaNegreiros/projects/2">https://github.com/users/EduardoSilvaNegreiros/projects/2</a></strong></li>
+<li>Nome do Kanban: <strong>Kanban - Projeto 5 Semestre ADS</strong></li>
+<li>Swagger local: <code><a href="http://localhost:5016/swagger">http://localhost:5016/swagger</a></code></li>
+<li>Postman Collection: <code>docs/Entrega 4/api/postman_collection.json</code></li>
+</ul>
+<h3>Valida&#231;&#227;o t&#233;cnica executada</h3>
+<ul>
+<li><code>dotnet restore</code>: restaura&#231;&#227;o conclu&#237;da.</li>
+<li><code>dotnet build --no-restore</code>: compila&#231;&#227;o conclu&#237;da com <strong>0 erros e 0 warnings</strong>.</li>
+<li><code>dotnet test --no-build</code>: <strong>15 testes aprovados</strong>, cobrindo recomenda&#231;&#227;o, checkout, carrinho persistente, roles, cat&#225;logo, imagens locais, upload, modera&#231;&#227;o, IA com cards e prote&#231;&#227;o por lojista.</li>
+<li><code>dotnet list package --vulnerable --include-transitive</code>: conferido sem vulnerabilidades conhecidas.</li>
+</ul>
+<h3>Confer&#234;ncia de commits</h3>
+<p>Confer&#234;ncia realizada em 31/05/2026. O reposit&#243;rio p&#250;blico e o Kanban foram conferidos. O hist&#243;rico local vis&#237;vel mostra commits associados a:</p>
+<ul>
+<li><code>Eduardo &lt;edunegreiross@gmail.com&gt;</code></li>
+<li><code>Eduardo Silva de Negreiros &lt;edunegreiross@gmail.com&gt;</code></li>
+</ul>
+<p>Observa&#231;&#227;o: caso o professor exija evid&#234;ncia individual de todos os integrantes, os demais membros devem realizar commits no reposit&#243;rio ou serem inclu&#237;dos como coautores nos commits.</p>
+<h2>Crit&#233;rios de avalia&#231;&#227;o</h2>
+<table>
+<thead><tr><th>Crit&#233;rio</th><th>Atendimento</th></tr></thead>
+<tbody>
+<tr><td>Padr&#245;es GoF</td><td>Strategy, Facade e Factory Method aplicados e documentados.</td></tr>
+<tr><td>Documenta&#231;&#227;o de APIs</td><td>Swagger/OpenAPI e Postman com 12 opera&#231;&#245;es <code>/api</code>, m&#233;todos HTTP, par&#226;metros, exemplos e status codes.</td></tr>
+<tr><td>Intelig&#234;ncia Artificial</td><td>PoC de recomenda&#231;&#227;o com OpenAI planejado, fallback local funcional e tela com cards de produto.</td></tr>
+<tr><td>Checkpoint 2</td><td>Estado atual, pend&#234;ncias, GitHub, Kanban e commits conferidos.</td></tr>
+</tbody></table>
 </main>
 </body>
 </html>

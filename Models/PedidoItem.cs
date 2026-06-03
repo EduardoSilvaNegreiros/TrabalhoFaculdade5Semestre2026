@@ -17,6 +17,6 @@ namespace WebApplication1.Models
         public decimal ValorComissao { get; set; }
         public decimal ValorRepasseLojista { get; set; }
         public string CodigoRastreio { get; set; } = string.Empty;
-        public string StatusEntrega { get; set; } = "Separação pelo lojista";
+        public string StatusEntrega { get; set; } = PedidoStatusEntrega.Separacao;
     }
 }

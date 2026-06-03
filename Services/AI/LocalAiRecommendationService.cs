@@ -25,6 +25,8 @@ public sealed class LocalAiRecommendationService : IAiRecommendationService
             produto.Categoria,
             produto.Marca,
             produto.Preco,
+            produto.ImagemUrl,
+            $"/Produto/Detalhes/{produto.Id}",
             CriarMotivo(produto.TipoPele, produto.TipoCabelo, request))).ToList();
 
         return new AiRecommendationResponse(

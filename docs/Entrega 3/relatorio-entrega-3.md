@@ -12,7 +12,7 @@
 
 Apresentar a arquitetura completa do Beauty Marketplace, desde a visão de alto nível com C4 até os modelos de dados relacional e não relacional. A entrega usa C4-PlantUML como Diagrams as Code, MySQL para o modelo relacional e MongoDB/Redis para a modelagem NoSQL.
 
-O Beauty Marketplace centraliza produtos de beleza de diferentes lojistas em uma única plataforma. O sistema atende consumidores que desejam comparar produtos por perfil de beleza, comprar de múltiplos vendedores em um carrinho unificado e acompanhar pedidos com rastreio por item. Também atende lojistas, que precisam gerenciar estoque e vendas, e administradores, que controlam aprovação de lojistas e comissões por categoria.
+O Beauty Marketplace centraliza produtos de beleza de diferentes lojistas em uma única plataforma. O sistema atende consumidores que desejam comparar produtos por perfil de beleza, comprar de múltiplos vendedores em um carrinho unificado e acompanhar pedidos com rastreio por item. Também atende lojistas, que precisam gerenciar estoque, vendas e envio de pedidos, e administradores, que controlam aprovação de lojistas, moderação de produtos e comissões por categoria.
 
 ## 2. Diagrama C4 - Nível Context (C1)
 
@@ -26,7 +26,7 @@ O diagrama de contexto apresenta o Beauty Marketplace como sistema central e mos
 | --- | --- | --- |
 | Consumidor | Usuário | Pesquisa, filtra, compra produtos de beleza, avalia itens e acompanha entregas. |
 | Lojista | Usuário | Cadastra produtos, acompanha vendas, gerencia estoque e recebe pedidos. |
-| Administrador | Usuário | Aprova ou reprova lojistas, define comissões por categoria e monitora a plataforma. |
+| Administrador | Usuário | Aprova ou reprova lojistas, modera produtos, define comissões por categoria e monitora a plataforma. |
 | Beauty Marketplace | Sistema | Centraliza catálogo, carrinho multi-lojista, checkout, avaliações, lista de desejos e rastreio. |
 | Gateway de pagamento | Sistema externo | Autoriza pagamento único e distribui valores entre lojistas por split. |
 | Correios/Transportadoras | Sistema externo | Calcula preço de frete, prazo e status de rastreio. |
@@ -67,10 +67,11 @@ O container detalhado no C3 é a Aplicação ASP.NET Core MVC, pois concentra as
 | CarrinhoController | Gerencia carrinho do consumidor, itens de múltiplos lojistas, validação de estoque, checkout, frete e split. |
 | PedidosController | Exibe histórico de pedidos e rastreamento por item/lojista. |
 | ListaDesejosController | Permite salvar e remover produtos da lista de desejos. |
-| LojistaController | Mostra dashboard do lojista, vendas, notificações de pedidos, cadastro/edição de produtos, upload de imagem e atualização de estoque. |
-| AdminController | Aprova/reprova lojistas, altera comissões por categoria e mostra o mapa de atendimento dos requisitos. |
+| LojistaController | Mostra dashboard do lojista, vendas, notificações de pedidos, cadastro/edição de produtos, upload de imagem, atualização de estoque e atualização de status de envio. |
+| AdminController | Aprova/reprova lojistas, aprova/reprova produtos, altera comissões por categoria e mostra o mapa de atendimento dos requisitos. |
 | ASP.NET Identity | Controla login, cadastro e roles Consumidor, Lojista e Administrador. |
 | ApplicationDbContext | Mapeia entidades relacionais e centraliza acesso ao banco via EF Core. |
+| CartService | Sincroniza carrinho em sessão e banco local, permitindo persistência por alguns dias e limpeza de itens expirados. |
 | SessionExtensions | Serializa o carrinho na sessão do usuário durante a navegação. |
 | MarketplaceSeeder | Cria dados de demonstração: roles, usuários, lojistas, produtos, categorias e avaliações. |
 | Integrações de domínio | Representa cálculo de frete, prazo, split, repasse, rastreio e notificações demonstráveis. |
@@ -105,11 +106,12 @@ O modelo relacional usa MySQL para representar entidades transacionais do market
 | lojistas | Dados comerciais, CNPJ, documentos e status de aprovação. |
 | categorias | Categorias comerciais, como skincare, maquiagem e cabelo. |
 | comissoes_categoria | Percentual de comissão vigente por categoria. |
-| produtos | Catálogo unificado com slug único, filtros de beleza, preço, estoque, imagem e lojista. |
+| produtos | Catálogo unificado com slug único, filtros de beleza, preço, estoque, imagem, lojista e status de moderação. |
 | pedidos | Cabeçalho da compra feita pelo consumidor. |
 | pedido_itens | Itens do pedido separados por produto e lojista, incluindo split e rastreio. |
 | avaliacoes | Prova social relacional básica vinculada a usuário e produto. |
 | lista_desejos_itens | Produtos salvos pelo consumidor para compra futura. |
+| carrinho_persistido_itens | Itens de carrinho salvos por consumidor, com expiração, para recuperação de compra não finalizada. |
 
 ### Relacionamentos
 
@@ -122,6 +124,8 @@ O modelo relacional usa MySQL para representar entidades transacionais do market
 - Cada item de pedido referencia produto e lojista para permitir split, repasse e rastreio por vendedor.
 - Um produto pode ter muitas avaliações.
 - Um usuário pode salvar muitos produtos na lista de desejos.
+- Um usuário pode ter itens de carrinho persistidos por prazo limitado.
+- Um produto só aparece publicamente quando seu status de moderação está aprovado.
 
 ### DER em formato textual
 
@@ -130,6 +134,7 @@ erDiagram
     USUARIOS ||--o{ PEDIDOS : realiza
     USUARIOS ||--o{ AVALIACOES : escreve
     USUARIOS ||--o{ LISTA_DESEJOS_ITENS : salva
+    USUARIOS ||--o{ CARRINHO_PERSISTIDO_ITENS : mantem
     USUARIOS ||--o| LOJISTAS : representa
     LOJISTAS ||--o{ PRODUTOS : vende
     CATEGORIAS ||--o{ PRODUTOS : classifica
@@ -139,6 +144,7 @@ erDiagram
     LOJISTAS ||--o{ PEDIDO_ITENS : recebe
     PRODUTOS ||--o{ AVALIACOES : recebe
     PRODUTOS ||--o{ LISTA_DESEJOS_ITENS : desejado
+    PRODUTOS ||--o{ CARRINHO_PERSISTIDO_ITENS : adicionado
 ```
 
 ## 7. Modelagem de dados - NoSQL
@@ -171,7 +177,7 @@ Justificativa: Redis reduz latência de operações frequentes e temporárias, e
 | --- | --- |
 | Qualidade e completude dos diagramas C4 | C1, C2 e C3 criados em PlantUML, com descrições no relatório. |
 | Uso correto de Diagrams as Code | Fontes `.puml` incluídos no repositório. |
-| Qualidade do modelo relacional SQL | Script MySQL com 9 tabelas, PKs, FKs, checks e índices. |
+| Qualidade do modelo relacional SQL | Script MySQL com 10 tabelas, PKs, FKs, checks e índices. |
 | Qualidade da modelagem NoSQL | MongoDB e Redis modelados com caso de uso e justificativa. |
 
 ## Forma de entrega

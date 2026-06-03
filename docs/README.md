@@ -20,4 +20,4 @@ Este diretório organiza as entregas e materiais de apoio do Beauty Marketplace.
 
 ## Banco demo
 
-O arquivo `meubanco.db` é mantido como banco local de demonstração. Ele é recriado pelo seed do projeto com roles, usuários de demonstração, lojistas, comissões, catálogo realista com 60 produtos, avaliações e pedidos iniciais quando aplicável.
+O arquivo `meubanco.db` é mantido como banco local de demonstração. Ele é recriado pelo seed do projeto com roles, usuários de demonstração, lojistas, comissões, catálogo realista com 60 produtos, avaliações, pedidos iniciais quando aplicável, carrinho persistente e moderação de produtos.

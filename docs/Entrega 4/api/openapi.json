@@ -1,4 +1,4 @@
-﻿{
+{
   "openapi": "3.0.4",
   "info": {
     "title": "Beauty Marketplace API",
@@ -516,6 +516,16 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
           }
         }
       }
@@ -589,6 +599,14 @@
           "preco": {
             "type": "number",
             "format": "double"
+          },
+          "imagemUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "detalhesUrl": {
+            "type": "string",
+            "nullable": true
           },
           "motivo": {
             "type": "string",

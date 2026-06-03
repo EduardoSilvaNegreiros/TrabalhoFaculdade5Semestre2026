@@ -2,8 +2,13 @@
     ViewData["Title"] = "Recomendação IA";
 }
 
-<h1>Recomendação IA</h1>
-<p class="lead">Informe seu perfil de beleza para receber sugestões personalizadas do catálogo.</p>
+<section class="dashboard-hero mb-4">
+    <div>
+        <p class="eyebrow">Recomendação inteligente</p>
+        <h1>Recomendação IA</h1>
+        <p>Informe seu perfil de beleza para receber sugestões personalizadas do catálogo.</p>
+    </div>
+</section>
 
 <section class="ai-panel">
     <form id="ai-form" class="filter-panel">
@@ -23,9 +28,11 @@
             <select id="tipoCabelo" name="tipoCabelo" class="form-select">
                 <option value="">Todos</option>
                 <option>Cacheado</option>
+                <option>Crespo</option>
+                <option>Liso</option>
+                <option>Ondulado</option>
                 <option>Danificado</option>
                 <option>Frágil</option>
-                <option>Todos</option>
             </select>
         </div>
 
@@ -60,10 +67,46 @@
     <div id="ai-result" class="ai-result mt-4" hidden></div>
 </section>
 
+<div id="cart-notification" class="toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0 m-3" role="alert">
+    <div class="d-flex">
+        <div class="toast-body">Produto adicionado ao carrinho.</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+</div>
+
 @section Scripts {
     <script>
         const form = document.getElementById("ai-form");
         const result = document.getElementById("ai-result");
+
+        const money = value => Number(value || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+        const valueOf = (item, camel, pascal) => item[camel] ?? item[pascal];
+        const escapeHtml = value => String(value ?? "")
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll("\"", "&quot;")
+            .replaceAll("'", "&#039;");
+
+        async function addToCart(produtoId) {
+            const response = await fetch(`/Carrinho/Adicionar/${produtoId}`, { method: "POST" });
+            if (response.redirected) {
+                window.location.href = response.url;
+                return;
+            }
+
+            const data = await response.json();
+            const toastEl = document.getElementById("cart-notification");
+            toastEl.querySelector(".toast-body").textContent = data.mensagem || "Produto adicionado ao carrinho.";
+            toastEl.classList.toggle("bg-danger", data.sucesso === false);
+            toastEl.classList.toggle("bg-success", data.sucesso !== false);
+            new bootstrap.Toast(toastEl).show();
+
+            const countElem = document.getElementById("cart-count");
+            if (countElem && data.quantidade !== undefined) {
+                countElem.textContent = data.quantidade;
+            }
+        }
 
         form.addEventListener("submit", async (event) => {
             event.preventDefault();
@@ -99,20 +142,45 @@
             result.innerHTML = `
                 <div class="summary-box">
                     <h2>Resultado</h2>
-                    <p><span>Resumo</span><strong>${resumo}</strong></p>
-                    <p><span>Aviso</span><strong>${alerta}</strong></p>
+                    <p><span>Resumo</span><strong>${escapeHtml(resumo)}</strong></p>
+                    <p><span>Aviso</span><strong>${escapeHtml(alerta)}</strong></p>
                 </div>
                 <div class="row g-3 mt-2">
-                    ${produtos.map(produto => `
-                        <div class="col-md-6">
-                            <div class="feature-block h-100">
-                                <h3>${produto.nome || produto.Nome}</h3>
-                                <p>${produto.motivo || produto.Motivo}</p>
-                                <strong>${Number(produto.preco || produto.Preco).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</strong>
-                            </div>
-                        </div>
-                    `).join("")}
+                    ${produtos.map(produto => {
+                        const produtoId = valueOf(produto, "produtoId", "ProdutoId");
+                        const nome = valueOf(produto, "nome", "Nome");
+                        const marca = valueOf(produto, "marca", "Marca");
+                        const categoria = valueOf(produto, "categoria", "Categoria");
+                        const preco = valueOf(produto, "preco", "Preco");
+                        const imagemUrl = valueOf(produto, "imagemUrl", "ImagemUrl") || "/images/produtos/seed/fallback-produto.png";
+                        const detalhesUrl = valueOf(produto, "detalhesUrl", "DetalhesUrl") || `/Produto/Detalhes/${produtoId}`;
+                        const motivo = valueOf(produto, "motivo", "Motivo");
+
+                        return `
+                            <div class="col-md-6 col-xl-4">
+                                <article class="card product-card ai-product-card h-100">
+                                    <a href="${escapeHtml(detalhesUrl)}">
+                                        <img src="${escapeHtml(imagemUrl)}" class="card-img-top" alt="${escapeHtml(nome)}" />
+                                    </a>
+                                    <div class="card-body d-flex flex-column">
+                                        <span class="badge text-bg-light align-self-start">${escapeHtml(categoria)}</span>
+                                        <h3 class="product-title">${escapeHtml(nome)}</h3>
+                                        <p class="product-meta"><strong>${escapeHtml(marca)}</strong></p>
+                                        <p class="small flex-grow-1">${escapeHtml(motivo)}</p>
+                                        <p class="price">${money(preco)}</p>
+                                        <div class="d-flex gap-2">
+                                            <a class="btn btn-outline-primary flex-fill" href="${escapeHtml(detalhesUrl)}">Detalhes</a>
+                                            <button class="btn btn-success flex-fill" type="button" data-produto-id="${produtoId}">Adicionar</button>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>`;
+                    }).join("")}
                 </div>`;
+
+            result.querySelectorAll("[data-produto-id]").forEach(button => {
+                button.addEventListener("click", () => addToCart(button.dataset.produtoId));
+            });
         });
     </script>
 }

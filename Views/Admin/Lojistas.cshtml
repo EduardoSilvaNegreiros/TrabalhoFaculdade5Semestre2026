@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Administração";
     var comissoes = ViewBag.Comissoes as List<WebApplication1.Models.ComissaoCategoria> ?? new();
+    var produtosPendentes = ViewBag.ProdutosPendentes as List<WebApplication1.Models.Produto> ?? new();
     var pendentes = Model.Count(l => l.Status == "Pendente");
     var aprovados = Model.Count(l => l.Status == "Aprovado");
     var reprovados = Model.Count(l => l.Status == "Reprovado");
@@ -12,16 +13,16 @@
     <div>
         <p class="eyebrow">Administração</p>
         <h1>Governança do marketplace</h1>
-        <p>Aprove lojistas, controle a procedência dos vendedores e ajuste comissões por categoria.</p>
+        <p>Aprove lojistas, modere produtos e ajuste comissões por categoria.</p>
     </div>
     <a class="btn btn-primary" asp-controller="Admin" asp-action="MapaAtendimento">Mapa de atendimento</a>
 </section>
 
 <div class="dashboard-grid mb-4">
     <div class="metric"><span>Lojistas cadastrados</span><strong>@Model.Count</strong></div>
-    <div class="metric metric-alert"><span>Pendentes</span><strong>@pendentes</strong></div>
+    <div class="metric metric-alert"><span>Lojistas pendentes</span><strong>@pendentes</strong></div>
     <div class="metric"><span>Aprovados</span><strong>@aprovados</strong></div>
-    <div class="metric"><span>Reprovados</span><strong>@reprovados</strong></div>
+    <div class="metric metric-alert"><span>Produtos pendentes</span><strong>@produtosPendentes.Count</strong></div>
 </div>
 
 <section class="mb-4">
@@ -75,6 +76,64 @@
             </tbody>
         </table>
     </div>
+</section>
+
+<section id="produtos-pendentes" class="mb-4">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">Curadoria</p>
+            <h2>Produtos aguardando aprovação</h2>
+        </div>
+        <span class="badge text-bg-light">@produtosPendentes.Count pendente(s)</span>
+    </div>
+    <p class="text-muted">Produtos criados ou editados pelo lojista ficam pendentes até revisão do administrador.</p>
+
+    @if (!produtosPendentes.Any())
+    {
+        <div class="alert alert-info">Nenhum produto aguardando moderação.</div>
+    }
+    else
+    {
+        <div class="table-responsive data-panel mt-3">
+            <table class="table align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Categoria</th>
+                        <th>Lojista</th>
+                        <th>Preço</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var produto in produtosPendentes)
+                    {
+                        <tr>
+                            <td>
+                                <div class="seller-product-cell">
+                                    <img src="@produto.ImagemUrl" alt="@produto.Nome" />
+                                    <div>
+                                        <strong>@produto.Nome</strong>
+                                        <small class="d-block text-muted">@produto.Marca</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>@produto.Categoria</td>
+                            <td>@(produto.Lojista?.NomeFantasia ?? "Lojista parceiro")</td>
+                            <td>@produto.Preco.ToString("C")</td>
+                            <td>
+                                <form class="d-flex flex-wrap gap-2" asp-controller="Admin" asp-action="AlterarStatusProduto" method="post">
+                                    <input type="hidden" name="id" value="@produto.Id" />
+                                    <button class="btn btn-sm btn-success" name="status" value="@WebApplication1.Models.ProdutoStatusModeracao.Aprovado">Aprovar</button>
+                                    <button class="btn btn-sm btn-outline-danger" name="status" value="@WebApplication1.Models.ProdutoStatusModeracao.Reprovado">Reprovar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
 </section>
 
 <section id="comissoes">

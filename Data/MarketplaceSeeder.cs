@@ -73,7 +73,7 @@ public static class MarketplaceSeeder
 
         if (!await db.Avaliacoes.AnyAsync())
         {
-            var produtos = await db.Produtos.Take(12).ToListAsync();
+            var produtos = await db.Produtos.OrderBy(p => p.Id).Take(12).ToListAsync();
             db.Avaliacoes.AddRange(produtos.Select(p => new Avaliacao
             {
                 ProdutoId = p.Id,
@@ -214,6 +214,7 @@ public static class MarketplaceSeeder
             produto.Composicao = seed.Composicao;
             produto.Estoque = seed.Estoque;
             produto.LojistaId = lojista.Id;
+            produto.StatusModeracao = ProdutoStatusModeracao.Aprovado;
         }
     }
 

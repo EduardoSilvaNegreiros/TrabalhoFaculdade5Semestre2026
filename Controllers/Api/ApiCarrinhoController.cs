@@ -1,11 +1,9 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WebApplication1.Data;
 using WebApplication1.Dtos.Api;
-using WebApplication1.Extensions;
 using WebApplication1.Models;
+using WebApplication1.Services.Cart;
 using WebApplication1.Services.Checkout;
 
 namespace WebApplication1.Controllers.Api;
@@ -16,12 +14,12 @@ namespace WebApplication1.Controllers.Api;
 [Produces("application/json")]
 public sealed class ApiCarrinhoController : ControllerBase
 {
-    private readonly ApplicationDbContext _context;
+    private readonly ICartService _cartService;
     private readonly ICheckoutFacade _checkoutFacade;
 
-    public ApiCarrinhoController(ApplicationDbContext context, ICheckoutFacade checkoutFacade)
+    public ApiCarrinhoController(ICartService cartService, ICheckoutFacade checkoutFacade)
     {
-        _context = context;
+        _cartService = cartService;
         _checkoutFacade = checkoutFacade;
     }
 
@@ -31,9 +29,10 @@ public sealed class ApiCarrinhoController : ControllerBase
     [HttpGet]
     [ProducesResponseType(typeof(CarrinhoResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public ActionResult<CarrinhoResponse> Obter()
+    public async Task<ActionResult<CarrinhoResponse>> Obter(CancellationToken cancellationToken)
     {
-        return Ok(CriarResposta(ObterCarrinho()));
+        var carrinho = await _cartService.GetAsync(HttpContext, ObterEmail(), cancellationToken);
+        return Ok(CriarResposta(carrinho));
     }
 
     /// <summary>
@@ -48,49 +47,13 @@ public sealed class ApiCarrinhoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<CarrinhoResponse>> Adicionar(CarrinhoAdicionarRequest request, CancellationToken cancellationToken)
     {
-        var produto = await _context.Produtos.Include(p => p.Lojista).FirstOrDefaultAsync(p => p.Id == request.ProdutoId, cancellationToken);
-        if (produto == null)
+        var result = await _cartService.AddAsync(HttpContext, ObterEmail(), request.ProdutoId, request.Quantidade, cancellationToken);
+        if (!result.Success)
         {
-            return NotFound();
+            return StatusCode(result.StatusCode, new { mensagem = result.Message });
         }
 
-        if (produto.Estoque <= 0)
-        {
-            return BadRequest(new { mensagem = "Produto indisponível." });
-        }
-
-        var carrinho = ObterCarrinho();
-        var quantidade = Math.Max(1, request.Quantidade);
-        var item = carrinho.FirstOrDefault(i => i.ProdutoId == produto.Id);
-
-        if (item == null)
-        {
-            var percentualComissao = await _context.ComissoesCategoria
-                .Where(c => c.Categoria == produto.Categoria)
-                .Select(c => c.Percentual)
-                .FirstOrDefaultAsync(cancellationToken);
-
-            carrinho.Add(new CarrinhoItem
-            {
-                ProdutoId = produto.Id,
-                Nome = produto.Nome,
-                Descricao = produto.Descricao,
-                ImagemUrl = produto.ImagemUrl,
-                Categoria = produto.Categoria,
-                Preco = produto.Preco,
-                Quantidade = Math.Min(quantidade, produto.Estoque),
-                LojistaId = produto.LojistaId,
-                NomeLojista = produto.Lojista?.NomeFantasia ?? "Lojista parceiro",
-                PercentualComissao = percentualComissao == 0 ? 12m : percentualComissao
-            });
-        }
-        else
-        {
-            item.Quantidade = Math.Min(item.Quantidade + quantidade, produto.Estoque);
-        }
-
-        SalvarCarrinho(carrinho);
-        return Ok(CriarResposta(carrinho));
+        return Ok(CriarResposta(result.Items));
     }
 
     /// <summary>
@@ -101,29 +64,13 @@ public sealed class ApiCarrinhoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<CarrinhoResponse>> Atualizar(int produtoId, CarrinhoAtualizarRequest request, CancellationToken cancellationToken)
     {
-        var carrinho = ObterCarrinho();
-        var item = carrinho.FirstOrDefault(i => i.ProdutoId == produtoId);
-        if (item == null)
+        var result = await _cartService.UpdateAsync(HttpContext, ObterEmail(), produtoId, request.Quantidade, cancellationToken);
+        if (!result.Success)
         {
-            return NotFound();
+            return StatusCode(result.StatusCode, new { mensagem = result.Message });
         }
 
-        var estoque = await _context.Produtos
-            .Where(p => p.Id == produtoId)
-            .Select(p => p.Estoque)
-            .FirstOrDefaultAsync(cancellationToken);
-
-        if (request.Quantidade <= 0)
-        {
-            carrinho.Remove(item);
-        }
-        else
-        {
-            item.Quantidade = Math.Min(request.Quantidade, estoque);
-        }
-
-        SalvarCarrinho(carrinho);
-        return Ok(CriarResposta(carrinho));
+        return Ok(CriarResposta(result.Items));
     }
 
     /// <summary>
@@ -131,11 +78,9 @@ public sealed class ApiCarrinhoController : ControllerBase
     /// </summary>
     [HttpDelete("itens/{produtoId:int}")]
     [ProducesResponseType(typeof(CarrinhoResponse), StatusCodes.Status200OK)]
-    public ActionResult<CarrinhoResponse> Remover(int produtoId)
+    public async Task<ActionResult<CarrinhoResponse>> Remover(int produtoId, CancellationToken cancellationToken)
     {
-        var carrinho = ObterCarrinho();
-        carrinho.RemoveAll(i => i.ProdutoId == produtoId);
-        SalvarCarrinho(carrinho);
+        var carrinho = await _cartService.RemoveAsync(HttpContext, ObterEmail(), produtoId, cancellationToken);
         return Ok(CriarResposta(carrinho));
     }
 
@@ -155,15 +100,5 @@ public sealed class ApiCarrinhoController : ControllerBase
     private string ObterEmail()
     {
         return User.FindFirstValue(ClaimTypes.Email) ?? User.Identity?.Name ?? "cliente@beautymarket.com";
-    }
-
-    private List<CarrinhoItem> ObterCarrinho()
-    {
-        return HttpContext.Session.GetObjectFromJson<List<CarrinhoItem>>($"Carrinho_{ObterEmail()}") ?? new List<CarrinhoItem>();
-    }
-
-    private void SalvarCarrinho(List<CarrinhoItem> carrinho)
-    {
-        HttpContext.Session.SetObjectAsJson($"Carrinho_{ObterEmail()}", carrinho);
     }
 }

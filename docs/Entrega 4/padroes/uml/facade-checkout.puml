@@ -12,14 +12,19 @@ class CheckoutFacade {
   +FinalizarAsync(...)
 }
 
+class CarrinhoController
 class ApiCheckoutController
+class CartService
 class CarrinhoItem
+class Produto
 class Pedido
 class PedidoItem
-class Produto
 
 ICheckoutFacade <|.. CheckoutFacade
+CarrinhoController --> ICheckoutFacade
 ApiCheckoutController --> ICheckoutFacade
+CarrinhoController --> CartService
+ApiCheckoutController --> CartService
 CheckoutFacade --> CarrinhoItem
 CheckoutFacade --> Produto
 CheckoutFacade --> Pedido
@@ -27,8 +32,10 @@ CheckoutFacade --> PedidoItem
 
 note right of CheckoutFacade
 Centraliza validação de carrinho,
-estoque, frete, split, pedido e
-baixa de estoque.
+estoque, frete, split, pedido,
+baixa de estoque e rastreio.
+A finalização ocorre dentro de
+transação EF Core.
 end note
 
 @enduml

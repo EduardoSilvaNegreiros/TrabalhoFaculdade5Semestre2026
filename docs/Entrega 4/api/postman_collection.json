@@ -239,7 +239,7 @@
           "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/ia/recomendacoes" },
           "status": "OK",
           "code": 200,
-          "body": "{\"provedor\":\"Local demonstrativo\",\"resumo\":\"Recomendação gerada por regras locais para apresentação sem chave externa.\",\"produtos\":[{\"nome\":\"Base Líquida Maybelline NY Fit Me Matte FPS22\",\"motivo\":\"Combina com pele oleosa e acabamento matte.\"}]}"
+          "body": "{\"provedor\":\"Local demonstrativo\",\"resumo\":\"Recomendação gerada por regras locais para apresentação sem chave externa.\",\"alertaCompatibilidade\":\"As sugestões não substituem avaliação dermatológica ou profissional.\",\"produtos\":[{\"produtoId\":1,\"nome\":\"Base Líquida Maybelline NY Fit Me Matte FPS22\",\"marca\":\"Maybelline\",\"categoria\":\"Maquiagem\",\"preco\":51.30,\"imagemUrl\":\"/images/produtos/reais/base-liquida-maybelline-ny-fit-me-matte-fps22.jpg\",\"detalhesUrl\":\"/Produto/Detalhes/1\",\"motivo\":\"Combina com pele oleosa e acabamento matte.\"}]}"
         }
       ]
     }

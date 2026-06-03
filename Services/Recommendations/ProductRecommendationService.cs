@@ -19,7 +19,7 @@ public sealed class ProductRecommendationService : IProductRecommendationService
     {
         var produtos = await _context.Produtos
             .Include(p => p.Lojista)
-            .Where(p => p.Estoque > 0)
+            .Where(p => p.Estoque > 0 && p.StatusModeracao == ProdutoStatusModeracao.Aprovado)
             .ToListAsync(cancellationToken);
 
         return produtos
@@ -36,4 +36,3 @@ public sealed class ProductRecommendationService : IProductRecommendationService
             .ToList();
     }
 }
-

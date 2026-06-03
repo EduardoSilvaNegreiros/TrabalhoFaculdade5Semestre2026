@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Data;
 using WebApplication1.Dtos.Api;
+using WebApplication1.Models;
 using WebApplication1.Services.Recommendations;
 
 namespace WebApplication1.Controllers.Api;
@@ -38,7 +39,10 @@ public sealed class ApiProdutosController : ControllerBase
         [FromQuery] decimal? precoMax,
         CancellationToken cancellationToken)
     {
-        var query = _context.Produtos.Include(p => p.Lojista).AsQueryable();
+        var query = _context.Produtos
+            .Include(p => p.Lojista)
+            .Where(p => p.StatusModeracao == ProdutoStatusModeracao.Aprovado)
+            .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(busca))
         {
@@ -97,7 +101,7 @@ public sealed class ApiProdutosController : ControllerBase
     {
         var produto = await _context.Produtos
             .Include(p => p.Lojista)
-            .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+            .FirstOrDefaultAsync(p => p.Id == id && p.StatusModeracao == ProdutoStatusModeracao.Aprovado, cancellationToken);
 
         return produto == null ? NotFound() : Ok(produto.ToDetalheResponse());
     }
@@ -107,8 +111,16 @@ public sealed class ApiProdutosController : ControllerBase
     /// </summary>
     [HttpGet("{id:int}/avaliacoes")]
     [ProducesResponseType(typeof(IEnumerable<AvaliacaoResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IEnumerable<AvaliacaoResponse>>> ListarAvaliacoes(int id, CancellationToken cancellationToken)
     {
+        var produtoAprovado = await _context.Produtos
+            .AnyAsync(p => p.Id == id && p.StatusModeracao == ProdutoStatusModeracao.Aprovado, cancellationToken);
+        if (!produtoAprovado)
+        {
+            return NotFound();
+        }
+
         var avaliacoes = await _context.Avaliacoes
             .Where(a => a.ProdutoId == id)
             .OrderByDescending(a => a.CriadoEm)
@@ -125,7 +137,7 @@ public sealed class ApiProdutosController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IEnumerable<ProdutoRecomendadoResponse>>> RecomendarPorProduto(int id, CancellationToken cancellationToken)
     {
-        var produto = await _context.Produtos.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+        var produto = await _context.Produtos.FirstOrDefaultAsync(p => p.Id == id && p.StatusModeracao == ProdutoStatusModeracao.Aprovado, cancellationToken);
         if (produto == null)
         {
             return NotFound();

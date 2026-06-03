@@ -19,6 +19,7 @@ namespace WebApplication1.Models
         public bool Vegano { get; set; }
         public string Composicao { get; set; } = string.Empty;
         public int Estoque { get; set; } = 20;
+        public string StatusModeracao { get; set; } = ProdutoStatusModeracao.Aprovado;
 
         public int? CategoriaId { get; set; }
         public Categoria? CategoriaRelacionada { get; set; }

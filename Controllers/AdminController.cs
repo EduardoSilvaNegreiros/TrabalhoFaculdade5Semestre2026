@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Data;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
@@ -18,6 +19,11 @@ namespace WebApplication1.Controllers
         public async Task<IActionResult> Lojistas()
         {
             ViewBag.Comissoes = await _context.ComissoesCategoria.OrderBy(c => c.Categoria).ToListAsync();
+            ViewBag.ProdutosPendentes = await _context.Produtos
+                .Include(p => p.Lojista)
+                .Where(p => p.StatusModeracao == ProdutoStatusModeracao.Pendente)
+                .OrderBy(p => p.Nome)
+                .ToListAsync();
             return View(await _context.Lojistas.OrderBy(l => l.Status).ThenBy(l => l.NomeFantasia).ToListAsync());
         }
 
@@ -51,7 +57,27 @@ namespace WebApplication1.Controllers
 
             comissao.Percentual = Math.Clamp(percentual, 0m, 100m);
             await _context.SaveChangesAsync();
-            return Redirect($"{Url.Action(nameof(Lojistas))}#comissoes");
+            return RedirectToAction(nameof(Lojistas));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AlterarStatusProduto(int id, string status)
+        {
+            if (!ProdutoStatusModeracao.Todos.Contains(status))
+            {
+                return BadRequest();
+            }
+
+            var produto = await _context.Produtos.FindAsync(id);
+            if (produto == null)
+            {
+                return NotFound();
+            }
+
+            produto.StatusModeracao = status;
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Lojistas));
         }
     }
 }

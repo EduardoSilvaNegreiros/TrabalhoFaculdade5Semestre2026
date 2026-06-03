@@ -74,6 +74,7 @@ CREATE TABLE produtos (
     vegano BOOLEAN NOT NULL DEFAULT FALSE,
     composicao TEXT NOT NULL,
     ativo BOOLEAN NOT NULL DEFAULT TRUE,
+    status_moderacao VARCHAR(20) NOT NULL DEFAULT 'Aprovado',
     criado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     atualizado_em DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT chk_produtos_preco
@@ -156,10 +157,28 @@ CREATE TABLE lista_desejos_itens (
         FOREIGN KEY (produto_id) REFERENCES produtos(id)
 ) ENGINE=InnoDB;
 
+-- Carrinho persistente para recuperação de itens do consumidor
+CREATE TABLE carrinho_persistido_itens (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_email VARCHAR(255) NOT NULL,
+    produto_id INT NOT NULL,
+    quantidade INT NOT NULL,
+    atualizado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    expira_em DATETIME NOT NULL,
+    CONSTRAINT uk_carrinho_usuario_produto
+        UNIQUE (usuario_email, produto_id),
+    CONSTRAINT chk_carrinho_quantidade
+        CHECK (quantidade > 0),
+    CONSTRAINT fk_carrinho_produtos
+        FOREIGN KEY (produto_id) REFERENCES produtos(id)
+) ENGINE=InnoDB;
+
 -- Indices para consultas frequentes
 CREATE INDEX idx_lojistas_status ON lojistas (status);
 CREATE INDEX idx_produtos_filtros ON produtos (categoria_id, tipo_pele, tipo_cabelo, tom, vegano);
 CREATE INDEX idx_produtos_lojista ON produtos (lojista_id, ativo);
+CREATE INDEX idx_produtos_moderacao ON produtos (status_moderacao);
 CREATE INDEX idx_pedidos_usuario ON pedidos (usuario_id, criado_em);
 CREATE INDEX idx_itens_lojista ON pedido_itens (lojista_id, status_entrega);
 CREATE INDEX idx_avaliacoes_produto ON avaliacoes (produto_id, criado_em);
+CREATE INDEX idx_carrinho_expiracao ON carrinho_persistido_itens (expira_em);

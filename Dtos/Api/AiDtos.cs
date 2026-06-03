@@ -14,6 +14,8 @@ public sealed record AiRecommendationProductResponse(
     string Categoria,
     string Marca,
     decimal Preco,
+    string ImagemUrl,
+    string DetalhesUrl,
     string Motivo);
 
 public sealed record AiRecommendationResponse(
@@ -21,4 +23,3 @@ public sealed record AiRecommendationResponse(
     string Resumo,
     string AlertaCompatibilidade,
     IReadOnlyList<AiRecommendationProductResponse> Produtos);
-

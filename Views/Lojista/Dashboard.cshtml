@@ -4,8 +4,10 @@
     ViewData["Title"] = "Painel do lojista";
     var vendas = ViewBag.ItensVendidos as List<WebApplication1.Models.PedidoItem> ?? new();
     var notificacoes = ViewBag.Notificacoes as List<WebApplication1.Models.PedidoItem> ?? new();
+    var statusEntrega = WebApplication1.Models.PedidoStatusEntrega.Todos;
     var estoqueBaixo = Model.Produtos.Count(p => p.Estoque > 0 && p.Estoque <= 5);
     var semEstoque = Model.Produtos.Count(p => p.Estoque <= 0);
+    var produtosPendentes = Model.Produtos.Count(p => p.StatusModeracao == WebApplication1.Models.ProdutoStatusModeracao.Pendente);
     var faturamento = vendas.Sum(v => v.PrecoUnitario * v.Quantidade);
     var repasse = vendas.Sum(v => v.ValorRepasseLojista);
 }
@@ -19,6 +21,11 @@
     <a class="btn btn-primary" asp-controller="Lojista" asp-action="NovoProduto">Novo produto</a>
 </section>
 
+@if (TempData["ErroLojista"] is string erroLojista)
+{
+    <div class="alert alert-warning">@erroLojista</div>
+}
+
 <div class="dashboard-grid">
     <div class="metric"><span>Produtos cadastrados</span><strong>@Model.Produtos.Count</strong></div>
     <div class="metric"><span>Itens vendidos</span><strong>@vendas.Sum(v => v.Quantidade)</strong></div>
@@ -26,33 +33,50 @@
     <div class="metric"><span>Repasse</span><strong>@repasse.ToString("C")</strong></div>
     <div class="metric metric-alert"><span>Estoque baixo</span><strong>@estoqueBaixo</strong></div>
     <div class="metric metric-alert"><span>Sem estoque</span><strong>@semEstoque</strong></div>
+    <div class="metric metric-alert"><span>Aguardando moderação</span><strong>@produtosPendentes</strong></div>
 </div>
 
 <section id="pedidos" class="mt-4">
     <div class="section-heading">
         <div>
             <p class="eyebrow">Operação</p>
-            <h2>Notificações de novos pedidos</h2>
+            <h2>Pedidos recebidos</h2>
         </div>
-        <span class="badge text-bg-light">@notificacoes.Count pedido(s)</span>
+        <span class="badge text-bg-light">@notificacoes.Count novo(s)</span>
     </div>
 
-    @if (!notificacoes.Any())
+    @if (!vendas.Any())
     {
-        <div class="alert alert-info">Nenhum pedido novo aguardando separação.</div>
+        <div class="alert alert-info">Nenhum pedido recebido ainda.</div>
     }
     else
     {
         <div class="row g-3">
-            @foreach (var item in notificacoes)
+            @foreach (var item in vendas.Take(12))
             {
                 <div class="col-md-6">
                     <div class="feature-block notification-card h-100">
-                        <span class="badge text-bg-primary">Separação</span>
+                        @if (item.StatusEntrega == WebApplication1.Models.PedidoStatusEntrega.Separacao)
+                        {
+                            <span class="badge text-bg-primary">Novo pedido</span>
+                        }
+                        else
+                        {
+                            <span class="badge text-bg-light">@item.StatusEntrega</span>
+                        }
                         <h3>@item.NomeProduto</h3>
                         <p><span>Quantidade</span><strong>@item.Quantidade</strong></p>
-                        <p><span>Status</span><strong>@item.StatusEntrega</strong></p>
                         <p><span>Rastreio</span><strong>@item.CodigoRastreio</strong></p>
+                        <form class="d-flex gap-2 align-items-center" asp-controller="Lojista" asp-action="AtualizarStatusEntrega" method="post">
+                            <input type="hidden" name="itemId" value="@item.Id" />
+                            <select class="form-select form-select-sm" name="status">
+                                @foreach (var status in statusEntrega)
+                                {
+                                    <option value="@status" selected="@(item.StatusEntrega == status)">@status</option>
+                                }
+                            </select>
+                            <button class="btn btn-sm btn-outline-primary">Salvar</button>
+                        </form>
                     </div>
                 </div>
             }
@@ -74,6 +98,7 @@
                 <tr>
                     <th>Produto</th>
                     <th>Categoria</th>
+                    <th>Moderação</th>
                     <th>Estoque</th>
                     <th>Preço</th>
                     <th>Atualizar estoque</th>
@@ -85,6 +110,12 @@
                 {
                     var statusEstoque = produto.Estoque <= 0 ? "Sem estoque" : produto.Estoque <= 5 ? "Baixo" : "Disponível";
                     var statusClass = produto.Estoque <= 0 ? "stock-out" : produto.Estoque <= 5 ? "stock-low" : "stock-ok";
+                    var moderacaoClass = produto.StatusModeracao switch
+                    {
+                        WebApplication1.Models.ProdutoStatusModeracao.Aprovado => "text-bg-success",
+                        WebApplication1.Models.ProdutoStatusModeracao.Reprovado => "text-bg-danger",
+                        _ => "text-bg-warning"
+                    };
 
                     <tr>
                         <td>
@@ -97,6 +128,7 @@
                             </div>
                         </td>
                         <td>@produto.Categoria</td>
+                        <td><span class="badge @moderacaoClass">@produto.StatusModeracao</span></td>
                         <td>
                             <span class="stock-badge @statusClass">@statusEstoque</span>
                             <small class="d-block text-muted mt-1">@produto.Estoque unidade(s)</small>

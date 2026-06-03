@@ -19,6 +19,7 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<PedidoItem> PedidoItens => Set<PedidoItem>();
     public DbSet<ListaDesejosItem> ListaDesejosItens => Set<ListaDesejosItem>();
     public DbSet<ComissaoCategoria> ComissoesCategoria => Set<ComissaoCategoria>();
+    public DbSet<CarrinhoPersistidoItem> CarrinhoPersistidoItens => Set<CarrinhoPersistidoItem>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -41,6 +42,8 @@ public class ApplicationDbContext : IdentityDbContext
             .IsUnique();
 
         builder.Entity<Produto>().Property(p => p.Slug).HasMaxLength(140);
+        builder.Entity<Produto>().Property(p => p.StatusModeracao).HasMaxLength(20);
+        builder.Entity<Produto>().HasIndex(p => p.StatusModeracao);
         builder.Entity<Produto>().Property(p => p.Preco).HasPrecision(10, 2);
         builder.Entity<Categoria>().Property(c => c.PercentualComissao).HasPrecision(5, 2);
         builder.Entity<ComissaoCategoria>().Property(c => c.Percentual).HasPrecision(5, 2);
@@ -55,5 +58,18 @@ public class ApplicationDbContext : IdentityDbContext
         builder.Entity<ListaDesejosItem>()
             .HasIndex(i => new { i.UsuarioEmail, i.ProdutoId })
             .IsUnique();
+
+        builder.Entity<CarrinhoPersistidoItem>()
+            .HasOne(i => i.Produto)
+            .WithMany()
+            .HasForeignKey(i => i.ProdutoId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<CarrinhoPersistidoItem>()
+            .HasIndex(i => new { i.UsuarioEmail, i.ProdutoId })
+            .IsUnique();
+
+        builder.Entity<CarrinhoPersistidoItem>()
+            .HasIndex(i => i.ExpiraEm);
     }
 }

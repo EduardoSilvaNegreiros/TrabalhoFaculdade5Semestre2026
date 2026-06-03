@@ -45,7 +45,7 @@ public sealed class ProductRecommendationService
 
 - **Categoria:** Estrutural.
 - **Problema resolvido:** finalizar uma compra envolve validar carrinho, conferir estoque, calcular frete, gerar split, criar pedido, criar itens e baixar estoque. Sem uma fachada, essa regra ficaria espalhada pelos controllers.
-- **Aplicação no projeto:** `ICheckoutFacade` e `CheckoutFacade`, usados pelo endpoint `POST /api/checkout`.
+- **Aplicação no projeto:** `ICheckoutFacade` e `CheckoutFacade`, usados pelo endpoint `POST /api/checkout` e pelo checkout MVC. A finalização roda dentro de transação EF Core, validando estoque, criando pedido, baixando estoque e liberando a limpeza do carrinho somente após sucesso.
 - **Diagrama UML:** `padroes/uml/facade-checkout.puml`.
 
 Trecho de código:
@@ -100,7 +100,7 @@ Os endpoints de carrinho, checkout e pedidos usam autenticação por cookie do A
 | --- | --- | --- | --- |
 | `/api/produtos` | GET | Lista produtos com filtros de beleza. | 200 |
 | `/api/produtos/{id}` | GET | Consulta detalhes de produto. | 200, 404 |
-| `/api/produtos/{id}/avaliacoes` | GET | Lista avaliações do produto. | 200 |
+| `/api/produtos/{id}/avaliacoes` | GET | Lista avaliações do produto. | 200, 404 |
 | `/api/produtos/{id}/recomendacoes` | GET | Lista produtos recomendados. | 200, 404 |
 | `/api/carrinho` | GET | Retorna carrinho do consumidor. | 200, 401 |
 | `/api/carrinho/itens` | POST | Adiciona item ao carrinho. | 200, 400, 404 |
@@ -132,13 +132,24 @@ Exemplo de response:
   "provedor": "Local demonstrativo",
   "resumo": "Recomendação gerada por regras locais que simulam a camada de IA para apresentação sem chave externa.",
   "alertaCompatibilidade": "As sugestões não substituem avaliação dermatológica ou profissional.",
-  "produtos": []
+  "produtos": [
+    {
+      "produtoId": 1,
+      "nome": "Base Líquida Maybelline NY Fit Me Matte FPS22",
+      "marca": "Maybelline",
+      "categoria": "Maquiagem",
+      "preco": 51.30,
+      "imagemUrl": "/images/produtos/reais/base-liquida-maybelline-ny-fit-me-matte-fps22.jpg",
+      "detalhesUrl": "/Produto/Detalhes/1",
+      "motivo": "Combina com pele oleosa e acabamento matte."
+    }
+  ]
 }
 ```
 
 ## 4. Inteligência Artificial na aplicação
 
-A IA será usada para recomendação personalizada de produtos de beleza. O consumidor informa tipo de pele, tipo de cabelo, objetivo, preferência vegana e faixa de preço. A aplicação retorna produtos compatíveis com justificativa.
+A IA será usada para recomendação personalizada de produtos de beleza. O consumidor informa tipo de pele, tipo de cabelo, objetivo, preferência vegana e faixa de preço. A aplicação retorna produtos compatíveis com justificativa, imagem e link de detalhes, permitindo renderizar cards diretamente na interface.
 
 ### Ferramenta escolhida
 
@@ -155,14 +166,14 @@ Referências oficiais:
 
 Endpoint: `POST /api/ia/recomendacoes`
 
-Além do endpoint JSON, o projeto possui uma tela para demonstração em `Consumidor > Recomendação IA`. Assim, durante a apresentação, o consumidor consegue testar a PoC sem depender do Postman.
+Além do endpoint JSON, o projeto possui uma tela para demonstração em `Consumidor > Recomendação IA`. Assim, durante a apresentação, o consumidor consegue testar a PoC sem depender do Postman e visualizar cards com imagem, marca, preço, motivo da recomendação, botão de detalhes e botão de carrinho.
 
 Fluxo:
 
 1. O endpoint recebe o perfil de beleza do consumidor.
 2. A fábrica escolhe OpenAI quando existe chave configurada.
 3. Sem chave, o fallback local usa as estratégias de recomendação.
-4. A resposta retorna produtos, justificativa, provedor usado e alerta de compatibilidade.
+4. A resposta retorna produtos aprovados, justificativa, imagem, link de detalhes, provedor usado e alerta de compatibilidade.
 
 ## 5. Checkpoint 2 - Estado atual do projeto
 
@@ -171,20 +182,22 @@ Fluxo:
 - Marketplace com separação de perfis: consumidor, lojista e administrador.
 - Catálogo com filtros de beleza, slug único, 60 produtos seedados por JSON, imagens reais locais e curadoria de preços compatível com o mercado brasileiro.
 - Painel do lojista com cadastro/edição de produtos e upload validado de imagem.
-- Carrinho multi-lojista.
-- Checkout com split, frete, rastreio e baixa de estoque.
+- Carrinho multi-lojista com persistência por 7 dias, sincronizando sessão e banco local.
+- Checkout transacional via Facade, com split, frete, rastreio e baixa de estoque.
 - Lista de desejos, avaliações, pedidos e dashboard do lojista.
-- Área administrativa para aprovação de lojistas e comissões.
+- Lojista pode atualizar status de envio dos próprios itens de pedido.
+- Área administrativa para aprovação de lojistas, moderação de produtos e comissões.
+- Catálogo, API e IA exibem apenas produtos aprovados.
 - Entrega 3 organizada com C4, SQL, MongoDB e Redis.
 - APIs JSON com Swagger/OpenAPI filtrado para `/api`.
 - PoC de IA para recomendação.
 - Página de Recomendação IA para demonstração pelo perfil consumidor.
-- Testes automatizados cobrindo Strategy, Facade/checkout multi-lojista e roles de acesso.
+- Testes automatizados cobrindo Strategy, Facade/checkout, carrinho persistente, moderação, IA e proteção por perfil.
 
 ### Em andamento
 
 - Evolução de integrações reais de pagamento, frete, e-mail e IA externa.
-- Ajustes visuais e testes manuais finais para apresentação.
+- Testes manuais finais para apresentação.
 
 ### Links
 
@@ -198,7 +211,7 @@ Fluxo:
 
 - `dotnet restore`: restauração concluída.
 - `dotnet build --no-restore`: compilação concluída com **0 erros e 0 warnings**.
-- `dotnet test --no-build`: **10 testes aprovados**, cobrindo recomendação, checkout multi-lojista, roles, catálogo, imagens locais, upload e proteção de produto por lojista.
+- `dotnet test --no-build`: **15 testes aprovados**, cobrindo recomendação, checkout, carrinho persistente, roles, catálogo, imagens locais, upload, moderação, IA com cards e proteção por lojista.
 - `dotnet list package --vulnerable --include-transitive`: conferido sem vulnerabilidades conhecidas.
 
 ### Conferência de commits
@@ -216,5 +229,5 @@ Observação: caso o professor exija evidência individual de todos os integrant
 | --- | --- |
 | Padrões GoF | Strategy, Facade e Factory Method aplicados e documentados. |
 | Documentação de APIs | Swagger/OpenAPI e Postman com 12 operações `/api`, métodos HTTP, parâmetros, exemplos e status codes. |
-| Inteligência Artificial | PoC de recomendação com OpenAI planejado e fallback local funcional. |
+| Inteligência Artificial | PoC de recomendação com OpenAI planejado, fallback local funcional e tela com cards de produto. |
 | Checkpoint 2 | Estado atual, pendências, GitHub, Kanban e commits conferidos. |

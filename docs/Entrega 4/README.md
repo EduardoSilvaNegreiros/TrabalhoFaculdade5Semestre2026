@@ -30,6 +30,15 @@ Pasta oficial da quarta entrega do Projeto Integrador.
 - Sem autenticação, esses endpoints retornam `401`; com perfil sem permissão, retornam `403`.
 - Não foram criadas novas rotas de API neste refinamento.
 
+## Melhorias implementadas no checkpoint
+
+- Checkout MVC e API usando `CheckoutFacade`, com transação EF Core, validação de estoque e baixa somente após sucesso.
+- Carrinho persistente por 7 dias, sincronizado entre sessão e banco local.
+- Moderação de produtos por status: `Aprovado`, `Pendente` e `Reprovado`.
+- Produtos novos/editados por lojista entram como `Pendente`; catálogo público, API e IA exibem apenas aprovados.
+- Lojista pode atualizar o status de envio dos próprios itens: `Separação pelo lojista`, `Enviado` e `Entregue`.
+- Tela de Recomendação IA mostra cards com imagem, preço, motivo, link de detalhes e botão de carrinho.
+
 ## Conferência de commits
 
 Conferência realizada em 31/05/2026. O histórico visível mostra commits associados a `Eduardo <edunegreiross@gmail.com>` e `Eduardo Silva de Negreiros <edunegreiross@gmail.com>`.
@@ -39,8 +48,8 @@ Caso o professor exija evidência individual de todos os integrantes, os demais 
 ## Validação executada
 
 - `dotnet restore`: restauração concluída.
-- `dotnet build --no-restore`: compilação concluída.
-- `dotnet test --no-build`: 10 testes aprovados, cobrindo recomendação, checkout multi-lojista, roles de acesso, slugs, catálogo com 60 produtos, imagens locais, filtros do seed, upload de imagem e proteção de produto por lojista.
+- `dotnet build --no-restore`: compilação concluída com 0 erros e 0 warnings.
+- `dotnet test --no-build`: 15 testes aprovados, cobrindo recomendação, checkout, carrinho persistente, roles, catálogo com 60 produtos, imagens locais, filtros do seed, upload de imagem, moderação e proteção por lojista.
 - `dotnet list package --vulnerable --include-transitive`: conferido sem vulnerabilidades conhecidas.
 - Swagger/OpenAPI: documentação filtrada para rotas `/api`, mantendo 12 operações.
 - Catálogo: curadoria realista com 60 produtos, imagens locais rastreadas e preços compatíveis com o mercado brasileiro.

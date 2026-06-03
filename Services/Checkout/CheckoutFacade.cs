@@ -39,9 +39,11 @@ public sealed class CheckoutFacade : ICheckoutFacade
             return new CheckoutResult(false, "Carrinho vazio.", null, 0m, "0 dias úteis");
         }
 
-        var ids = carrinho.Select(i => i.ProdutoId).ToList();
+        await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+
+        var ids = carrinho.Select(i => i.ProdutoId).Distinct().ToList();
         var produtos = await _context.Produtos
-            .Where(p => ids.Contains(p.Id))
+            .Where(p => ids.Contains(p.Id) && p.StatusModeracao == ProdutoStatusModeracao.Aprovado)
             .ToDictionaryAsync(p => p.Id, cancellationToken);
 
         foreach (var item in carrinho)
@@ -52,6 +54,7 @@ public sealed class CheckoutFacade : ICheckoutFacade
             }
         }
 
+        var subtotal = carrinho.Sum(i => i.Subtotal);
         var frete = CalcularFrete(carrinho, request.Cep);
         var prazo = CalcularPrazo(carrinho);
         var pedido = new Pedido
@@ -59,9 +62,9 @@ public sealed class CheckoutFacade : ICheckoutFacade
             UsuarioEmail = usuarioEmail,
             MetodoPagamento = string.IsNullOrWhiteSpace(request.MetodoPagamento) ? "Pix" : request.MetodoPagamento,
             CepEntrega = string.IsNullOrWhiteSpace(request.Cep) ? "01001000" : request.Cep,
-            Subtotal = carrinho.Sum(i => i.Subtotal),
+            Subtotal = subtotal,
             Frete = frete,
-            Total = carrinho.Sum(i => i.Subtotal) + frete,
+            Total = subtotal + frete,
             Status = "Pedido confirmado"
         };
 
@@ -79,7 +82,7 @@ public sealed class CheckoutFacade : ICheckoutFacade
                 ValorComissao = item.ValorComissao,
                 ValorRepasseLojista = item.ValorRepasseLojista,
                 CodigoRastreio = $"BM{DateTime.UtcNow:yyMMdd}{item.ProdutoId:0000}",
-                StatusEntrega = "Separação pelo lojista"
+                StatusEntrega = PedidoStatusEntrega.Separacao
             });
 
             produtos[item.ProdutoId].Estoque -= item.Quantidade;
@@ -87,6 +90,7 @@ public sealed class CheckoutFacade : ICheckoutFacade
 
         _context.Pedidos.Add(pedido);
         await _context.SaveChangesAsync(cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
 
         return new CheckoutResult(true, "Pedido confirmado.", pedido, frete, prazo);
     }

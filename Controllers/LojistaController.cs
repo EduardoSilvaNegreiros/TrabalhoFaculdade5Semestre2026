@@ -144,6 +144,7 @@ namespace WebApplication1.Controllers
             produto.Acabamento = model.Acabamento;
             produto.Vegano = model.Vegano;
             produto.Composicao = model.Composicao.Trim();
+            produto.StatusModeracao = ProdutoStatusModeracao.Pendente;
 
             if (!model.Id.HasValue)
             {
@@ -174,6 +175,39 @@ namespace WebApplication1.Controllers
             await _context.SaveChangesAsync();
 
             return Redirect($"{Url.Action(nameof(Dashboard))}#estoque");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AtualizarStatusEntrega(int itemId, string status, CancellationToken cancellationToken)
+        {
+            var lojista = await ObterLojistaLogadoAsync();
+            if (lojista == null)
+            {
+                return NotFound();
+            }
+
+            if (!PedidoStatusEntrega.Todos.Contains(status))
+            {
+                TempData["ErroLojista"] = "Status de entrega inválido.";
+                return Redirect($"{Url.Action(nameof(Dashboard))}#pedidos");
+            }
+
+            var item = await _context.PedidoItens
+                .Include(i => i.Pedido)
+                .ThenInclude(p => p!.Itens)
+                .FirstOrDefaultAsync(i => i.Id == itemId && i.LojistaId == lojista.Id, cancellationToken);
+
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            item.StatusEntrega = status;
+            AtualizarStatusPedido(item.Pedido);
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return Redirect($"{Url.Action(nameof(Dashboard))}#pedidos");
         }
 
         private async Task PrepararFormularioAsync()
@@ -225,6 +259,27 @@ namespace WebApplication1.Controllers
         private static string ObterImagemFallback(string categoria)
         {
             return $"/images/produtos/seed/fallback-{SlugHelper.Generate(categoria)}.png";
+        }
+
+        private static void AtualizarStatusPedido(Pedido? pedido)
+        {
+            if (pedido == null || !pedido.Itens.Any())
+            {
+                return;
+            }
+
+            if (pedido.Itens.All(i => i.StatusEntrega == PedidoStatusEntrega.Entregue))
+            {
+                pedido.Status = "Entregue";
+            }
+            else if (pedido.Itens.Any(i => i.StatusEntrega == PedidoStatusEntrega.Enviado))
+            {
+                pedido.Status = "Enviado";
+            }
+            else
+            {
+                pedido.Status = "Pedido confirmado";
+            }
         }
 
         private async Task<Lojista?> ObterLojistaLogadoAsync()

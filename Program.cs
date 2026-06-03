@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.OpenApi;
 using WebApplication1.Data;
 using WebApplication1.Services.AI;
+using WebApplication1.Services.Cart;
 using WebApplication1.Services.Checkout;
 using WebApplication1.Services.ProductImages;
 using WebApplication1.Services.Recommendations;
@@ -99,6 +100,7 @@ builder.Services.AddScoped<IProductRecommendationStrategy, SkinHairRecommendatio
 builder.Services.AddScoped<IProductRecommendationStrategy, CategoryRecommendationStrategy>();
 builder.Services.AddScoped<IProductRecommendationStrategy, VeganPriceRecommendationStrategy>();
 builder.Services.AddScoped<IProductRecommendationService, ProductRecommendationService>();
+builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<ICheckoutFacade, CheckoutFacade>();
 builder.Services.AddScoped<IProductImageService, ProductImageService>();
 builder.Services.AddScoped<LocalAiRecommendationService>();
@@ -135,7 +137,13 @@ else
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+var configuredUrls = app.Configuration["urls"] ?? app.Configuration["ASPNETCORE_URLS"] ?? string.Empty;
+var configuredHttpsPort = app.Configuration["https_port"] ?? app.Configuration["HTTPS_PORT"];
+if (!string.IsNullOrWhiteSpace(configuredHttpsPort) ||
+    configuredUrls.Contains("https://", StringComparison.OrdinalIgnoreCase))
+{
+    app.UseHttpsRedirection();
+}
 app.UseStaticFiles();
 app.UseRouting();
 
