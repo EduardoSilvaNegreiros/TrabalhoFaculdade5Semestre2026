@@ -33,6 +33,15 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public async Task<IActionResult> Alternar(int produtoId)
         {
+            var produtoValido = await _context.Produtos.AnyAsync(p =>
+                p.Id == produtoId &&
+                p.StatusModeracao == ProdutoStatusModeracao.Aprovado);
+
+            if (!produtoValido)
+            {
+                return RedirectToAction("Index", "Produto");
+            }
+
             var email = ObterEmail();
             var existente = await _context.ListaDesejosItens.FirstOrDefaultAsync(i => i.UsuarioEmail == email && i.ProdutoId == produtoId);
 
