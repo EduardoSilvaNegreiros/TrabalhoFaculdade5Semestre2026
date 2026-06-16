@@ -5,6 +5,7 @@ Este diretorio concentra as entregas academicas e os materiais de apoio do **Bea
 ## Estrutura principal
 
 - [Entrega 1 - Concepcao](./Entrega%201/README.md): documentacao da definicao do problema, modelo de negocio, requisitos, user stories, Kanban e GitHub.
+- [Entrega 2 - Design e UX](./Entrega%202/README.md): documentacao das personas, jornadas, pontos de dor, wireframes, prototipo em Figma e testes de usabilidade.
 - [Entrega 3 - Arquitetura](./Entrega%203/README.md): documentacao dos diagramas C4, Diagrams as Code e modelagem de dados SQL/NoSQL.
 - [Entrega 4 - Padroes, APIs e IA](./Entrega%204/README.md): documentacao dos padroes GoF, APIs, prova de conceito de IA e Checkpoint 2.
 - [Entrega Final](./Entrega%20Final/roteiro-video-defesa.md): roteiro do video de defesa final.

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Beauty Marketplace - Entrega 2 - Design e UX</title>
+  <style>
+    @page { size: A4; margin: 14mm 12mm; }
+    :root {
+      --bg: #f6f1eb;
+      --paper: #fffdfa;
+      --ink: #22303a;
+      --muted: #5e6b74;
+      --line: #d8cec4;
+      --accent: #9b4f5c;
+      --accent-soft: #faeef1;
+      --table-head: #f9f0f2;
+      --hero-a: #fff4f6;
+      --hero-b: #f8ece7;
+      --chip: #f4ede8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #f8f1ea 0%, #f2f5f2 100%);
+      color: var(--ink);
+      font-family: "Segoe UI", Georgia, serif;
+      line-height: 1.66;
+    }
+    main {
+      max-width: 980px;
+      margin: 28px auto;
+      padding: 44px 56px 64px;
+      background: var(--paper);
+      box-shadow: 0 16px 40px rgba(46, 31, 27, 0.12);
+      border: 1px solid rgba(155, 79, 92, 0.08);
+    }
+    .hero {
+      margin-bottom: 28px;
+      padding: 28px 30px;
+      background: linear-gradient(135deg, var(--hero-a) 0%, var(--hero-b) 100%);
+      border: 1px solid #ecd4d9;
+    }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3 {
+      margin: 0 0 12px;
+      color: #172733;
+      line-height: 1.22;
+    }
+    h1 { font-size: 30px; }
+    h2 {
+      margin-top: 30px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      font-size: 21px;
+    }
+    h3 {
+      margin-top: 22px;
+      font-size: 16px;
+    }
+    p { margin: 0 0 12px; }
+    ul, ol {
+      margin: 0 0 16px 22px;
+      padding: 0;
+    }
+    li { margin: 0 0 6px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 13px;
+    }
+    th, td {
+      padding: 10px 11px;
+      border: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+    th {
+      background: var(--table-head);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    a {
+      color: #7f3142;
+      text-decoration: none;
+      word-break: break-word;
+    }
+    .persona {
+      margin: 18px 0 20px;
+      padding: 18px 20px;
+      background: #fff9f7;
+      border: 1px solid #ead9d2;
+    }
+    .chips {
+      margin: 10px 0 0;
+    }
+    .chip {
+      display: inline-block;
+      margin: 0 8px 8px 0;
+      padding: 6px 10px;
+      background: var(--chip);
+      border-radius: 999px;
+      font-size: 12px;
+    }
+    .note {
+      margin: 18px 0;
+      padding: 14px 16px;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    .compact li { margin-bottom: 4px; }
+    @media print {
+      body { background: #fff; }
+      main {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        border: 0;
+      }
+      table, .persona, .note { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Entrega 2 - Bloco 2</p>
+      <h1>Beauty Marketplace - Entrega 2 - Design e UX</h1>
+      <p>Relatorio consolidado da etapa de design, cobrindo estudo de usuarios, personas, jornadas, pontos de dor, wireframes, prototipo em Figma e validacao de usabilidade do projeto.</p>
+    </section>
+
+    <h2>Objetivo</h2>
+    <p>Apresentar a construcao da experiencia do usuario do Beauty Marketplace, mostrando como a fase de design ajudou a transformar o problema inicial em fluxos, telas e decisoes de produto coerentes com a implementacao final.</p>
+
+    <h2>1. Identificacao do grupo</h2>
+    <ul class="compact">
+      <li>Numero do grupo: <strong>4</strong></li>
+      <li>Eduardo Silva de Negreiros - RA <strong>924109760</strong></li>
+      <li>Josue Padetti Correa - RA <strong>924109806</strong></li>
+      <li>Gabrielle Victoria de Souza Barboza - RA <strong>424106162</strong></li>
+      <li>Micael Dantas da Silva - RA <strong>924110378</strong></li>
+      <li>Daiane Jheniffer da Silva Araujo - RA <strong>1726105657</strong></li>
+      <li>Beatriz Cerqueira Sonoro - RA <strong>924106243</strong></li>
+      <li>Kauanne Vitoria Soares Bernardo - RA <strong>924111927</strong></li>
+      <li>Julio Guedes de Oliveira - RA <strong>926107422</strong></li>
+      <li>Matheus Da Silva Reis - RA <strong>926111266</strong></li>
+      <li>Wesley Weber Fernandes - RA <strong>924107330</strong></li>
+      <li>Bryan Willian da Silva Almeida - RA <strong>925116744</strong></li>
+    </ul>
+
+    <h2>2. Personas</h2>
+
+    <div class="persona">
+      <h3>2.1 Persona B2C - Consumidora final</h3>
+      <p><strong>Juliana Mendes</strong>, 29 anos, analista de marketing, compra online com frequencia e busca praticidade, curadoria e confianca para montar sua rotina de skincare e maquiagem.</p>
+      <div class="chips">
+        <span class="chip">Necessidade: recomendacoes aderentes</span>
+        <span class="chip">Dor: mercado fragmentado</span>
+        <span class="chip">Dor: frete separado</span>
+        <span class="chip">Objetivo: compra centralizada e segura</span>
+      </div>
+    </div>
+
+    <div class="persona">
+      <h3>2.2 Persona B2B - Lojista parceiro</h3>
+      <p><strong>Ricardo Santos</strong>, 42 anos, proprietario de loja regional de cosmeticos, precisa ampliar a presenca digital sem assumir o custo de um e-commerce proprio completo.</p>
+      <div class="chips">
+        <span class="chip">Necessidade: plataforma pronta para vender</span>
+        <span class="chip">Dor: baixa visibilidade</span>
+        <span class="chip">Dor: concorrencia elevada</span>
+        <span class="chip">Objetivo: ampliar faturamento e alcance</span>
+      </div>
+    </div>
+
+    <h2>3. Jornada do usuario</h2>
+
+    <h3>3.1 Jornada da consumidora</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Fase</th>
+          <th>Acao principal</th>
+          <th>Ponto de dor</th>
+          <th>Oportunidade de UX</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Descoberta</td>
+          <td>Juliana encontra o marketplace ao buscar solucoes para pele oleosa.</td>
+          <td>Excesso de opcoes genericas em lojas amplas dificulta a descoberta.</td>
+          <td>Destacar filtros por perfil de beleza, tipo de pele e categoria.</td>
+        </tr>
+        <tr>
+          <td>Consideracao</td>
+          <td>Ela compara produtos, avaliacoes e lojas antes de escolher.</td>
+          <td>Falta de prova social e duvida sobre procedencia reduzem confianca.</td>
+          <td>Exibir fotos reais, avaliacoes verificadas e informacoes claras do vendedor.</td>
+        </tr>
+        <tr>
+          <td>Decisao</td>
+          <td>Monta o carrinho com itens de diferentes lojistas.</td>
+          <td>Fretes separados e etapas dispersas aumentam o abandono.</td>
+          <td>Simplificar o checkout e reforcar a proposta de compra centralizada.</td>
+        </tr>
+        <tr>
+          <td>Pos-venda</td>
+          <td>Acompanha a entrega e o uso dos produtos.</td>
+          <td>Falta de orientacao apos a compra reduz percepcao de valor.</td>
+          <td>Entregar historico, rastreio e orientacoes de uso no fluxo pos-venda.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>3.2 Jornada do lojista</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Fase</th>
+          <th>Acao principal</th>
+          <th>Ponto de dor</th>
+          <th>Oportunidade de UX</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Adesao</td>
+          <td>Ricardo avalia entrar na plataforma e iniciar cadastro.</td>
+          <td>Onboarding complexo gera desistencias.</td>
+          <td>Criar fluxo de entrada claro e orientado para lojistas iniciantes.</td>
+        </tr>
+        <tr>
+          <td>Operacao</td>
+          <td>Publica produtos e organiza estoque e pedidos.</td>
+          <td>Cadastro manual excessivo e rotina operacional repetitiva.</td>
+          <td>Facilitar carga de catalogo, painel intuitivo e acompanhamento de pedidos.</td>
+        </tr>
+        <tr>
+          <td>Analise</td>
+          <td>Observa vendas, margem e comportamento do catalogo.</td>
+          <td>Falta de dados dificulta tomada de decisao.</td>
+          <td>Oferecer indicadores de desempenho e leitura simples dos resultados.</td>
+        </tr>
+        <tr>
+          <td>Retencao</td>
+          <td>Busca aumentar recorrencia e competir com grandes varejistas.</td>
+          <td>Concorrencia forte e custo de aquisicao alto.</td>
+          <td>Criar recursos de destaque, fidelizacao e suporte a acoes promocionais.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>4. Pontos de dor e oportunidades</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Ponto de dor</th>
+          <th>Impacto na experiencia</th>
+          <th>Direcao de solucao no projeto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Logistica multi-vendedor pode aumentar prazo e custo de entrega.</td>
+          <td>O usuario percebe a compra como fragmentada e menos previsivel.</td>
+          <td>Priorizar comunicacao clara de frete, consolidacao de fluxo e destaque para lojistas com melhor expedicao.</td>
+        </tr>
+        <tr>
+          <td>Lojistas enfrentam alto custo de aquisicao e forte concorrencia digital.</td>
+          <td>A adesao ao marketplace precisa mostrar ganho real de exposicao.</td>
+          <td>Estruturar vitrine especializada, onboarding simples e suporte ao crescimento do seller.</td>
+        </tr>
+        <tr>
+          <td>Consumidores possuem duvidas tecnicas no momento da compra.</td>
+          <td>A decisao fica lenta e sujeita a abandono.</td>
+          <td>Conectar a experiencia a filtros mais inteligentes, conteudo de apoio e recomendacao assistida.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>5. Wireframes e prototipo</h2>
+    <h3>5.1 Wireframes de baixa fidelidade</h3>
+    <p>Os wireframes de baixa fidelidade foram usados para estruturar navegacao, hierarquia de conteudo e distribuicao inicial das telas. Nessa etapa, o foco esteve menos em acabamento visual e mais em validar o caminho principal do usuario: descoberta de produtos, comparacao, carrinho e fluxo de compra.</p>
+
+    <h3>5.2 Prototipo de alta fidelidade no Figma</h3>
+    <p>O prototipo de alta fidelidade foi produzido no Figma e registrado como artefato oficial desta entrega.</p>
+    <div class="note">
+      <strong>Link do prototipo:</strong>
+      <p><a href="https://www.figma.com/make/a9aNk5P93AZZCU46FWkMF5/Prototipo-de-site-de-beleza?code-node-id=0-9&amp;p=f&amp;t=VmBFOeUkHWlRkrfj-0&amp;fullscreen=1">https://www.figma.com/make/a9aNk5P93AZZCU46FWkMF5/Prototipo-de-site-de-beleza?code-node-id=0-9&amp;p=f&amp;t=VmBFOeUkHWlRkrfj-0&amp;fullscreen=1</a></p>
+    </div>
+    <p>O prototipo consolidou identidade visual, navegacao e organizacao das principais telas. A implementacao final do Beauty Marketplace evoluiu a partir dessa base de design, mantendo a preocupacao com descoberta de produtos, experiencia de compra e operacao do lojista.</p>
+
+    <h2>6. Teste de usabilidade</h2>
+    <p>O material original registra dois relatos de avaliacao qualitativa do prototipo. Eles foram consolidados abaixo para destacar percepcoes, ajustes realizados e aprendizados de UX.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Evidencia</th>
+          <th>Percepcao observada</th>
+          <th>Ajuste realizado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Relato 1</td>
+          <td>O conceito foi considerado interessante e util por reunir compra e venda em um unico lugar, mas a identidade visual precisava transmitir mais autoridade. Tambem foi apontado que o frete aumentava quando os itens vinham de lojas diferentes.</td>
+          <td>Refinamento da paleta de cores e correcao da exibicao de produtos no carrinho.</td>
+        </tr>
+        <tr>
+          <td>Relato 2</td>
+          <td>O modelo foi visto como promissor, mas dependente de uma proposta justa para lojistas e de variedade de produtos para o consumidor final.</td>
+          <td>Inclusao de novos icones e melhoria da comunicacao visual dos produtos disponiveis.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Aprendizados consolidados</h3>
+    <ul>
+      <li>A proposta de centralizacao gera valor imediato para o consumidor, desde que a experiencia transmita confianca.</li>
+      <li>O marketplace precisa equilibrar conveniencia para quem compra com beneficio concreto para quem vende.</li>
+      <li>Pequenos ajustes de identidade visual, organizacao de catalogo e clareza do carrinho influenciam diretamente a percepcao de maturidade do produto.</li>
+    </ul>
+
+    <h2>7. Relacao com o sistema implementado</h2>
+    <ul>
+      <li>catalogo com foco em descoberta e navegacao por categorias;</li>
+      <li>detalhamento visual de produtos e reforco de confianca na pagina de compra;</li>
+      <li>lista de desejos, carrinho e historico como continuidade da jornada da consumidora;</li>
+      <li>painel do lojista e moderacao administrativa como resposta ao fluxo operacional do seller;</li>
+      <li>recomendacao assistida por IA como evolucao do problema de duvida tecnica na compra.</li>
+    </ul>
+
+    <h2>8. Cobertura da entrega</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Bloco documentado</th>
+          <th>Evidencia presente</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Pesquisa de usuarios</td><td>Personas B2C e B2B descritas com dores, necessidades e objetivos.</td></tr>
+        <tr><td>Jornada de uso</td><td>Jornadas separadas para consumidora e lojista, com fases, dores e oportunidades.</td></tr>
+        <tr><td>Definicao de problemas</td><td>Pontos de dor consolidados e conectados ao direcionamento do produto.</td></tr>
+        <tr><td>Prototipacao</td><td>Wireframes de baixa fidelidade e Figma de alta fidelidade registrados.</td></tr>
+        <tr><td>Validacao</td><td>Feedbacks de usabilidade e ajustes aplicados ao design.</td></tr>
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>
