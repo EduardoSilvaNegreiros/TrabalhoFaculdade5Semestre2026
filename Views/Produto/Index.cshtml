@@ -1,7 +1,7 @@
 @model List<WebApplication1.Models.Produto>
 
 @{
-    ViewData["Title"] = "Catálogo";
+    ViewData["Title"] = "Catalogo";
     var categorias = ViewBag.Categorias as List<string> ?? new();
     var peles = ViewBag.Peles as List<string> ?? new();
     var cabelos = ViewBag.Cabelos as List<string> ?? new();
@@ -32,8 +32,8 @@
     AddFilter("lojista", "Lojista", Context.Request.Query["lojista"]);
     AddFilter("tom", "Tom", Context.Request.Query["tom"]);
     AddFilter("acabamento", "Acabamento", Context.Request.Query["acabamento"]);
-    AddFilter("precoMin", "Preço mín.", Context.Request.Query["precoMin"]);
-    AddFilter("precoMax", "Preço máx.", Context.Request.Query["precoMax"]);
+    AddFilter("precoMin", "Preco min.", Context.Request.Query["precoMin"]);
+    AddFilter("precoMax", "Preco max.", Context.Request.Query["precoMax"]);
     AddFilter("ordenacao", "Ordem", Context.Request.Query["ordenacao"]);
 
     if (Context.Request.Query["vegano"] == "true")
@@ -69,18 +69,18 @@
 <section class="market-hero catalog-hero">
     <div>
         <p class="eyebrow">Marketplace de beleza</p>
-        <h1>Produtos reais, filtros de beleza e checkout único.</h1>
-        <p>Encontre maquiagem, skincare e cuidados capilares por perfil, marca, acabamento, faixa de preço e lojista.</p>
+        <h1>Produtos reais, filtros de beleza e checkout unico.</h1>
+        <p>Encontre maquiagem, skincare e cuidados capilares por perfil, marca, acabamento, faixa de preco e lojista.</p>
     </div>
 </section>
 
-<div class="stat-strip mb-4" aria-label="Resumo do catálogo">
+<div class="stat-strip mb-4" aria-label="Resumo do catalogo">
     <div>
         <span>Produtos encontrados</span>
         <strong>@totalProdutos</strong>
     </div>
     <div>
-        <span>Marcas na seleção</span>
+        <span>Marcas na selecao</span>
         <strong>@marcasEncontradas</strong>
     </div>
     <div>
@@ -177,12 +177,12 @@
     </div>
 
     <div>
-        <label class="form-label" for="precoMin">Preço mín.</label>
+        <label class="form-label" for="precoMin">Preco min.</label>
         <input id="precoMin" name="precoMin" type="number" step="1" min="0" class="form-control" value="@Context.Request.Query["precoMin"]" placeholder="R$ 0" />
     </div>
 
     <div>
-        <label class="form-label" for="precoMax">Preço máx.</label>
+        <label class="form-label" for="precoMax">Preco max.</label>
         <input id="precoMax" name="precoMax" type="number" step="1" min="0" class="form-control" value="@Context.Request.Query["precoMax"]" placeholder="R$ 200" />
     </div>
 
@@ -191,8 +191,8 @@
         <select id="ordenacao" name="ordenacao" class="form-select">
             <option value="">Nome A-Z</option>
             <option value="nome-desc" selected="@(Context.Request.Query["ordenacao"] == "nome-desc")">Nome Z-A</option>
-            <option value="menor-preco" selected="@(Context.Request.Query["ordenacao"] == "menor-preco")">Menor preço</option>
-            <option value="maior-preco" selected="@(Context.Request.Query["ordenacao"] == "maior-preco")">Maior preço</option>
+            <option value="menor-preco" selected="@(Context.Request.Query["ordenacao"] == "menor-preco")">Menor preco</option>
+            <option value="maior-preco" selected="@(Context.Request.Query["ordenacao"] == "maior-preco")">Maior preco</option>
             <option value="estoque" selected="@(Context.Request.Query["ordenacao"] == "estoque")">Maior estoque</option>
         </select>
     </div>
@@ -213,6 +213,7 @@
 
 @if (filtrosAtivos.Any())
 {
+    <p class="filter-summary mb-2">@filtrosAtivos.Count filtro(s) ativo(s)</p>
     <div class="active-filters mb-3" aria-label="Filtros ativos">
         @foreach (var filtro in filtrosAtivos)
         {
@@ -225,15 +226,15 @@
 
 <div class="catalog-toolbar mb-3">
     <strong>@totalProdutos produto(s) encontrado(s)</strong>
-    <span class="text-muted">Produtos universais também aparecem quando você filtra por pele, cabelo ou tom.</span>
+    <span class="text-muted">Produtos universais tambem aparecem quando voce filtra por pele, cabelo ou tom.</span>
 </div>
 
 @if (!Model.Any())
 {
     <div class="empty-state">
         <h2>Nenhum produto encontrado</h2>
-        <p>Remova um filtro ativo, amplie a faixa de preço ou busque por marca, categoria ou benefício.</p>
-        <a class="btn btn-primary" asp-controller="Produto" asp-action="Index">Ver catálogo completo</a>
+        <p>Limpe algum filtro ativo, amplie a faixa de preco ou tente outra marca, categoria ou necessidade.</p>
+        <a class="btn btn-primary" asp-controller="Produto" asp-action="Index">Ver catalogo completo</a>
     </div>
 }
 
@@ -276,7 +277,7 @@
 
                     <div class="product-purchase-row">
                         <div>
-                            <span class="price-label">Preço</span>
+                            <span class="price-label">Preco</span>
                             <p class="price mb-0">@produto.Preco.ToString("C")</p>
                         </div>
                         <span class="stock-badge @(produto.Estoque <= 0 ? "stock-out" : estoqueBaixo ? "stock-low" : "stock-ok")">
@@ -287,7 +288,7 @@
                     <div class="d-flex gap-2 mt-3">
                         @if (produto.Estoque <= 0)
                         {
-                            <button class="btn btn-secondary flex-fill" disabled>Indisponível</button>
+                            <button class="btn btn-secondary flex-fill" disabled>Indisponivel</button>
                         }
                         else if (User.IsInRole("Consumidor"))
                         {
