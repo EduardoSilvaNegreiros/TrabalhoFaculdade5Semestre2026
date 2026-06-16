@@ -19,13 +19,13 @@
             <dt class="col-sm-4">Tipo de pele</dt><dd class="col-sm-8">@Model.TipoPele</dd>
             <dt class="col-sm-4">Tipo de cabelo</dt><dd class="col-sm-8">@Model.TipoCabelo / @Model.CurvaturaCachos</dd>
             <dt class="col-sm-4">Tom</dt><dd class="col-sm-8">@Model.Tom</dd>
-            <dt class="col-sm-4">Composição</dt><dd class="col-sm-8">@Model.Composicao</dd>
+            <dt class="col-sm-4">Composicao</dt><dd class="col-sm-8">@Model.Composicao</dd>
             <dt class="col-sm-4">Estoque</dt><dd class="col-sm-8">@Model.Estoque unidades</dd>
         </dl>
         <p class="price fs-3">@((Model.Preco).ToString("C"))</p>
         @if (Model.Estoque <= 0)
         {
-            <button class="btn btn-secondary btn-lg" disabled>Produto indisponível</button>
+            <button class="btn btn-secondary btn-lg" disabled>Produto indisponivel</button>
         }
         else if (User.IsInRole("Consumidor"))
         {
@@ -39,49 +39,69 @@
 </div>
 
 <section class="mt-5">
-    <h2>Avaliações de clientes</h2>
-    <div class="row g-3">
-        @foreach (var avaliacao in avaliacoes)
-        {
-            <div class="col-md-6">
-                <div class="card h-100 review-card">
-                    <div class="row g-0">
-                        <div class="col-4">
-                            <img src="@avaliacao.MidiaUrl" class="img-fluid rounded-start review-image" alt="Foto enviada por cliente" />
-                        </div>
-                        <div class="col-8">
-                            <div class="card-body">
-                                <strong>@avaliacao.Nota/5 estrelas</strong>
-                                <p class="mb-1">@avaliacao.Comentario</p>
-                                <small class="text-muted">@avaliacao.TipoPele - @avaliacao.TipoCabelo - @avaliacao.UsuarioEmail</small>
+    <h2>Avaliacoes de clientes</h2>
+    @if (!avaliacoes.Any())
+    {
+        <div class="empty-state">
+            <h3>Sem avaliacoes por enquanto</h3>
+            <p>Este produto ainda nao possui avaliacoes de clientes.</p>
+        </div>
+    }
+    else
+    {
+        <div class="row g-3">
+            @foreach (var avaliacao in avaliacoes)
+            {
+                <div class="col-md-6">
+                    <div class="card h-100 review-card">
+                        <div class="row g-0">
+                            <div class="col-4">
+                                <img src="@avaliacao.MidiaUrl" class="img-fluid rounded-start review-image" alt="Foto enviada por cliente" />
+                            </div>
+                            <div class="col-8">
+                                <div class="card-body">
+                                    <strong>@avaliacao.Nota/5 estrelas</strong>
+                                    <p class="mb-1">@avaliacao.Comentario</p>
+                                    <small class="text-muted">@avaliacao.TipoPele - @avaliacao.TipoCabelo - @avaliacao.UsuarioEmail</small>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
+            }
+        </div>
+    }
 </section>
 
 <section class="mt-5">
     <h2>Produtos recomendados</h2>
-    <div class="row row-cols-1 row-cols-md-4 g-3">
-        @foreach (var produto in recomendados)
-        {
-            <div class="col">
-                <a class="recommend-card" asp-controller="Produto" asp-action="Detalhes" asp-route-id="@produto.Id">
-                    <img src="@produto.ImagemUrl" alt="@produto.Nome" />
-                    <span>@produto.Nome</span>
-                </a>
-            </div>
-        }
-    </div>
+    @if (!recomendados.Any())
+    {
+        <div class="empty-state">
+            <h3>Sem recomendacoes no momento</h3>
+            <p>Ainda nao encontramos produtos relacionados para exibir nesta pagina.</p>
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-4 g-3">
+            @foreach (var produto in recomendados)
+            {
+                <div class="col">
+                    <a class="recommend-card" asp-controller="Produto" asp-action="Detalhes" asp-route-id="@produto.Id">
+                        <img src="@produto.ImagemUrl" alt="@produto.Nome" />
+                        <span>@produto.Nome</span>
+                    </a>
+                </div>
+            }
+        </div>
+    }
 </section>
 
 @section Scripts {
     <script>
         document.querySelector(".adicionar-carrinho")?.addEventListener("click", function () {
-            fetch(`/Carrinho/Adicionar/${this.dataset.id}`, { method: "POST" })
+            fetch(/Carrinho/Adicionar/${this.dataset.id}, { method: "POST" })
                 .then(response => response.redirected ? (window.location.href = response.url) : response.json())
                 .then(data => {
                     if (data?.quantidade) {
