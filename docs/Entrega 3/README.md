@@ -26,4 +26,4 @@ Reunir os artefatos que demonstram a arquitetura do sistema em diferentes nívei
 
 ## Observação
 
-Os campos de número do grupo, nomes completos e RAs permanecem como placeholders para preenchimento final antes da submissão.
+A identificação do grupo já foi preenchida no relatório final da entrega.

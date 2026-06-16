@@ -4,8 +4,8 @@ Use esta lista para conferir se a entrega cobre todos os pontos esperados no blo
 
 ## 1. Identificação do grupo
 
-- [ ] Número do grupo preenchido.
-- [ ] Nome completo e RA de todos os integrantes preenchidos.
+- [x] Número do grupo preenchido.
+- [x] Nome completo e RA de todos os integrantes preenchidos.
 
 ## 2. Padrões de projeto (GoF)
 

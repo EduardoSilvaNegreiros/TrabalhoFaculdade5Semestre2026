@@ -8,11 +8,18 @@ Apresentar a arquitetura completa do sistema, cobrindo os diagramas C4, o uso de
 
 ## 1. Identificação do grupo
 
-- Número do grupo: **[preencher número do grupo]**
-- Integrante 1: **[nome completo]** - RA **[RA]**
-- Integrante 2: **[nome completo]** - RA **[RA]**
-- Integrante 3: **[nome completo]** - RA **[RA]**
-- Integrante 4: **[nome completo]** - RA **[RA]**
+- Número do grupo: **4**
+- Integrante 1: **Eduardo Silva de Negreiros** - RA **924109760**
+- Integrante 2: **Josué Padetti Correa** - RA **924109806**
+- Integrante 3: **Gabrielle Victoria de Souza Barboza** - RA **424106162**
+- Integrante 4: **Micael Dantas da Silva** - RA **924110378**
+- Integrante 5: **Daiane Jheniffer da Silva Araujo** - RA **1726105657**
+- Integrante 6: **Beatriz Cerqueira Sonoro** - RA **924106243**
+- Integrante 7: **Kauanne Vitória Soares Bernardo** - RA **924111927**
+- Integrante 8: **Júlio Guedes de Oliveira** - RA **926107422**
+- Integrante 9: **Matheus Da Silva Reis** - RA **926111266**
+- Integrante 10: **Wesley Weber Fernandes** - RA **924107330**
+- Integrante 11: **Bryan Willian da Silva Almeida** - RA **925116744**
 
 ## 2. Diagrama C4 - Nível Context (C1)
 
