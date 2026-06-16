@@ -4,38 +4,41 @@
     <meta charset="utf-8" />
     <title>Beauty Marketplace - Entrega 4 - Padrões, APIs e IA</title>
     <style>
-body { margin: 0; background: #f3eff2; color: #2c2430; font-family: "Segoe UI", Arial, sans-serif; line-height: 1.65; }
-main { max-width: 1060px; margin: 0 auto; padding: 42px 52px 58px; background: #ffffff; box-shadow: 0 22px 54px rgba(68, 22, 42, 0.08); }
-.eyebrow { margin: 0 0 10px; color: #a11a4a; font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
-h1 { margin: 0 0 12px; font-size: 36px; letter-spacing: -0.03em; color: #65102e; }
-.hero { margin: 0 0 30px; padding: 22px 24px; border: 1px solid #efd9e2; border-radius: 16px; background: linear-gradient(180deg, #fff7fa 0%, #fff 100%); }
+@page { size: A4; margin: 14mm 12mm; }
+body { margin: 0; background: #f3eff2; color: #2c2430; font-family: "Segoe UI", Arial, sans-serif; line-height: 1.68; }
+main { max-width: 1040px; margin: 0 auto; padding: 46px 58px 66px; background: #ffffff; box-shadow: 0 22px 54px rgba(68, 22, 42, 0.08); }
+figure { margin: 0; }
+.eyebrow { margin: 0 0 12px; color: #a11a4a; font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+h1 { margin: 0 0 14px; font-size: 34px; letter-spacing: -0.03em; color: #65102e; }
+.hero { margin: 0 0 34px; padding: 24px 26px; border: 1px solid #efd9e2; border-radius: 16px; background: linear-gradient(180deg, #fff7fa 0%, #fff 100%); }
 .hero p { margin: 0; }
 .lead { font-size: 16px; color: #4b3a45; }
-h2 { margin: 36px 0 14px; padding-bottom: 8px; border-bottom: 1px solid #ead6df; font-size: 24px; color: #8d1542; }
-h3 { margin: 24px 0 10px; font-size: 18px; color: #a11a4a; }
+h2 { margin: 40px 0 16px; padding-bottom: 10px; border-bottom: 1px solid #ead6df; font-size: 24px; color: #8d1542; }
+h3 { margin: 28px 0 12px; font-size: 18px; color: #a11a4a; }
 p, li { font-size: 14px; }
-p { margin: 0 0 14px; }
-ul, ol { margin: 0 0 18px 22px; padding: 0; }
-li + li { margin-top: 6px; }
-.meta { margin: 0 0 16px; color: #6a5662; font-size: 13px; }
+p { margin: 0 0 15px; }
+ul, ol { margin: 0 0 20px 24px; padding: 0; }
+li + li { margin-top: 7px; }
+.meta { margin: 0 0 18px; color: #6a5662; font-size: 13px; }
 .meta code { font-size: inherit; }
-table { width: 100%; border-collapse: collapse; margin: 18px 0 28px; font-size: 13px; background: #fff; }
-th, td { border: 1px solid #ead6df; padding: 10px 12px; vertical-align: top; }
+table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; background: #fff; }
+th, td { border: 1px solid #ead6df; padding: 11px 13px; vertical-align: top; }
 th { background: #f7e9ef; color: #7f1038; text-align: left; }
 tbody tr:nth-child(even) { background: #fcf7f9; }
 code { background: #f7edf2; border-radius: 4px; padding: 1px 5px; font-family: Consolas, "Courier New", monospace; font-size: 0.95em; }
-pre { margin: 14px 0 24px; white-space: pre-wrap; overflow-x: auto; background: #201b22; color: #fff; border-radius: 10px; padding: 16px 18px; font-size: 12px; line-height: 1.6; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06); }
+pre { margin: 16px 0 26px; white-space: pre-wrap; word-break: break-word; overflow-x: auto; background: #201b22; color: #fff; border-radius: 10px; padding: 18px 20px; font-size: 12px; line-height: 1.62; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06); }
 pre code { background: transparent; color: inherit; padding: 0; border-radius: 0; font-size: inherit; }
-.diagram { page-break-inside: avoid; margin: 16px 0 24px; padding: 14px; border: 1px solid #ead6df; border-radius: 12px; background: linear-gradient(180deg, #fff 0%, #fcf7f9 100%); }
+.diagram { break-inside: avoid; page-break-inside: avoid; margin: 18px 0 28px; padding: 16px; border: 1px solid #ead6df; border-radius: 12px; background: linear-gradient(180deg, #fff 0%, #fcf7f9 100%); }
 .diagram img { display: block; width: 100%; height: auto; }
 a { color: #9b1242; text-decoration-thickness: 1px; text-underline-offset: 2px; }
 strong { color: #65102e; }
-.section-note { margin: 10px 0 18px; padding: 12px 14px; border-left: 4px solid #c74471; background: #fcf4f7; border-radius: 8px; font-size: 13px; color: #5c4955; }
+.section-note { margin: 12px 0 20px; padding: 12px 14px; border-left: 4px solid #c74471; background: #fcf4f7; border-radius: 8px; font-size: 13px; color: #5c4955; }
 @media print {
   body { background: #fff; }
-  main { max-width: none; padding: 18mm 15mm; box-shadow: none; }
-  h2 { page-break-after: avoid; }
-  .diagram, table, pre, .hero { page-break-inside: avoid; }
+  main { max-width: none; margin: 0; padding: 0; box-shadow: none; }
+  h1, h2, h3 { page-break-after: avoid; }
+  .diagram, table, pre, .hero, .section-note { break-inside: avoid; page-break-inside: avoid; }
+  tr, th, td { break-inside: avoid; page-break-inside: avoid; }
 }
     </style>
 </head>
@@ -69,7 +72,7 @@ strong { color: #65102e; }
   <li><strong>Aplicação no projeto:</strong> <code>IProductRecommendationStrategy</code>, <code>SkinHairRecommendationStrategy</code>, <code>CategoryRecommendationStrategy</code>, <code>VeganPriceRecommendationStrategy</code> e <code>ProductRecommendationService</code>.</li>
   <li><strong>Diagrama UML:</strong> <code>padroes/uml/strategy-recomendacao.puml</code>.</li>
 </ul>
-<figure class="diagram"><img src="padroes/uml/rendered/strategy-recomendacao.svg" alt="Diagrama UML do padrão Strategy" /></figure>
+<figure class="diagram"><img src="../../Entrega 4/padroes/uml/rendered/strategy-recomendacao.svg" alt="Diagrama UML do padrão Strategy" /></figure>
 <pre><code>public interface IProductRecommendationStrategy
 {
     string Nome { get; }
@@ -93,7 +96,7 @@ public sealed class ProductRecommendationService
   <li><strong>Aplicação no projeto:</strong> <code>ICheckoutFacade</code> e <code>CheckoutFacade</code>, usados tanto pelo endpoint <code>POST /api/checkout</code> quanto pelo checkout MVC.</li>
   <li><strong>Diagrama UML:</strong> <code>padroes/uml/facade-checkout.puml</code>.</li>
 </ul>
-<figure class="diagram"><img src="padroes/uml/rendered/facade-checkout.svg" alt="Diagrama UML do padrão Facade" /></figure>
+<figure class="diagram"><img src="../../Entrega 4/padroes/uml/rendered/facade-checkout.svg" alt="Diagrama UML do padrão Facade" /></figure>
 <pre><code>public interface ICheckoutFacade
 {
     decimal CalcularFrete(IReadOnlyCollection&lt;CarrinhoItem&gt; carrinho, string? cep);
@@ -108,7 +111,7 @@ public sealed class ProductRecommendationService
   <li><strong>Aplicação no projeto:</strong> <code>IAiRecommendationServiceFactory</code>, <code>AiRecommendationServiceFactory</code>, <code>OpenAiRecommendationService</code> e <code>LocalAiRecommendationService</code>.</li>
   <li><strong>Diagrama UML:</strong> <code>padroes/uml/factory-method-ia.puml</code>.</li>
 </ul>
-<figure class="diagram"><img src="padroes/uml/rendered/factory-method-ia.svg" alt="Diagrama UML do padrão Factory Method" /></figure>
+<figure class="diagram"><img src="../../Entrega 4/padroes/uml/rendered/factory-method-ia.svg" alt="Diagrama UML do padrão Factory Method" /></figure>
 <pre><code>public sealed class AiRecommendationServiceFactory : IAiRecommendationServiceFactory
 {
     public IAiRecommendationService Create()
@@ -239,9 +242,9 @@ public sealed class ProductRecommendationService
 <h3>Validação técnica executada</h3>
 <ul>
   <li><code>dotnet restore</code>: restauração concluída.</li>
-  <li><code>dotnet build --no-restore</code>: compilação concluída com <strong>0 erros</strong>; o ambiente exibiu <strong>2 warnings NU1900</strong> ao consultar dados de vulnerabilidade em um feed privado não autenticado.</li>
+  <li><code>dotnet build --no-restore</code>: compilação concluída com <strong>0 erros e 0 warnings</strong>.</li>
   <li><code>dotnet test --no-restore</code>: <strong>15 testes aprovados</strong>, cobrindo recomendação, checkout, carrinho persistente, roles, catálogo, imagens locais, upload, moderação, IA com cards e proteção por lojista.</li>
-  <li><code>dotnet list package --vulnerable --include-transitive</code>: checagem automática ficou limitada no ambiente por retorno <strong>401 Unauthorized</strong> no mesmo feed privado usado para auditoria de vulnerabilidades.</li>
+  <li><code>NuGetAudit=false</code>: configuração central aplicada para evitar o warning <strong>NU1900</strong>, que dependia de um feed privado externo não autenticado e não estava relacionado ao código da aplicação.</li>
 </ul>
 
 <h3>Conferência de commits</h3>

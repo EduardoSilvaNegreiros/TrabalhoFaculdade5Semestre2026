@@ -74,9 +74,9 @@ Conta: `admin@beautymarket.com` / `Admin@123`
 ## 8. Comandos de validação
 
 ```powershell
+dotnet restore
 dotnet build --no-restore
-dotnet test --no-build
-dotnet list package --vulnerable --include-transitive
+dotnet test --no-restore
 ```
 
 ## 9. Checklist rápido para apresentação

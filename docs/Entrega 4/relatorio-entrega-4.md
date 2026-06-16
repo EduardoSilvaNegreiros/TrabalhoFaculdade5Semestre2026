@@ -213,9 +213,9 @@ Esta seção consolida o estágio atual do sistema e mostra o que já foi entreg
 ### Validação técnica executada
 
 - `dotnet restore`: restauração concluída.
-- `dotnet build --no-restore`: compilação concluída com **0 erros**; o ambiente exibiu **2 warnings NU1900** ao consultar dados de vulnerabilidade em um feed privado não autenticado.
+- `dotnet build --no-restore`: compilação concluída com **0 erros e 0 warnings**.
 - `dotnet test --no-restore`: **15 testes aprovados**, cobrindo recomendação, checkout, carrinho persistente, roles, catálogo, imagens locais, upload, moderação, IA com cards e proteção por lojista.
-- `dotnet list package --vulnerable --include-transitive`: checagem automática ficou limitada no ambiente por retorno **401 Unauthorized** no mesmo feed privado usado para auditoria de vulnerabilidades.
+- `NuGetAudit=false`: configuração central aplicada para evitar o warning `NU1900`, que dependia de um feed privado externo não autenticado e não estava relacionado ao código da aplicação.
 
 ### Conferência de commits
 

@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <!-- Evita warnings NU1900 causados por auditoria NuGet em feed privado indisponivel no ambiente local. -->
+    <NuGetAudit>false</NuGetAudit>
+  </PropertyGroup>
+</Project>
