@@ -1,139 +1,176 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="utf-8" />
     <title>Beauty Marketplace - Entrega 3 - Arquitetura</title>
     <style>
-body { margin: 0; color: #28222a; font-family: "Segoe UI", Arial, sans-serif; line-height: 1.55; background: #fff; }
-main { max-width: 1060px; margin: 0 auto; padding: 40px 48px; }
-h1 { margin-top: 0; border-bottom: 4px solid #b0164e; padding-bottom: 12px; font-size: 34px; }
-h2 { margin-top: 34px; font-size: 24px; }
-h3 { margin-top: 22px; font-size: 18px; }
+body { margin: 0; background: #f3eff2; color: #2c2430; font-family: "Segoe UI", Arial, sans-serif; line-height: 1.65; }
+main { max-width: 1060px; margin: 0 auto; padding: 42px 52px 58px; background: #ffffff; box-shadow: 0 22px 54px rgba(68, 22, 42, 0.08); }
+.eyebrow { margin: 0 0 10px; color: #a11a4a; font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+h1 { margin: 0 0 12px; font-size: 36px; letter-spacing: -0.03em; color: #65102e; }
+.hero { margin: 0 0 30px; padding: 22px 24px; border: 1px solid #efd9e2; border-radius: 16px; background: linear-gradient(180deg, #fff7fa 0%, #fff 100%); }
+.hero p { margin: 0; }
+.lead { font-size: 16px; color: #4b3a45; }
+h2 { margin: 36px 0 14px; padding-bottom: 8px; border-bottom: 1px solid #ead6df; font-size: 24px; color: #8d1542; }
+h3 { margin: 24px 0 10px; font-size: 18px; color: #a11a4a; }
 p, li { font-size: 14px; }
-table { width: 100%; border-collapse: collapse; margin: 14px 0 24px; font-size: 13px; }
-th, td { border: 1px solid #ead6df; padding: 9px 10px; vertical-align: top; }
-th { background: #f7e9ef; text-align: left; }
-code { background: #f7edf2; border-radius: 4px; padding: 1px 4px; font-family: Consolas, monospace; }
-pre { white-space: pre-wrap; background: #201b22; color: #fff; border-radius: 8px; padding: 14px; font-size: 12px; }
-.diagram { page-break-inside: avoid; border: 1px solid #ead6df; border-radius: 8px; padding: 12px; margin: 12px 0 20px; }
+p { margin: 0 0 14px; }
+ul, ol { margin: 0 0 18px 22px; padding: 0; }
+li + li { margin-top: 6px; }
+.meta { margin: 0 0 16px; color: #6a5662; font-size: 13px; }
+.meta code { font-size: inherit; }
+table { width: 100%; border-collapse: collapse; margin: 18px 0 28px; font-size: 13px; background: #fff; }
+th, td { border: 1px solid #ead6df; padding: 10px 12px; vertical-align: top; }
+th { background: #f7e9ef; color: #7f1038; text-align: left; }
+tbody tr:nth-child(even) { background: #fcf7f9; }
+code { background: #f7edf2; border-radius: 4px; padding: 1px 5px; font-family: Consolas, "Courier New", monospace; font-size: 0.95em; }
+pre { margin: 14px 0 24px; white-space: pre-wrap; overflow-x: auto; background: #201b22; color: #fff; border-radius: 10px; padding: 16px 18px; font-size: 12px; line-height: 1.6; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06); }
+pre code { background: transparent; color: inherit; padding: 0; border-radius: 0; font-size: inherit; }
+.diagram { page-break-inside: avoid; margin: 16px 0 24px; padding: 14px; border: 1px solid #ead6df; border-radius: 12px; background: linear-gradient(180deg, #fff 0%, #fcf7f9 100%); }
 .diagram img { display: block; width: 100%; height: auto; }
-a { color: #9b1242; }
-@media print { main { max-width: none; padding: 22mm 16mm; } h2 { page-break-after: avoid; } .diagram, table { page-break-inside: avoid; } }
+a { color: #9b1242; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+strong { color: #65102e; }
+.section-note { margin: 10px 0 18px; padding: 12px 14px; border-left: 4px solid #c74471; background: #fcf4f7; border-radius: 8px; font-size: 13px; color: #5c4955; }
+@media print {
+  body { background: #fff; }
+  main { max-width: none; padding: 18mm 15mm; box-shadow: none; }
+  h2 { page-break-after: avoid; }
+  .diagram, table, pre, .hero { page-break-inside: avoid; }
+}
     </style>
 </head>
 <body>
 <main>
+<p class="eyebrow">Projeto Integrador • Bloco 3</p>
 <h1>Beauty Marketplace - Entrega 3 - Arquitetura</h1>
-<h2>1. Identifica&#231;&#227;o do grupo</h2>
+<section class="hero">
+  <p class="lead">Esta entrega consolida a arquitetura do Beauty Marketplace em diferentes níveis de abstração, conectando visão de contexto, visão de containers, visão de componentes e modelagem de dados relacional e não relacional.</p>
+</section>
+
+<h2>Objetivo</h2>
+<p>Apresentar a arquitetura completa do sistema, cobrindo os diagramas C4, o uso de Diagrams as Code e a modelagem de dados com <strong>MySQL</strong>, <strong>MongoDB</strong> e <strong>Redis</strong>, sempre relacionando cada artefato com o funcionamento real do marketplace.</p>
+
+<h2>1. Identificação do grupo</h2>
 <ul>
-<li>N&#250;mero do grupo: <strong>[preencher n&#250;mero do grupo]</strong></li>
-<li>Integrante 1: <strong>[nome completo]</strong> - RA <strong>[RA]</strong></li>
-<li>Integrante 2: <strong>[nome completo]</strong> - RA <strong>[RA]</strong></li>
-<li>Integrante 3: <strong>[nome completo]</strong> - RA <strong>[RA]</strong></li>
-<li>Integrante 4: <strong>[nome completo]</strong> - RA <strong>[RA]</strong></li>
-</ul>
-<h2>Objetivo da entrega</h2>
-<p>Apresentar a arquitetura completa do Beauty Marketplace, desde a vis&#227;o de alto n&#237;vel com C4 at&#233; os modelos de dados relacional e n&#227;o relacional. A entrega usa C4-PlantUML como Diagrams as Code, MySQL para o modelo relacional e MongoDB/Redis para a modelagem NoSQL.</p>
-<p>O Beauty Marketplace centraliza produtos de beleza de diferentes lojistas em uma &#250;nica plataforma. O sistema atende consumidores que desejam comparar produtos por perfil de beleza, comprar de m&#250;ltiplos vendedores em um carrinho unificado e acompanhar pedidos com rastreio por item. Tamb&#233;m atende lojistas, que precisam gerenciar estoque, vendas e envio de pedidos, e administradores, que controlam aprova&#231;&#227;o de lojistas, modera&#231;&#227;o de produtos e comiss&#245;es por categoria.</p>
-<h2>2. Diagrama C4 - N&#237;vel Context (C1)</h2>
-<p>Arquivo fonte do diagrama: <code>diagramas/c1-context.puml</code></p>
-<figure class="diagram"><img src="diagramas/rendered/c1-context.svg" alt="Diagrama" /></figure>
-<p>O diagrama de contexto apresenta o Beauty Marketplace como sistema central e mostra sua rela&#231;&#227;o com usu&#225;rios e sistemas externos.</p>
-<h3>Elementos do C1</h3>
-<table>
-<thead><tr><th>Elemento</th><th>Tipo</th><th>Descri&#231;&#227;o</th></tr></thead>
-<tbody>
-<tr><td>Consumidor</td><td>Usu&#225;rio</td><td>Pesquisa, filtra, compra produtos de beleza, avalia itens e acompanha entregas.</td></tr>
-<tr><td>Lojista</td><td>Usu&#225;rio</td><td>Cadastra produtos, acompanha vendas, gerencia estoque e recebe pedidos.</td></tr>
-<tr><td>Administrador</td><td>Usu&#225;rio</td><td>Aprova ou reprova lojistas, modera produtos, define comiss&#245;es por categoria e monitora a plataforma.</td></tr>
-<tr><td>Beauty Marketplace</td><td>Sistema</td><td>Centraliza cat&#225;logo, carrinho multi-lojista, checkout, avalia&#231;&#245;es, lista de desejos e rastreio.</td></tr>
-<tr><td>Gateway de pagamento</td><td>Sistema externo</td><td>Autoriza pagamento &#250;nico e distribui valores entre lojistas por split.</td></tr>
-<tr><td>Correios/Transportadoras</td><td>Sistema externo</td><td>Calcula pre&#231;o de frete, prazo e status de rastreio.</td></tr>
-<tr><td>Servi&#231;o de e-mail/notifica&#231;&#245;es</td><td>Sistema externo</td><td>Envia confirma&#231;&#245;es, avisos de novos pedidos e recupera&#231;&#227;o de carrinho abandonado.</td></tr>
-<tr><td>Redes sociais e comunidade</td><td>Sistema externo/social</td><td>Representa origem de resenhas, tend&#234;ncias e prova social que influenciam a compra.</td></tr>
-</tbody></table>
-<h2>3. Diagrama C4 - N&#237;vel Container (C2)</h2>
-<p>Arquivo fonte do diagrama: <code>diagramas/c2-container.puml</code></p>
-<figure class="diagram"><img src="diagramas/rendered/c2-container.svg" alt="Diagrama" /></figure>
-<p>O diagrama de containers detalha os blocos execut&#225;veis e de armazenamento envolvidos na solu&#231;&#227;o.</p>
-<h3>Containers e justificativas tecnol&#243;gicas</h3>
-<table>
-<thead><tr><th>Container</th><th>Tecnologia</th><th>Responsabilidade</th><th>Justificativa</th></tr></thead>
-<tbody>
-<tr><td>Navegador / Mobile Web</td><td>Razor Views, Bootstrap, HTML, CSS e JavaScript</td><td>Interface responsiva para consumidor, lojista e administrador.</td><td>Permite demonstrar os fluxos do marketplace em ambiente web e mobile sem criar aplicativo nativo.</td></tr>
-<tr><td>Aplica&#231;&#227;o ASP.NET Core MVC</td><td>ASP.NET Core MVC, EF Core e Identity</td><td>Controllers, regras de neg&#243;cio, autentica&#231;&#227;o por roles, carrinho, pedidos, lojista e admin.</td><td>J&#225; &#233; a base do projeto, reduz complexidade e oferece padr&#227;o MVC adequado para apresenta&#231;&#227;o acad&#234;mica.</td></tr>
-<tr><td>MySQL</td><td>Banco relacional</td><td>Modelo oficial de usu&#225;rios, lojistas, produtos, pedidos, comiss&#245;es e avalia&#231;&#245;es.</td><td>Adequado para dados transacionais, integridade referencial, PKs/FKs e consultas relacionais.</td></tr>
-<tr><td>SQLite local</td><td>Banco relacional embarcado</td><td>Execu&#231;&#227;o local do prot&#243;tipo.</td><td>Facilita demonstra&#231;&#227;o sem instalar servidor de banco, mas n&#227;o substitui o modelo MySQL da entrega.</td></tr>
-<tr><td>MongoDB</td><td>Banco de documentos</td><td>Avalia&#231;&#245;es com fotos, v&#237;deos e atributos flex&#237;veis de beleza.</td><td>Avalia&#231;&#245;es podem mudar de formato conforme categoria, m&#237;dia e perfil do consumidor.</td></tr>
-<tr><td>Redis</td><td>Cache chave-valor</td><td>Carrinho r&#225;pido, TTL de carrinho abandonado e ranking de produtos visualizados.</td><td>Reduz lat&#234;ncia em opera&#231;&#245;es frequentes e permite recomenda&#231;&#227;o simples.</td></tr>
-<tr><td>Gateway de pagamento</td><td>API externa</td><td>Pagamento &#250;nico e split por lojista.</td><td>Necess&#225;rio para o modelo de neg&#243;cio multi-vendedor.</td></tr>
-<tr><td>Correios/Transportadoras</td><td>API externa</td><td>Frete, prazo e rastreio.</td><td>Necess&#225;rio para compra com lojistas diferentes e entrega por item.</td></tr>
-<tr><td>E-mail/notifica&#231;&#245;es</td><td>API externa</td><td>Confirma&#231;&#245;es, avisos de pedido e recupera&#231;&#227;o de carrinho.</td><td>Apoia comunica&#231;&#227;o transacional e reten&#231;&#227;o do consumidor.</td></tr>
-</tbody></table>
-<h2>4. Diagrama C4 - N&#237;vel Component (C3)</h2>
-<p>Arquivo fonte do diagrama: <code>diagramas/c3-component-backend.puml</code></p>
-<figure class="diagram"><img src="diagramas/rendered/c3-component-backend.svg" alt="Diagrama" /></figure>
-<p>O container detalhado no C3 &#233; a Aplica&#231;&#227;o ASP.NET Core MVC, pois concentra as regras principais do marketplace.</p>
-<h3>Componentes e responsabilidades</h3>
-<table>
-<thead><tr><th>Componente</th><th>Responsabilidade</th></tr></thead>
-<tbody>
-<tr><td>ProdutoController</td><td>Exibe cat&#225;logo p&#250;blico, busca, filtros de beleza, detalhes, avalia&#231;&#245;es e recomenda&#231;&#245;es.</td></tr>
-<tr><td>CarrinhoController</td><td>Gerencia carrinho do consumidor, itens de m&#250;ltiplos lojistas, valida&#231;&#227;o de estoque, checkout, frete e split.</td></tr>
-<tr><td>PedidosController</td><td>Exibe hist&#243;rico de pedidos e rastreamento por item/lojista.</td></tr>
-<tr><td>ListaDesejosController</td><td>Permite salvar e remover produtos da lista de desejos.</td></tr>
-<tr><td>LojistaController</td><td>Mostra dashboard do lojista, vendas, notifica&#231;&#245;es de pedidos, cadastro/edi&#231;&#227;o de produtos, upload de imagem, atualiza&#231;&#227;o de estoque e atualiza&#231;&#227;o de status de envio.</td></tr>
-<tr><td>AdminController</td><td>Aprova/reprova lojistas, aprova/reprova produtos, altera comiss&#245;es por categoria e mostra o mapa de atendimento dos requisitos.</td></tr>
-<tr><td>ASP.NET Identity</td><td>Controla login, cadastro e roles Consumidor, Lojista e Administrador.</td></tr>
-<tr><td>ApplicationDbContext</td><td>Mapeia entidades relacionais e centraliza acesso ao banco via EF Core.</td></tr>
-<tr><td>CartService</td><td>Sincroniza carrinho em sess&#227;o e banco local, permitindo persist&#234;ncia por alguns dias e limpeza de itens expirados.</td></tr>
-<tr><td>SessionExtensions</td><td>Serializa o carrinho na sess&#227;o do usu&#225;rio durante a navega&#231;&#227;o.</td></tr>
-<tr><td>MarketplaceSeeder</td><td>Cria dados de demonstra&#231;&#227;o: roles, usu&#225;rios, lojistas, produtos, categorias e avalia&#231;&#245;es.</td></tr>
-<tr><td>Integra&#231;&#245;es de dom&#237;nio</td><td>Representa c&#225;lculo de frete, prazo, split, repasse, rastreio e notifica&#231;&#245;es demonstr&#225;veis.</td></tr>
-</tbody></table>
-<h2>5. Diagrams as Code</h2>
-<p>Os diagramas C4 foram criados com PlantUML e C4-PlantUML. O c&#243;digo-fonte est&#225; versionado no reposit&#243;rio, atendendo ao crit&#233;rio de Diagrams as Code.</p>
-<p>Arquivos:</p>
-<ul>
-<li><code>diagramas/c1-context.puml</code></li>
-<li><code>diagramas/c2-container.puml</code></li>
-<li><code>diagramas/c3-component-backend.puml</code></li>
+  <li>Número do grupo: <strong>[preencher número do grupo]</strong></li>
+  <li>Integrante 1: <strong>[nome completo]</strong> - RA <strong>[RA]</strong></li>
+  <li>Integrante 2: <strong>[nome completo]</strong> - RA <strong>[RA]</strong></li>
+  <li>Integrante 3: <strong>[nome completo]</strong> - RA <strong>[RA]</strong></li>
+  <li>Integrante 4: <strong>[nome completo]</strong> - RA <strong>[RA]</strong></li>
 </ul>
 
-<p>Com PlantUML instalado, os diagramas podem ser gerados com:</p>
-<pre><code>plantuml &quot;docs/Entrega 3/diagramas/*.puml&quot;</code></pre>
+<h2>2. Diagrama C4 - Nível Context (C1)</h2>
+<p class="meta">Arquivo fonte do diagrama: <code>diagramas/c1-context.puml</code></p>
+<figure class="diagram"><img src="diagramas/rendered/c1-context.svg" alt="Diagrama C4 nível Context" /></figure>
+<p>O diagrama C1 apresenta o Beauty Marketplace como sistema central e evidencia quem interage com a plataforma, quais integrações externas participam do fluxo e qual é o papel de cada elemento no ecossistema do produto.</p>
+
+<h3>Elementos representados</h3>
+<table>
+  <thead><tr><th>Elemento</th><th>Tipo</th><th>Descrição</th></tr></thead>
+  <tbody>
+    <tr><td>Consumidor</td><td>Usuário</td><td>Pesquisa, filtra, compra produtos de beleza, avalia itens e acompanha entregas.</td></tr>
+    <tr><td>Lojista</td><td>Usuário</td><td>Cadastra produtos, acompanha vendas, gerencia estoque e recebe pedidos.</td></tr>
+    <tr><td>Administrador</td><td>Usuário</td><td>Aprova ou reprova lojistas, modera produtos, define comissões por categoria e monitora a plataforma.</td></tr>
+    <tr><td>Beauty Marketplace</td><td>Sistema</td><td>Centraliza catálogo, carrinho multi-lojista, checkout, avaliações, lista de desejos e rastreio.</td></tr>
+    <tr><td>Gateway de pagamento</td><td>Sistema externo</td><td>Autoriza o pagamento único e distribui valores entre lojistas por split.</td></tr>
+    <tr><td>Correios/Transportadoras</td><td>Sistema externo</td><td>Calcula frete, prazo e atualização de rastreio por item.</td></tr>
+    <tr><td>Serviço de e-mail/notificações</td><td>Sistema externo</td><td>Envia confirmações, avisos de pedidos e mensagens de recuperação de carrinho.</td></tr>
+    <tr><td>Redes sociais e comunidade</td><td>Sistema externo/social</td><td>Representa a origem de tendências, resenhas e prova social que influenciam a decisão de compra.</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Diagrama C4 - Nível Container (C2)</h2>
+<p class="meta">Arquivo fonte do diagrama: <code>diagramas/c2-container.puml</code></p>
+<figure class="diagram"><img src="diagramas/rendered/c2-container.svg" alt="Diagrama C4 nível Container" /></figure>
+<p>O diagrama C2 detalha os principais containers da solução, mostrando como a interface, a aplicação, os bancos de dados e as integrações externas se relacionam para sustentar os fluxos do marketplace.</p>
+
+<h3>Containers, tecnologias e justificativas</h3>
+<table>
+  <thead><tr><th>Container</th><th>Tecnologia</th><th>Responsabilidade</th><th>Justificativa</th></tr></thead>
+  <tbody>
+    <tr><td>Navegador / Mobile Web</td><td>Razor Views, Bootstrap, HTML, CSS e JavaScript</td><td>Interface responsiva para consumidor, lojista e administrador.</td><td>Permite demonstrar todos os fluxos do sistema em ambiente web, sem necessidade de aplicativo nativo.</td></tr>
+    <tr><td>Aplicação ASP.NET Core MVC</td><td>ASP.NET Core MVC, EF Core e Identity</td><td>Controllers, regras de negócio, autenticação por roles, carrinho, pedidos, lojista e administração.</td><td>É a base do projeto, reduz complexidade de integração e segue o padrão arquitetural adotado na disciplina.</td></tr>
+    <tr><td>MySQL</td><td>Banco relacional</td><td>Modelo oficial de usuários, lojistas, produtos, pedidos, comissões e avaliações.</td><td>Atende bem dados transacionais, integridade referencial e consultas relacionais.</td></tr>
+    <tr><td>SQLite local</td><td>Banco relacional embarcado</td><td>Execução local do protótipo durante demonstração e desenvolvimento.</td><td>Simplifica a apresentação do sistema sem substituir a modelagem oficial da entrega, que permanece em MySQL.</td></tr>
+    <tr><td>MongoDB</td><td>Banco de documentos</td><td>Armazena avaliações com mídia e atributos flexíveis relacionados ao perfil de beleza.</td><td>Permite evoluir o formato dos documentos sem depender de alterações frequentes no schema relacional principal.</td></tr>
+    <tr><td>Redis</td><td>Cache chave-valor</td><td>Acelera carrinho, TTL de abandono e ranking de produtos visualizados.</td><td>Reduz latência em operações frequentes e apoia cenários de recomendação simples.</td></tr>
+    <tr><td>Gateway de pagamento</td><td>API externa</td><td>Processa pagamento único e split por lojista.</td><td>É essencial para o modelo de negócio multi-vendedor do marketplace.</td></tr>
+    <tr><td>Correios/Transportadoras</td><td>API externa</td><td>Fornece frete, prazo e rastreio.</td><td>Sustenta a entrega por item e por lojista dentro de uma compra unificada.</td></tr>
+    <tr><td>E-mail/notificações</td><td>API externa</td><td>Envia confirmações, alertas de pedido e recuperação de carrinho.</td><td>Apoia a comunicação transacional e a retenção do consumidor.</td></tr>
+  </tbody>
+</table>
+
+<h2>4. Diagrama C4 - Nível Component (C3)</h2>
+<p class="meta">Arquivo fonte do diagrama: <code>diagramas/c3-component-backend.puml</code></p>
+<figure class="diagram"><img src="diagramas/rendered/c3-component-backend.svg" alt="Diagrama C4 nível Component" /></figure>
+<p>O container detalhado no C3 é a <strong>Aplicação ASP.NET Core MVC</strong>, pois é nele que estão concentradas as regras que organizam catálogo, carrinho, checkout, pedidos, moderação e autenticação.</p>
+
+<h3>Componentes do container principal</h3>
+<table>
+  <thead><tr><th>Componente</th><th>Responsabilidade</th></tr></thead>
+  <tbody>
+    <tr><td>ProdutoController</td><td>Exibe catálogo público, busca, filtros de beleza, detalhes, avaliações e recomendações.</td></tr>
+    <tr><td>CarrinhoController</td><td>Gerencia carrinho do consumidor, itens de múltiplos lojistas, validação de estoque, checkout, frete e split.</td></tr>
+    <tr><td>PedidosController</td><td>Exibe histórico de pedidos e rastreamento por item/lojista.</td></tr>
+    <tr><td>ListaDesejosController</td><td>Permite salvar e remover produtos da lista de desejos.</td></tr>
+    <tr><td>LojistaController</td><td>Mostra dashboard do lojista, vendas, notificações, cadastro/edição de produtos, upload de imagem, estoque e status de envio.</td></tr>
+    <tr><td>AdminController</td><td>Aprova ou reprova lojistas e produtos, ajusta comissões por categoria e apresenta o mapa de atendimento dos requisitos.</td></tr>
+    <tr><td>ASP.NET Identity</td><td>Controla login, cadastro e roles <code>Consumidor</code>, <code>Lojista</code> e <code>Administrador</code>.</td></tr>
+    <tr><td>ApplicationDbContext</td><td>Mapeia entidades relacionais e centraliza o acesso a dados com EF Core.</td></tr>
+    <tr><td>CartService</td><td>Sincroniza carrinho em sessão e banco local, mantendo persistência por alguns dias e limpando itens expirados.</td></tr>
+    <tr><td>SessionExtensions</td><td>Serializa o carrinho na sessão do usuário durante a navegação.</td></tr>
+    <tr><td>MarketplaceSeeder</td><td>Cria dados de demonstração: roles, usuários, lojistas, produtos, categorias e avaliações.</td></tr>
+    <tr><td>Integrações de domínio</td><td>Representam cálculo de frete, prazo, split, repasse, rastreio e notificações demonstráveis.</td></tr>
+  </tbody>
+</table>
+
+<h2>5. Diagrams as Code</h2>
+<p>Os diagramas C4 foram implementados em <strong>PlantUML</strong> com apoio da biblioteca <strong>C4-PlantUML</strong>, atendendo ao requisito de Diagrams as Code. O código-fonte dos diagramas fica versionado junto com a documentação, o que facilita manutenção, revisão e rastreabilidade.</p>
+
+<h3>Arquivos fonte</h3>
+<ul>
+  <li><code>diagramas/c1-context.puml</code></li>
+  <li><code>diagramas/c2-container.puml</code></li>
+  <li><code>diagramas/c3-component-backend.puml</code></li>
+</ul>
+
+<h3>Geração dos diagramas</h3>
+<pre><code>plantuml "docs/Entrega 3/diagramas/*.puml"</code></pre>
+
 <h2>6. Modelagem de dados - SQL (MySQL)</h2>
-<p>Arquivo fonte: <code>sql/mysql-schema.sql</code></p>
-<p>O modelo relacional usa MySQL para representar entidades transacionais do marketplace. Ele possui mais de cinco tabelas, chaves prim&#225;rias, chaves estrangeiras, restri&#231;&#245;es e &#237;ndices.</p>
+<p class="meta">Arquivo fonte: <code>sql/mysql-schema.sql</code></p>
+<p>O modelo relacional oficial da entrega foi estruturado em <strong>MySQL</strong> para representar as entidades transacionais do marketplace. O script contempla mais de cinco tabelas, chaves primárias, chaves estrangeiras, restrições e índices, cobrindo o núcleo funcional do sistema.</p>
+
 <h3>Tabelas principais</h3>
 <table>
-<thead><tr><th>Tabela</th><th>Finalidade</th></tr></thead>
-<tbody>
-<tr><td>usuarios</td><td>Consumidores, lojistas e administradores autenticados.</td></tr>
-<tr><td>lojistas</td><td>Dados comerciais, CNPJ, documentos e status de aprova&#231;&#227;o.</td></tr>
-<tr><td>categorias</td><td>Categorias comerciais, como skincare, maquiagem e cabelo.</td></tr>
-<tr><td>comissoes_categoria</td><td>Percentual de comiss&#227;o vigente por categoria.</td></tr>
-<tr><td>produtos</td><td>Cat&#225;logo unificado com slug &#250;nico, filtros de beleza, pre&#231;o, estoque, imagem, lojista e status de modera&#231;&#227;o.</td></tr>
-<tr><td>pedidos</td><td>Cabe&#231;alho da compra feita pelo consumidor.</td></tr>
-<tr><td>pedido_itens</td><td>Itens do pedido separados por produto e lojista, incluindo split e rastreio.</td></tr>
-<tr><td>avaliacoes</td><td>Prova social relacional b&#225;sica vinculada a usu&#225;rio e produto.</td></tr>
-<tr><td>lista_desejos_itens</td><td>Produtos salvos pelo consumidor para compra futura.</td></tr>
-<tr><td>carrinho_persistido_itens</td><td>Itens de carrinho salvos por consumidor, com expira&#231;&#227;o, para recupera&#231;&#227;o de compra n&#227;o finalizada.</td></tr>
-</tbody></table>
-<h3>Relacionamentos</h3>
+  <thead><tr><th>Tabela</th><th>Finalidade</th></tr></thead>
+  <tbody>
+    <tr><td>usuarios</td><td>Armazena consumidores, lojistas e administradores autenticados.</td></tr>
+    <tr><td>lojistas</td><td>Guarda dados comerciais, CNPJ, documentos e status de aprovação.</td></tr>
+    <tr><td>categorias</td><td>Organiza grupos comerciais como skincare, maquiagem e cabelo.</td></tr>
+    <tr><td>comissoes_categoria</td><td>Define o percentual de comissão vigente por categoria.</td></tr>
+    <tr><td>produtos</td><td>Representa o catálogo com slug único, filtros de beleza, preço, estoque, imagem, lojista e status de moderação.</td></tr>
+    <tr><td>pedidos</td><td>Registra o cabeçalho da compra realizada pelo consumidor.</td></tr>
+    <tr><td>pedido_itens</td><td>Registra os itens do pedido por produto e lojista, incluindo split e rastreio.</td></tr>
+    <tr><td>avaliacoes</td><td>Mantém a prova social relacional básica vinculada a usuário e produto.</td></tr>
+    <tr><td>lista_desejos_itens</td><td>Guarda produtos salvos pelo consumidor para compra futura.</td></tr>
+    <tr><td>carrinho_persistido_itens</td><td>Guarda itens de carrinho com expiração para recuperação de compra não finalizada.</td></tr>
+  </tbody>
+</table>
+
+<h3>Relacionamentos principais</h3>
 <ul>
-<li>Um usu&#225;rio pode ser consumidor, lojista ou administrador.</li>
-<li>Um lojista pode ter muitos produtos, cadastrados manualmente no painel ou carregados pelo cat&#225;logo seedado em JSON.</li>
-<li>Uma categoria pode ter muitos produtos.</li>
-<li>Uma categoria possui uma configura&#231;&#227;o de comiss&#227;o.</li>
-<li>Um usu&#225;rio consumidor pode ter muitos pedidos.</li>
-<li>Um pedido possui muitos itens.</li>
-<li>Cada item de pedido referencia produto e lojista para permitir split, repasse e rastreio por vendedor.</li>
-<li>Um produto pode ter muitas avalia&#231;&#245;es.</li>
-<li>Um usu&#225;rio pode salvar muitos produtos na lista de desejos.</li>
-<li>Um usu&#225;rio pode ter itens de carrinho persistidos por prazo limitado.</li>
-<li>Um produto s&#243; aparece publicamente quando seu status de modera&#231;&#227;o est&#225; aprovado.</li>
+  <li>Um usuário pode atuar como consumidor, lojista ou administrador.</li>
+  <li>Um lojista pode possuir vários produtos no catálogo.</li>
+  <li>Uma categoria pode classificar muitos produtos e possui uma configuração de comissão.</li>
+  <li>Um consumidor pode realizar vários pedidos.</li>
+  <li>Um pedido possui vários itens.</li>
+  <li>Cada item de pedido referencia produto e lojista para viabilizar split e rastreio por vendedor.</li>
+  <li>Um produto pode receber várias avaliações.</li>
+  <li>Um usuário pode manter itens em lista de desejos e carrinho persistido.</li>
+  <li>Um produto só pode aparecer no catálogo público quando estiver com moderação aprovada.</li>
 </ul>
+
 <h3>DER em formato textual</h3>
 <pre><code>erDiagram
     USUARIOS ||--o{ PEDIDOS : realiza
@@ -150,33 +187,34 @@ a { color: #9b1242; }
     PRODUTOS ||--o{ AVALIACOES : recebe
     PRODUTOS ||--o{ LISTA_DESEJOS_ITENS : desejado
     PRODUTOS ||--o{ CARRINHO_PERSISTIDO_ITENS : adicionado</code></pre>
+
 <h2>7. Modelagem de dados - NoSQL</h2>
+
 <h3>MongoDB</h3>
-<p>Arquivo fonte: <code>nosql/mongodb-avaliacoes.json</code></p>
-<p>Cole&#231;&#227;o: <code>avaliacoes_produto</code></p>
-<p>Caso de uso: armazenar avalia&#231;&#245;es ricas com coment&#225;rio, fotos, v&#237;deos, atributos de beleza, status de modera&#231;&#227;o, compra verificada e curtidas.</p>
-<p>Justificativa: a prova social de produtos de beleza possui dados flex&#237;veis. Uma avalia&#231;&#227;o pode conter fotos de textura, v&#237;deos, tom de pele, tipo de cabelo, curvatura de cachos ou atributos diferentes conforme a categoria. MongoDB permite evoluir esses documentos sem alterar constantemente o schema relacional.</p>
+<p class="meta">Arquivo fonte: <code>nosql/mongodb-avaliacoes.json</code></p>
+<div class="section-note">Coleção modelada: <code>avaliacoes_produto</code></div>
+<p><strong>Caso de uso:</strong> armazenar avaliações ricas com comentário, fotos, vídeos, atributos de beleza, status de moderação, compra verificada e curtidas.</p>
+<p><strong>Justificativa:</strong> no contexto de produtos de beleza, a prova social pode variar bastante conforme categoria, tipo de mídia e perfil do consumidor. O modelo documental do MongoDB permite guardar essas variações com flexibilidade, sem exigir mudanças frequentes no modelo relacional principal.</p>
+
 <h3>Redis</h3>
-<p>Arquivo fonte: <code>nosql/redis-estruturas.md</code></p>
-<p>Estruturas modeladas:</p>
+<p class="meta">Arquivo fonte: <code>nosql/redis-estruturas.md</code></p>
 <ul>
-<li><code>cart:{usuarioId}</code> como Hash, com TTL de 30 minutos, para carrinho r&#225;pido.</li>
-<li><code>ranking:produtos:visualizados</code> como Sorted Set, para recomenda&#231;&#227;o simples por popularidade.</li>
-<li><code>cart:abandoned:{usuarioId}</code> como resumo tempor&#225;rio para recupera&#231;&#227;o de carrinho abandonado.</li>
+  <li><code>cart:{usuarioId}</code> como Hash com TTL de 30 minutos para carrinho rápido.</li>
+  <li><code>ranking:produtos:visualizados</code> como Sorted Set para recomendação simples por popularidade.</li>
+  <li><code>cart:abandoned:{usuarioId}</code> como resumo temporário para recuperação de carrinho abandonado.</li>
 </ul>
-<p>Justificativa: Redis reduz lat&#234;ncia de opera&#231;&#245;es frequentes e tempor&#225;rias, evita carga desnecess&#225;ria no MySQL e apoia fluxos de recomenda&#231;&#227;o e recupera&#231;&#227;o de carrinho.</p>
-<h2>Checklist final dos crit&#233;rios de avalia&#231;&#227;o</h2>
+<p><strong>Justificativa:</strong> o Redis reduz latência em operações temporárias e de alta frequência, aliviando o banco relacional e apoiando funcionalidades como recomendação e recuperação de carrinho.</p>
+
+<h2>8. Critérios de avaliação atendidos</h2>
 <table>
-<thead><tr><th>Crit&#233;rio</th><th>Atendimento</th></tr></thead>
-<tbody>
-<tr><td>Qualidade e completude dos diagramas C4</td><td>C1, C2 e C3 criados em PlantUML, com descri&#231;&#245;es no relat&#243;rio.</td></tr>
-<tr><td>Uso correto de Diagrams as Code</td><td>Fontes <code>.puml</code> inclu&#237;dos no reposit&#243;rio.</td></tr>
-<tr><td>Qualidade do modelo relacional SQL</td><td>Script MySQL com 10 tabelas, PKs, FKs, checks e &#237;ndices.</td></tr>
-<tr><td>Qualidade da modelagem NoSQL</td><td>MongoDB e Redis modelados com caso de uso e justificativa.</td></tr>
-</tbody></table>
-<h2>Forma de entrega</h2>
-<p>Enviar o arquivo <code>relatorio-entrega-3.pdf</code> e o link do reposit&#243;rio GitHub contendo esta pasta <code>docs/Entrega 3</code>, com diagramas PlantUML e scripts de modelagem.</p>
+  <thead><tr><th>Critério</th><th>Peso</th><th>Atendimento no projeto</th></tr></thead>
+  <tbody>
+    <tr><td>Qualidade e completude dos diagramas C4</td><td>30%</td><td>Os níveis C1, C2 e C3 foram elaborados em PlantUML, com descrição textual e coerência com o sistema implementado.</td></tr>
+    <tr><td>Uso correto de Diagrams as Code</td><td>10%</td><td>Os arquivos <code>.puml</code> estão versionados no repositório e podem ser regenerados a qualquer momento.</td></tr>
+    <tr><td>Qualidade do modelo relacional (SQL)</td><td>30%</td><td>O script MySQL cobre o domínio principal com 10 tabelas, relacionamentos, restrições e índices.</td></tr>
+    <tr><td>Qualidade da modelagem NoSQL</td><td>30%</td><td>MongoDB e Redis foram modelados com caso de uso claro e justificativa alinhada ao contexto do marketplace.</td></tr>
+  </tbody>
+</table>
 </main>
 </body>
 </html>
-

@@ -1,56 +1,35 @@
 # Entrega 4 - Padrões, APIs e IA
 
-Pasta oficial da quarta entrega do Projeto Integrador.
+Pasta oficial da quarta entrega do Projeto Integrador, correspondente ao **Bloco 4 - Desenvolvimento** e ao **Checkpoint 2 - Validação Técnica** do Beauty Marketplace.
 
-## Arquivos principais
+## Objetivo da pasta
 
-- `relatorio-entrega-4.pdf`: documento final para submissão.
-- `relatorio-entrega-4.md`: fonte editável do relatório.
-- `relatorio-entrega-4.html`: versão HTML para impressão.
-- `api/openapi.json`: especificação OpenAPI gerada pelo Swagger, filtrada para endpoints `/api`.
+Organizar os artefatos que demonstram a aplicação de padrões GoF, a documentação das APIs do sistema, a prova de conceito de Inteligência Artificial e o estágio atual do projeto.
+
+## Conteúdo principal
+
+- `relatorio-entrega-4.pdf`: versão final para submissão.
+- `relatorio-entrega-4.md`: fonte textual editável do relatório.
+- `api/openapi.json`: especificação OpenAPI filtrada para rotas `/api`.
 - `api/postman_collection.json`: coleção Postman com exemplos reais do catálogo atual.
-- `padroes/uml/*.puml`: diagramas UML dos padrões GoF.
+- `padroes/uml/*.puml`: diagramas UML dos padrões GoF aplicados.
 - `padroes/uml/rendered/*.svg`: diagramas UML renderizados.
-- `checklist-avaliacao.md`: conferência dos itens obrigatórios.
+- `checklist-avaliacao.md`: conferência dos requisitos e critérios atendidos.
 
-## Links da entrega
+## Leitura recomendada
+
+1. Comece pelo `relatorio-entrega-4.pdf` para a visão consolidada da entrega.
+2. Consulte `padroes/uml/` para os diagramas dos padrões GoF.
+3. Abra `api/openapi.json` e `api/postman_collection.json` para a documentação técnica das APIs.
+4. Revise `checklist-avaliacao.md` para confirmação dos itens obrigatórios.
+
+## Links importantes
 
 - Repositório GitHub: <https://github.com/EduardoSilvaNegreiros/TrabalhoFaculdade5Semestre2026>
 - GitHub Projects/Kanban: <https://github.com/users/EduardoSilvaNegreiros/projects/2>
 - Nome do Kanban: `Kanban - Projeto 5 Semestre ADS`
 - Swagger local: `http://localhost:5016/swagger`
-- OpenAPI JSON local: `http://localhost:5016/swagger/v1/swagger.json`
-- Postman Collection: `api/postman_collection.json`
 
-## Observações da API
+## Observação
 
-- O Swagger está filtrado para documentar somente rotas iniciadas por `/api`.
-- A documentação inclui esquema informativo de autenticação por cookie do ASP.NET Identity.
-- Endpoints de carrinho, checkout e pedidos exigem login como `Consumidor`.
-- Sem autenticação, esses endpoints retornam `401`; com perfil sem permissão, retornam `403`.
-- Não foram criadas novas rotas de API neste refinamento.
-
-## Melhorias implementadas no checkpoint
-
-- Checkout MVC e API usando `CheckoutFacade`, com transação EF Core, validação de estoque e baixa somente após sucesso.
-- Carrinho persistente por 7 dias, sincronizado entre sessão e banco local.
-- Moderação de produtos por status: `Aprovado`, `Pendente` e `Reprovado`.
-- Produtos novos/editados por lojista entram como `Pendente`; catálogo público, API e IA exibem apenas aprovados.
-- Lojista pode atualizar o status de envio dos próprios itens: `Separação pelo lojista`, `Enviado` e `Entregue`.
-- Tela de Recomendação IA mostra cards com imagem, preço, motivo, link de detalhes e botão de carrinho.
-
-## Conferência de commits
-
-Conferência realizada em 31/05/2026. O histórico visível mostra commits associados a `Eduardo <edunegreiross@gmail.com>` e `Eduardo Silva de Negreiros <edunegreiross@gmail.com>`.
-
-Caso o professor exija evidência individual de todos os integrantes, os demais membros devem realizar commits no repositório ou serem incluídos como coautores nos commits.
-
-## Validação executada
-
-- `dotnet restore`: restauração concluída.
-- `dotnet build --no-restore`: compilação concluída com 0 erros e 0 warnings.
-- `dotnet test --no-build`: 15 testes aprovados, cobrindo recomendação, checkout, carrinho persistente, roles, catálogo com 60 produtos, imagens locais, filtros do seed, upload de imagem, moderação e proteção por lojista.
-- `dotnet list package --vulnerable --include-transitive`: conferido sem vulnerabilidades conhecidas.
-- Swagger/OpenAPI: documentação filtrada para rotas `/api`, mantendo 12 operações.
-- Catálogo: curadoria realista com 60 produtos, imagens locais rastreadas e preços compatíveis com o mercado brasileiro.
-- Banco demo: `meubanco.db` usado como base local para apresentação.
+Os campos de número do grupo, nomes completos e RAs permanecem como placeholders para preenchimento final antes da submissão.

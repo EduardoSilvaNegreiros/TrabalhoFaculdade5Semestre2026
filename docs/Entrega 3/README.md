@@ -1,18 +1,29 @@
 # Entrega 3 - Arquitetura
 
-Pasta oficial da terceira entrega do Projeto Integrador, correspondente ao Bloco 3 - Arquitetura.
+Pasta oficial da terceira entrega do Projeto Integrador, dedicada ao **Bloco 3 - Arquitetura** do Beauty Marketplace.
 
-## Arquivos para entrega
+## Objetivo da pasta
 
-- `relatorio-entrega-3.pdf`: documento final para submissão.
-- `relatorio-entrega-3.md`: fonte editável do relatório.
-- `relatorio-entrega-3.html`: versão para impressão/conversão em PDF.
+Reunir os artefatos que demonstram a arquitetura do sistema em diferentes níveis de abstração: visão de contexto, visão de containers, visão de componentes e modelagem de dados relacional e não relacional.
+
+## Conteúdo principal
+
+- `relatorio-entrega-3.pdf`: versão final para submissão.
+- `relatorio-entrega-3.md`: fonte textual editável do relatório.
 - `diagramas/*.puml`: fontes PlantUML dos diagramas C4.
-- `sql/mysql-schema.sql`: script MySQL com tabelas, PKs, FKs e índices.
+- `diagramas/rendered/*.svg`: diagramas C4 renderizados.
+- `sql/mysql-schema.sql`: script relacional oficial da entrega.
 - `nosql/mongodb-avaliacoes.json`: modelagem da coleção MongoDB.
 - `nosql/redis-estruturas.md`: modelagem das estruturas Redis.
-- `checklist-avaliacao.md`: conferência dos itens obrigatórios.
+- `checklist-avaliacao.md`: conferência dos requisitos e critérios atendidos.
+
+## Leitura recomendada
+
+1. Comece pelo `relatorio-entrega-3.pdf` para a visão consolidada da entrega.
+2. Consulte `diagramas/*.puml` para comprovar o uso de Diagrams as Code.
+3. Abra `sql/mysql-schema.sql` para a modelagem relacional.
+4. Revise `nosql/` para a parte documental e de cache.
 
 ## Observação
 
-Preencha manualmente no relatório o número do grupo, nomes completos e RAs antes de gerar a versão final enviada ao professor.
+Os campos de número do grupo, nomes completos e RAs permanecem como placeholders para preenchimento final antes da submissão.

@@ -1,16 +1,16 @@
 # Documentação do Projeto Integrador
 
-Este diretório organiza as entregas e materiais de apoio do Beauty Marketplace.
+Este diretório concentra as entregas acadêmicas e os materiais de apoio do **Beauty Marketplace**.
 
-## Entregas
+## Estrutura principal
 
-- [Entrega 3 - Arquitetura](./Entrega%203/README.md): C4 Context, Container e Component, Diagrams as Code, modelagem SQL MySQL, MongoDB e Redis.
-- [Entrega 4 - Padrões, APIs e IA](./Entrega%204/README.md): padrões GoF, Swagger/OpenAPI, Postman Collection, PoC de IA e checkpoint 2.
+- [Entrega 3 - Arquitetura](./Entrega%203/README.md): documentação dos diagramas C4, Diagrams as Code e modelagem de dados SQL/NoSQL.
+- [Entrega 4 - Padrões, APIs e IA](./Entrega%204/README.md): documentação dos padrões GoF, APIs, prova de conceito de IA e Checkpoint 2.
 
-## Apoio para apresentação
+## Materiais de apoio
 
-- [Roteiro de apresentação](./roteiro-apresentacao.md): fluxo passo a passo para demonstrar consumidor, lojista, administrador e IA.
-- [Fontes dos produtos reais do catálogo](./imagens-produtos/fontes-produtos-reais.md): origem dos nomes, preços e imagens baixadas para uso local no catálogo.
+- [Roteiro de apresentação](./roteiro-apresentacao.md): sequência sugerida para demonstrar o sistema e as entregas.
+- [Fontes dos produtos reais do catálogo](./imagens-produtos/fontes-produtos-reais.md): origem dos nomes, preços e imagens usadas localmente no catálogo.
 
 ## Contas de demonstração
 
@@ -18,6 +18,6 @@ Este diretório organiza as entregas e materiais de apoio do Beauty Marketplace.
 - Lojista: `lojista@beautymarket.com` / `Lojista@123`
 - Administrador: `admin@beautymarket.com` / `Admin@123`
 
-## Banco demo
+## Banco de demonstração
 
-O arquivo `meubanco.db` é mantido como banco local de demonstração. Ele é recriado pelo seed do projeto com roles, usuários de demonstração, lojistas, comissões, catálogo realista com 60 produtos, avaliações, pedidos iniciais quando aplicável, carrinho persistente e moderação de produtos.
+O arquivo `meubanco.db` é mantido como base local de demonstração. Ele é recriado pelo seed do projeto com roles, usuários de exemplo, lojistas, catálogo, avaliações, moderação de produtos e dados necessários para apresentação.
