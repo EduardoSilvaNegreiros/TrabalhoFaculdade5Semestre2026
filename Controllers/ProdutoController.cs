@@ -7,6 +7,14 @@ namespace WebApplication1.Controllers
 {
     public class ProdutoController : Controller
     {
+        private static readonly HashSet<string> OrdenacoesPermitidas = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "menor-preco",
+            "maior-preco",
+            "nome-desc",
+            "estoque"
+        };
+
         private readonly ApplicationDbContext _context;
 
         public ProdutoController(ApplicationDbContext context)
@@ -28,6 +36,11 @@ namespace WebApplication1.Controllers
             decimal? precoMax,
             string? ordenacao)
         {
+            if (!string.IsNullOrWhiteSpace(ordenacao) && !OrdenacoesPermitidas.Contains(ordenacao))
+            {
+                ordenacao = null;
+            }
+
             var produtosAprovados = _context.Produtos.Where(p => p.StatusModeracao == ProdutoStatusModeracao.Aprovado);
             var query = produtosAprovados.Include(p => p.Lojista).AsQueryable();
 
@@ -104,13 +117,49 @@ namespace WebApplication1.Controllers
                 }
             }
 
-            ViewBag.Categorias = await produtosAprovados.Select(p => p.Categoria).Distinct().OrderBy(c => c).ToListAsync();
-            ViewBag.Peles = await produtosAprovados.Select(p => p.TipoPele).Where(v => v != "Todos").Distinct().OrderBy(c => c).ToListAsync();
-            ViewBag.Cabelos = await produtosAprovados.Select(p => p.TipoCabelo).Where(v => v != "Todos").Distinct().OrderBy(c => c).ToListAsync();
-            ViewBag.Marcas = await produtosAprovados.Select(p => p.Marca).Distinct().OrderBy(c => c).ToListAsync();
-            ViewBag.Lojistas = await produtosAprovados.Include(p => p.Lojista).Where(p => p.Lojista != null).Select(p => p.Lojista!.NomeFantasia).Distinct().OrderBy(c => c).ToListAsync();
-            ViewBag.Tons = await produtosAprovados.Select(p => p.Tom).Where(v => v != "Universal").Distinct().OrderBy(c => c).ToListAsync();
-            ViewBag.Acabamentos = await produtosAprovados.Select(p => p.Acabamento).Distinct().OrderBy(c => c).ToListAsync();
+            ViewBag.Categorias = await produtosAprovados
+                .Select(p => p.Categoria)
+                .Where(c => !string.IsNullOrWhiteSpace(c))
+                .Distinct()
+                .OrderBy(c => c)
+                .ToListAsync();
+            ViewBag.Peles = await produtosAprovados
+                .Select(p => p.TipoPele)
+                .Where(v => v != "Todos" && !string.IsNullOrWhiteSpace(v))
+                .Distinct()
+                .OrderBy(c => c)
+                .ToListAsync();
+            ViewBag.Cabelos = await produtosAprovados
+                .Select(p => p.TipoCabelo)
+                .Where(v => v != "Todos" && !string.IsNullOrWhiteSpace(v))
+                .Distinct()
+                .OrderBy(c => c)
+                .ToListAsync();
+            ViewBag.Marcas = await produtosAprovados
+                .Select(p => p.Marca)
+                .Where(m => !string.IsNullOrWhiteSpace(m))
+                .Distinct()
+                .OrderBy(c => c)
+                .ToListAsync();
+            ViewBag.Lojistas = await produtosAprovados
+                .Include(p => p.Lojista)
+                .Where(p => p.Lojista != null && !string.IsNullOrWhiteSpace(p.Lojista!.NomeFantasia))
+                .Select(p => p.Lojista!.NomeFantasia)
+                .Distinct()
+                .OrderBy(c => c)
+                .ToListAsync();
+            ViewBag.Tons = await produtosAprovados
+                .Select(p => p.Tom)
+                .Where(v => v != "Universal" && !string.IsNullOrWhiteSpace(v))
+                .Distinct()
+                .OrderBy(c => c)
+                .ToListAsync();
+            ViewBag.Acabamentos = await produtosAprovados
+                .Select(p => p.Acabamento)
+                .Where(a => !string.IsNullOrWhiteSpace(a))
+                .Distinct()
+                .OrderBy(c => c)
+                .ToListAsync();
             ViewBag.TotalProdutos = await query.CountAsync();
 
             query = ordenacao switch

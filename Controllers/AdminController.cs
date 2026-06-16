@@ -35,6 +35,13 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public async Task<IActionResult> AlterarStatus(int id, string status)
         {
+            status = status?.Trim() ?? string.Empty;
+            var statusPermitidos = new[] { "Pendente", "Aprovado", "Reprovado" };
+            if (!statusPermitidos.Contains(status))
+            {
+                return BadRequest();
+            }
+
             var lojista = await _context.Lojistas.FindAsync(id);
             if (lojista == null)
             {
