@@ -223,6 +223,12 @@ a {
     line-height: 1;
 }
 
+.filter-summary {
+    color: #6f6470;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
 .filter-check {
     min-height: 38px;
     display: flex;
@@ -624,6 +630,49 @@ a {
 .metric strong {
     font-size: 1.6rem;
     color: #b0164e;
+}
+
+.profile-badge {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 0.5rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    background: #f8e7ef;
+    color: #7b284d;
+    font-size: 0.75rem;
+    font-weight: 700;
+    vertical-align: middle;
+}
+
+.wishlist-summary {
+    display: inline-grid;
+    gap: 0.2rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid #ead3de;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.wishlist-summary span {
+    color: #6f6470;
+    font-size: 0.85rem;
+    font-weight: 650;
+}
+
+.wishlist-summary strong {
+    color: #7b284d;
+    font-size: 1.2rem;
+}
+
+.wishlist-card-disabled {
+    opacity: 0.92;
+    border-style: dashed;
+}
+
+.wishlist-unavailable-message {
+    color: #842029;
+    font-weight: 600;
 }
 
 .metric-alert strong {
