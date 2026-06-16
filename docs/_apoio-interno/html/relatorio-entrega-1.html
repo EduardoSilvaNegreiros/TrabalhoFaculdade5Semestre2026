@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Beauty Marketplace - Entrega 1 - Concepcao</title>
+  <style>
+    @page { size: A4; margin: 14mm 12mm; }
+    :root {
+      --bg: #f3efe7;
+      --paper: #fffdf9;
+      --ink: #1f2933;
+      --muted: #5d6b78;
+      --line: #d8cfc4;
+      --accent: #0f766e;
+      --accent-soft: #eaf8f5;
+      --table-head: #eef8f6;
+      --code: #f5f4f0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #edf3f0 0%, #f6f4ef 100%);
+      color: var(--ink);
+      font-family: "Segoe UI", Georgia, serif;
+      line-height: 1.66;
+    }
+    main {
+      max-width: 980px;
+      margin: 28px auto;
+      padding: 46px 58px 66px;
+      background: var(--paper);
+      box-shadow: 0 14px 38px rgba(25, 44, 40, 0.12);
+      border: 1px solid rgba(15, 118, 110, 0.08);
+    }
+    .hero {
+      padding: 26px 28px;
+      margin-bottom: 26px;
+      background: linear-gradient(135deg, #f3fbf9 0%, #ebf7f4 100%);
+      border: 1px solid #cfe6e0;
+    }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    h1, h2, h3 { color: #172733; margin: 0 0 12px; line-height: 1.22; }
+    h1 { font-size: 30px; }
+    h2 {
+      margin-top: 28px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      font-size: 21px;
+    }
+    h3 { margin-top: 20px; font-size: 16px; }
+    p { margin: 0 0 12px; }
+    ul, ol { margin: 0 0 14px 22px; padding: 0; }
+    li { margin: 0 0 6px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 22px;
+      font-size: 13px;
+    }
+    th, td {
+      padding: 10px 11px;
+      border: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+    th {
+      background: var(--table-head);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    code {
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--code);
+      font-family: Consolas, monospace;
+      font-size: 0.95em;
+    }
+    .note {
+      margin: 18px 0;
+      padding: 14px 16px;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    @media print {
+      body { background: #fff; }
+      main {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        border: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Entrega 1 - Bloco 1</p>
+      <h1>Beauty Marketplace - Entrega 1 - Concepcao</h1>
+      <p>Relatorio consolidado da concepcao inicial do projeto, com definicao do problema, modelo de negocio, requisitos, user stories, Kanban e configuracao do repositorio GitHub.</p>
+    </section>
+
+    <h2>Objetivo</h2>
+    <p>Apresentar a concepcao inicial do projeto de extensao, com definicao do problema, modelo de negocio, requisitos, historias de usuario organizadas no Kanban e repositorio GitHub configurado.</p>
+
+    <h2>1. Identificacao do grupo</h2>
+    <ul>
+      <li>Numero do grupo: <strong>4</strong></li>
+      <li>Eduardo Silva de Negreiros - RA <strong>924109760</strong></li>
+      <li>Josue Padetti Correa - RA <strong>924109806</strong></li>
+      <li>Gabrielle Victoria de Souza Barboza - RA <strong>424106162</strong></li>
+      <li>Micael Dantas da Silva - RA <strong>924110378</strong></li>
+      <li>Daiane Jheniffer da Silva Araujo - RA <strong>1726105657</strong></li>
+      <li>Beatriz Cerqueira Sonoro - RA <strong>924106243</strong></li>
+      <li>Kauanne Vitoria Soares Bernardo - RA <strong>924111927</strong></li>
+      <li>Julio Guedes de Oliveira - RA <strong>926107422</strong></li>
+      <li>Matheus Da Silva Reis - RA <strong>926111266</strong></li>
+      <li>Wesley Weber Fernandes - RA <strong>924107330</strong></li>
+      <li>Bryan Willian da Silva Almeida - RA <strong>925116744</strong></li>
+    </ul>
+
+    <h2>2. Definicao do problema e modelo de negocio</h2>
+    <h3>Problema identificado</h3>
+    <p>O mercado de beleza e cuidados pessoais cresce rapidamente, mas a jornada de compra continua fragmentada. O consumidor muitas vezes precisa pesquisar em varios sites, comparar procedencia, lidar com fretes separados e interpretar catalogos pouco adaptados ao contexto real de beleza.</p>
+    <ul>
+      <li>dificuldade de reunir diferentes categorias e marcas em uma unica compra;</li>
+      <li>falta de confianca sobre procedencia e curadoria em plataformas genericas;</li>
+      <li>ausencia de experiencia orientada a tipo de pele, cabelo, composicao e preferencias do consumidor brasileiro.</li>
+    </ul>
+
+    <h3>Publico-alvo</h3>
+    <ul>
+      <li><strong>Consumidor conectado:</strong> usuarios que pesquisam produtos online, usam redes sociais como referencia e valorizam praticidade no autocuidado.</li>
+      <li><strong>Lojista parceiro de beleza:</strong> vendedores que precisam de vitrine digital, gestao de catalogo e fluxo comercial organizado.</li>
+    </ul>
+
+    <h3>Contexto social e comunitario</h3>
+    <ul>
+      <li><strong>Democratizacao do acesso:</strong> ampliar disponibilidade de marcas para regioes com oferta mais limitada.</li>
+      <li><strong>Diversidade e representatividade:</strong> valorizar filtros e catalogacao para diferentes perfis de beleza.</li>
+      <li><strong>Apoio a pequenos lojistas:</strong> fortalecer a presenca desses vendedores em ambiente digital estruturado.</li>
+    </ul>
+
+    <h3>Business Model Canvas em formato textual</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Bloco</th>
+          <th>Definicao para o projeto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Proposta de valor</td><td>Centralizar descoberta, recomendacao e compra de produtos de beleza em uma unica plataforma, com catalogo curado, filtros especificos e compra unificada.</td></tr>
+        <tr><td>Segmentos de clientes</td><td>Consumidores digitais de produtos de beleza; pequenos e medios lojistas; administracao da plataforma.</td></tr>
+        <tr><td>Canais</td><td>Site web, redes sociais, comunidades digitais de beleza, busca organica e campanhas de relacionamento.</td></tr>
+        <tr><td>Relacionamento com clientes</td><td>Autoatendimento, recomendacoes personalizadas, avaliacoes, historico de pedidos e notificacoes.</td></tr>
+        <tr><td>Fontes de receita</td><td>Comissao sobre vendas, possiveis planos de destaque para lojistas e servicos promocionais.</td></tr>
+        <tr><td>Recursos principais</td><td>Plataforma web, base de produtos, integracao de pagamento, logica de recomendacao e moderacao administrativa.</td></tr>
+        <tr><td>Atividades principais</td><td>Curadoria de catalogo, moderacao de lojistas e produtos, manutencao tecnica e gestao da experiencia de compra.</td></tr>
+        <tr><td>Parcerias principais</td><td>Lojistas parceiros, gateway de pagamento, servicos de frete e fornecedores de tecnologia.</td></tr>
+        <tr><td>Estrutura de custos</td><td>Hospedagem, manutencao da aplicacao, integracoes externas, suporte, moderacao e divulgacao.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>3. Requisitos do sistema</h2>
+    <h3>Requisitos funcionais</h3>
+    <table>
+      <thead><tr><th>Codigo</th><th>Descricao</th></tr></thead>
+      <tbody>
+        <tr><td>RF01</td><td>Pagamento de carrinho multi-lojista com distribuicao automatica de valores e comissoes.</td></tr>
+        <tr><td>RF02</td><td>Cadastro e onboarding de lojistas.</td></tr>
+        <tr><td>RF03</td><td>Gestao de catalogo com fotos, descricoes e estoque.</td></tr>
+        <tr><td>RF04</td><td>Busca avancada com filtros de beleza.</td></tr>
+        <tr><td>RF05</td><td>Painel exclusivo para o lojista.</td></tr>
+        <tr><td>RF06</td><td>Sistema de avaliacoes e prova social.</td></tr>
+        <tr><td>RF07</td><td>Recomendacao inteligente de produtos.</td></tr>
+        <tr><td>RF08</td><td>Recuperacao de carrinho abandonado.</td></tr>
+        <tr><td>RF09</td><td>Gestao de frete integrada.</td></tr>
+        <tr><td>RF10</td><td>Historico de pedidos e rastreamento por item.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Requisitos nao funcionais</h3>
+    <table>
+      <thead><tr><th>Codigo</th><th>Descricao</th><th>Justificativa</th></tr></thead>
+      <tbody>
+        <tr><td>RNF01</td><td>Seguranca e protecao de dados alinhadas a LGPD.</td><td>A confianca e essencial para consumidor e lojista em ambiente digital.</td></tr>
+        <tr><td>RNF02</td><td>Escalabilidade para suportar crescimento de trafego.</td><td>O mercado possui picos sazonais e promocionais.</td></tr>
+        <tr><td>RNF03</td><td>Alta disponibilidade da plataforma.</td><td>Indisponibilidade impacta operacao e vendas.</td></tr>
+        <tr><td>RNF04</td><td>Tempo de resposta rapido nas paginas do catalogo.</td><td>A experiencia de compra depende de navegacao visual fluida.</td></tr>
+        <tr><td>RNF05</td><td>Responsividade com foco mobile first.</td><td>Grande parte do consumo online ocorre em smartphone.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>4. User Stories e Kanban</h2>
+    <h3>User Stories</h3>
+    <ol>
+      <li>Como consumidor, quero filtrar produtos por tipo de pele para encontrar itens mais adequados ao meu tratamento.</li>
+      <li>Como consumidor, quero adicionar itens de diferentes vendedores no mesmo carrinho para fazer um pagamento unificado.</li>
+      <li>Como lojista, quero ter um dashboard de vendas para acompanhar faturamento e desempenho dos meus produtos.</li>
+      <li>Como lojista, quero receber notificacoes de novos pedidos para agilizar separacao e envio.</li>
+      <li>Como consumidor, quero salvar produtos em uma lista de desejos para compra futura.</li>
+      <li>Como administrador, quero aprovar ou reprovar novos lojistas para garantir procedencia e qualidade.</li>
+      <li>Como consumidor, quero visualizar fotos reais nas avaliacoes para ganhar mais seguranca na compra.</li>
+      <li>Como lojista, quero integrar meu estoque com a plataforma para evitar venda sem disponibilidade.</li>
+      <li>Como consumidor, quero receber codigo de rastreio apos o envio para acompanhar meu pedido.</li>
+      <li>Como administrador, quero definir niveis de comissao por categoria para controlar melhor a lucratividade da plataforma.</li>
+    </ol>
+
+    <h3>Kanban</h3>
+    <ul>
+      <li>GitHub Projects / Kanban: <strong>https://github.com/users/EduardoSilvaNegreiros/projects/2</strong></li>
+      <li>Nome do quadro: <strong>Kanban - Projeto 5 Semestre ADS</strong></li>
+      <li>Estrutura esperada: <strong>A Fazer</strong>, <strong>Em Progresso</strong> e <strong>Concluido</strong></li>
+    </ul>
+
+    <h2>5. Repositorio GitHub</h2>
+    <ul>
+      <li>Repositorio publico: <strong>https://github.com/EduardoSilvaNegreiros/TrabalhoFaculdade5Semestre2026</strong></li>
+      <li>README da raiz atualizado com nome do projeto, descricao, integrantes, instrucoes de uso e links principais.</li>
+    </ul>
+
+    <div class="note">
+      <strong>Conferencia atual de colaboracao:</strong>
+      <p>O historico visivel no repositorio/local ja comprova colaboracao de varios autores associados ao grupo. Antes da submissao final desta entrega, ainda e recomendavel conferir diretamente no GitHub se todos os integrantes do grupo possuem ao menos um commit visivel associado.</p>
+    </div>
+
+    <h2>6. Criterios de avaliacao atendidos</h2>
+    <table>
+      <thead><tr><th>Criterio</th><th>Peso</th><th>Atendimento atual</th></tr></thead>
+      <tbody>
+        <tr><td>Clareza e coerencia na definicao do problema</td><td>20%</td><td>Problema, publico e contexto social descritos de forma coerente com o projeto.</td></tr>
+        <tr><td>Completude e qualidade do Business Model Canvas</td><td>20%</td><td>Canvas consolidado em formato textual com proposta de valor, segmentos, canais, receita e custos.</td></tr>
+        <tr><td>Qualidade dos requisitos funcionais e nao funcionais</td><td>20%</td><td>10 RFs e 5 RNFs com justificativa alinhada ao dominio do sistema.</td></tr>
+        <tr><td>Qualidade das User Stories e organizacao do Kanban</td><td>20%</td><td>10 user stories registradas e Kanban referenciado com a estrutura esperada.</td></tr>
+        <tr><td>Configuracao e uso do GitHub</td><td>20%</td><td>Repositorio publico e README organizados; conferencia final de commits de todos os integrantes ainda deve ser revisada no GitHub.</td></tr>
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>

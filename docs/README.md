@@ -1,23 +1,25 @@
-# Documentação do Projeto Integrador
+# Documentacao do Projeto Integrador
 
-Este diretório concentra as entregas acadêmicas e os materiais de apoio do **Beauty Marketplace**.
+Este diretorio concentra as entregas academicas e os materiais de apoio do **Beauty Marketplace**.
 
 ## Estrutura principal
 
-- [Entrega 3 - Arquitetura](./Entrega%203/README.md): documentação dos diagramas C4, Diagrams as Code e modelagem de dados SQL/NoSQL.
-- [Entrega 4 - Padrões, APIs e IA](./Entrega%204/README.md): documentação dos padrões GoF, APIs, prova de conceito de IA e Checkpoint 2.
+- [Entrega 1 - Concepcao](./Entrega%201/README.md): documentacao da definicao do problema, modelo de negocio, requisitos, user stories, Kanban e GitHub.
+- [Entrega 3 - Arquitetura](./Entrega%203/README.md): documentacao dos diagramas C4, Diagrams as Code e modelagem de dados SQL/NoSQL.
+- [Entrega 4 - Padroes, APIs e IA](./Entrega%204/README.md): documentacao dos padroes GoF, APIs, prova de conceito de IA e Checkpoint 2.
+- [Entrega Final](./Entrega%20Final/roteiro-video-defesa.md): roteiro do video de defesa final.
 
 ## Materiais de apoio
 
-- [Roteiro de apresentação](./roteiro-apresentacao.md): sequência sugerida para demonstrar o sistema e as entregas.
-- [Fontes dos produtos reais do catálogo](./imagens-produtos/fontes-produtos-reais.md): origem dos nomes, preços e imagens usadas localmente no catálogo.
+- [Roteiro de apresentacao](./roteiro-apresentacao.md): sequencia sugerida para demonstrar o sistema e as entregas.
+- [Fontes dos produtos reais do catalogo](./imagens-produtos/fontes-produtos-reais.md): origem dos nomes, precos e imagens usadas localmente no catalogo.
 
-## Contas de demonstração
+## Contas de demonstracao
 
 - Consumidor: `cliente@beautymarket.com` / `Cliente@123`
 - Lojista: `lojista@beautymarket.com` / `Lojista@123`
 - Administrador: `admin@beautymarket.com` / `Admin@123`
 
-## Banco de demonstração
+## Banco de demonstracao
 
-O arquivo `meubanco.db` é mantido como base local de demonstração. Ele é recriado pelo seed do projeto com roles, usuários de exemplo, lojistas, catálogo, avaliações, moderação de produtos e dados necessários para apresentação.
+O arquivo `meubanco.db` e mantido como base local de demonstracao. Ele e recriado pelo seed do projeto com roles, usuarios de exemplo, lojistas, catalogo, avaliacoes, moderacao de produtos e dados necessarios para apresentacao.
