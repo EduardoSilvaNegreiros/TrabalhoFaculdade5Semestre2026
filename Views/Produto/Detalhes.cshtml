@@ -101,13 +101,22 @@
 @section Scripts {
     <script>
         document.querySelector(".adicionar-carrinho")?.addEventListener("click", function () {
-            fetch(/Carrinho/Adicionar/${this.dataset.id}, { method: "POST" })
-                .then(response => response.redirected ? (window.location.href = response.url) : response.json())
-                .then(data => {
-                    if (data?.quantidade) {
-                        const countElem = document.getElementById("cart-count");
-                        if (countElem) countElem.textContent = data.quantidade;
+            fetch(`/Carrinho/Adicionar/${this.dataset.id}`, { method: "POST" })
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                        return null;
                     }
+                    if (response.status === 401 || response.status === 403) {
+                        window.location.href = "/Identity/Account/Login";
+                        return null;
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (!data) return;
+                    const countElem = document.getElementById("cart-count");
+                    if (countElem) countElem.textContent = data.quantidade;
                 });
         });
     </script>

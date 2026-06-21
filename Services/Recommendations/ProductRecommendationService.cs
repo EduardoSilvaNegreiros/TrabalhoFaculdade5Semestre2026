@@ -17,10 +17,17 @@ public sealed class ProductRecommendationService : IProductRecommendationService
 
     public async Task<IReadOnlyList<Produto>> RecommendAsync(ProductRecommendationRequest request, int limit, CancellationToken cancellationToken)
     {
-        var produtos = await _context.Produtos
+        var query = _context.Produtos
             .Include(p => p.Lojista)
             .Where(p => p.Estoque > 0 && p.StatusModeracao == ProdutoStatusModeracao.Aprovado)
-            .ToListAsync(cancellationToken);
+            .AsQueryable();
+
+        if (request.PrecoMax.HasValue)
+        {
+            query = query.Where(p => p.Preco <= request.PrecoMax.Value);
+        }
+
+        var produtos = await query.ToListAsync(cancellationToken);
 
         return produtos
             .Select(produto => new

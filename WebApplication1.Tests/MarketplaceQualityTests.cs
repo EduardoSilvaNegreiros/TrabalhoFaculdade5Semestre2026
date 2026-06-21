@@ -84,6 +84,31 @@ public sealed class MarketplaceQualityTests
     }
 
     [Fact]
+    public async Task RecommendationService_respeita_preco_maximo_como_filtro()
+    {
+        await using var database = await TestDatabase.CreateAsync();
+        var context = database.Context;
+        var lojista = await CriarLojistaAsync(context, "Glow Brasil", "lojista@beautymarket.com");
+        var produtoDentroDoPreco = CriarProdutoCatalogo("produto-ate-vinte", "Produto ate vinte", lojista.Id, ProdutoStatusModeracao.Aprovado);
+        var produtoAcimaDoPreco = CriarProdutoCatalogo("produto-vinte-oito", "Produto vinte e oito", lojista.Id, ProdutoStatusModeracao.Aprovado);
+        produtoDentroDoPreco.Preco = 20m;
+        produtoAcimaDoPreco.Preco = 28m;
+
+        context.Produtos.AddRange(produtoDentroDoPreco, produtoAcimaDoPreco);
+        await context.SaveChangesAsync();
+
+        var service = new ProductRecommendationService(context, Array.Empty<IProductRecommendationStrategy>());
+        var recomendacoes = await service.RecommendAsync(
+            new ProductRecommendationRequest(null, null, null, null, 20m, null),
+            5,
+            CancellationToken.None);
+
+        Assert.Contains(recomendacoes, p => p.Id == produtoDentroDoPreco.Id);
+        Assert.DoesNotContain(recomendacoes, p => p.Id == produtoAcimaDoPreco.Id);
+        Assert.All(recomendacoes, p => Assert.True(p.Preco <= 20m));
+    }
+
+    [Fact]
     public async Task CheckoutFacade_cria_pedido_multilojista_com_rastreio_e_baixa_estoque()
     {
         await using var database = await TestDatabase.CreateAsync();
@@ -496,6 +521,40 @@ public sealed class MarketplaceQualityTests
         var produto = Assert.Single(response.Produtos);
         Assert.False(string.IsNullOrWhiteSpace(produto.ImagemUrl));
         Assert.Equal($"/Produto/Detalhes/{produto.ProdutoId}", produto.DetalhesUrl);
+    }
+
+    [Fact]
+    public async Task LocalAiRecommendationService_respeita_preco_maximo()
+    {
+        await using var database = await TestDatabase.CreateAsync();
+        var context = database.Context;
+        var lojista = await CriarLojistaAsync(context, "Glow Brasil", "lojista@beautymarket.com");
+        var produtoDentroDoPreco = CriarProdutoCatalogo("produto-ia-ate-vinte", "Produto IA ate vinte", lojista.Id, ProdutoStatusModeracao.Aprovado);
+        var produtoAcimaDoPreco = CriarProdutoCatalogo("produto-ia-vinte-oito", "Produto IA vinte e oito", lojista.Id, ProdutoStatusModeracao.Aprovado);
+        produtoDentroDoPreco.Preco = 20m;
+        produtoAcimaDoPreco.Preco = 28m;
+
+        context.Produtos.AddRange(produtoDentroDoPreco, produtoAcimaDoPreco);
+        await context.SaveChangesAsync();
+
+        var recommendationService = new ProductRecommendationService(
+            context,
+            new IProductRecommendationStrategy[]
+            {
+                new SkinHairRecommendationStrategy(),
+                new CategoryRecommendationStrategy(),
+                new VeganPriceRecommendationStrategy()
+            });
+        var ai = new LocalAiRecommendationService(recommendationService);
+
+        var response = await ai.RecommendAsync(
+            new AiRecommendationRequest("Oleosa", "Todos", "produto acessivel", "Maquiagem", false, 20m),
+            CancellationToken.None);
+
+        var produto = Assert.Single(response.Produtos);
+        Assert.Equal(produtoDentroDoPreco.Id, produto.ProdutoId);
+        Assert.DoesNotContain(response.Produtos, p => p.ProdutoId == produtoAcimaDoPreco.Id);
+        Assert.All(response.Produtos, p => Assert.True(p.Preco <= 20m));
     }
 
     private static void AssertControllerRole<TController>(string expectedRole)
