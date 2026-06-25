@@ -8,8 +8,8 @@ Reunir os artefatos que documentam a pesquisa de usuarios, as personas, a jornad
 
 ## Conteudo principal
 
-- `relatorio-entrega-2.pdf`: versao final para submissao.
-- `relatorio-entrega-2.md`: fonte textual editavel do relatorio.
+- `relatorio-entrega-2.pdf`: versao oficial final para submissao.
+- `relatorio-entrega-2.md`: material textual de apoio mantido no repositorio.
 - `checklist-avaliacao.md`: conferencia dos blocos esperados para a entrega.
 
 ## Leitura recomendada
@@ -20,4 +20,4 @@ Reunir os artefatos que documentam a pesquisa de usuarios, as personas, a jornad
 
 ## Observacao
 
-O relatorio desta entrega foi consolidado a partir do PDF original do grupo e do prototipo em Figma, com normalizacao para o nome atual do projeto, **Beauty Marketplace**, e para a composicao oficial do **Grupo 4**.
+O PDF desta pasta e a referencia oficial para submissao da entrega. O arquivo Markdown permanece como apoio textual do repositorio.

@@ -6,7 +6,7 @@ Use esta lista para conferir se a entrega final cobre os pontos obrigatorios do 
 
 - [ ] Video gravado com duracao entre 15 e 25 minutos.
 - [ ] Todos os 11 integrantes participam ativamente da gravacao.
-- [ ] Link do video publicado no YouTube nao listado ou Google Drive.
+- [x] Link do video publicado no YouTube nao listado ou Google Drive: `https://youtu.be/8xRP4LWxfyA?is=C3TIzKe_77GF9F3Z`.
 - [x] Roteiro de defesa final criado com divisao de falas por integrante.
 - [x] Roteiro cobre apresentacao do grupo e do projeto.
 - [x] Roteiro cobre contexto do problema e impacto social/comunitario.
@@ -36,7 +36,7 @@ Use esta lista para conferir se a entrega final cobre os pontos obrigatorios do 
 - [x] Entrega 2: Prototipacao e UX documentada.
 - [x] Entrega 3: Arquitetura do sistema documentada.
 - [x] Entrega 4: Desenvolvimento, APIs e IA documentados.
-- [ ] Entrega Final: video de defesa publicado e link pronto para submissao.
+- [x] Entrega Final: video de defesa publicado e link pronto para submissao.
 
 ## 4. Criterios de avaliacao da entrega final
 
@@ -48,6 +48,6 @@ Use esta lista para conferir se a entrega final cobre os pontos obrigatorios do 
 
 ## Pendencias antes da submissao
 
-- Publicar o video de defesa e registrar o link final.
+- Confirmar que o video final ficou entre 15 e 25 minutos.
 - Confirmar que todos os integrantes aparecem e falam no video.
 - Conferir diretamente no GitHub a evidencia final de commits de todos os membros do grupo.

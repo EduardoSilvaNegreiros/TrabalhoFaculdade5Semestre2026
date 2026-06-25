@@ -10,6 +10,10 @@ Este diretorio concentra as entregas academicas e os materiais de apoio do **Bea
 - [Entrega 4 - Padroes, APIs e IA](./Entrega%204/README.md): documentacao dos padroes GoF, APIs, prova de conceito de IA e Checkpoint 2.
 - [Entrega Final](./Entrega%20Final/roteiro-video-defesa.md): roteiro do video de defesa final e checklist de submissao.
 
+## Links principais
+
+- Video final de defesa: `https://youtu.be/8xRP4LWxfyA?is=C3TIzKe_77GF9F3Z`
+
 ## Materiais de apoio
 
 - [Roteiro de apresentacao](./roteiro-apresentacao.md): sequencia sugerida para demonstrar o sistema e as entregas.

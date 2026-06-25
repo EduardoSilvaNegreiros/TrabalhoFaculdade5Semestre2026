@@ -8,8 +8,8 @@ Reunir os artefatos que apresentam a definicao inicial do problema, o modelo de 
 
 ## Conteudo principal
 
-- `relatorio-entrega-1.pdf`: versao final para submissao.
-- `relatorio-entrega-1.md`: fonte textual editavel do relatorio.
+- `relatorio-entrega-1.pdf`: versao oficial final para submissao.
+- `relatorio-entrega-1.md`: material textual de apoio mantido no repositorio.
 - `checklist-avaliacao.md`: conferencia dos requisitos obrigatorios da entrega.
 
 ## Leitura recomendada
@@ -20,4 +20,4 @@ Reunir os artefatos que apresentam a definicao inicial do problema, o modelo de 
 
 ## Observacao
 
-O relatorio desta entrega foi consolidado a partir do material inicial enviado pelo grupo e complementado com as evidencias atuais do repositorio.
+O PDF desta pasta e a referencia oficial para submissao da entrega. O arquivo Markdown permanece como apoio textual do repositorio.

@@ -15,6 +15,7 @@ Nao usar tela dividida, comparacao lado a lado ou tres telas ao mesmo tempo. Qua
 - Duracao alvo: **19 a 21 minutos**
 - Duracao permitida pela entrega: **15 a 25 minutos**
 - Formato: video de defesa final com todos os integrantes participando
+- Link final do video: `https://youtu.be/8xRP4LWxfyA?is=C3TIzKe_77GF9F3Z`
 
 ## Integrantes e ordem sugerida
 
@@ -975,9 +976,9 @@ Fala sugerida: "Como conclusao, o Beauty Marketplace integrou concepcao, UX, arq
 
 - [ ] Video gravado com duracao entre 15 e 25 minutos.
 - [ ] Todos os integrantes aparecem ou participam ativamente na gravação.
-- [ ] Link do video publicado no YouTube não listado ou Google Drive.
-- [ ] Repositorio GitHub final revisado.
-- [ ] README.md da raiz atualizado.
-- [ ] Pasta `/docs` com Entregas 1, 2, 3, 4 e Entrega Final.
-- [ ] Scripts SQL, diagramas, OpenAPI, Postman e codigo dos protótipos versionados.
-- [ ] Link final do video e link do GitHub prontos para submissao.
+- [x] Link do video publicado no YouTube não listado ou Google Drive: `https://youtu.be/8xRP4LWxfyA?is=C3TIzKe_77GF9F3Z`.
+- [x] Repositorio GitHub final revisado.
+- [x] README.md da raiz atualizado.
+- [x] Pasta `/docs` com Entregas 1, 2, 3, 4 e Entrega Final.
+- [x] Scripts SQL, diagramas, OpenAPI, Postman e codigo dos protótipos versionados.
+- [x] Link final do video e link do GitHub prontos para submissao.

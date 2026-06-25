@@ -66,3 +66,4 @@ Aplicacao local:
 
 - Repositorio publico: `https://github.com/EduardoSilvaNegreiros/TrabalhoFaculdade5Semestre2026`
 - GitHub Projects / Kanban: `https://github.com/users/EduardoSilvaNegreiros/projects/2`
+- Video final de defesa: `https://youtu.be/8xRP4LWxfyA?is=C3TIzKe_77GF9F3Z`
