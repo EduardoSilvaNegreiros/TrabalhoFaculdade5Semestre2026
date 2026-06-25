@@ -2,13 +2,13 @@
 
 Esta e a **Entrega Final / Entrega 5**, correspondente ao **Bloco 5 - Integracao & Entrega Final**. A entrega foi postergada em funcao da licenca medica do professor entre 16/02 e 18/03/2026.
 
-Documento de apoio para gravar a defesa final do **Beauty Marketplace**. Este roteiro foi escrito para funcionar como guia de gravação: cada parte indica **quem fala**, **qual tela deve estar aberta**, **o que clicar**, **o que destacar** e **quando trocar de tela**.
+Este documento serve como apoio para a defesa final do **Beauty Marketplace**. A ideia nao e ler tudo palavra por palavra, mas usar as falas como guia para uma apresentacao natural, mostrando o sistema com calma e explicando as decisoes do grupo.
 
 ## Regra principal da gravação
 
-Mostrar **uma tela por vez**.
+Mostrem **uma tela por vez**.
 
-Nao usar tela dividida, comparacao lado a lado ou tres telas ao mesmo tempo. Quando a fala citar consumidor, lojista e administrador, mostrem primeiro uma tela, terminem a ideia, depois troquem para a proxima. A banca precisa acompanhar o que está sendo falado sem disputar atenção com varias janelas abertas.
+Evitem tela dividida ou varias janelas competindo pela atencao. Quando a fala passar por consumidor, lojista e administrador, terminem uma ideia em uma tela antes de trocar para a proxima. Isso deixa o video mais facil de acompanhar.
 
 ## Dados gerais
 
@@ -35,7 +35,7 @@ Nao usar tela dividida, comparacao lado a lado ou tres telas ao mesmo tempo. Qua
 10. **Wesley Weber Fernandes** - RA **924107330**
 11. **Bryan Willian da Silva Almeida** - RA **925116744**
 
-Se a ordem real de fala mudar, mantenham a mesma estrutura. O importante e todos participarem e cada pessoa ter uma parte clara.
+Se a ordem real mudar, tudo bem. O importante e que todos participem e que cada pessoa fale de uma parte que conhece.
 
 ## Preparacao antes de gravar
 
@@ -75,7 +75,7 @@ Bloco lojista: entrar como lojista e gravar painel, pedidos recebidos, estoque e
 
 Bloco administrador: entrar como administrador e gravar aprovação de lojistas, moderação de produtos, comissões e mapa de atendimento.
 
-Na edição, juntar os blocos na ordem do roteiro. Isso reduz erro de login durante a gravação.
+Na edicao, juntem os blocos na ordem do roteiro. Assim a apresentacao fica fluida e ninguem precisa correr com troca de login no meio da gravacao.
 
 ## Visao geral do tempo
 
@@ -95,7 +95,7 @@ Na edição, juntar os blocos na ordem do roteiro. Isso reduz erro de login dura
 
 ## Guia simples de cliques e telas
 
-Use esta parte como cola para quem estiver compartilhando a tela. A pessoa que fala não precisa ler tudo. Quem controla a tela só precisa seguir a ordem.
+Use esta parte como cola para quem estiver compartilhando a tela. Quem fala pode explicar com as proprias palavras; quem controla a tela so precisa seguir a ordem com tranquilidade.
 
 ### Eduardo - abertura
 
@@ -279,7 +279,7 @@ Mostrar exatamente: `Beauty Marketplace`, `Grupo 4`, lista de integrantes e, se 
 
 Nao mostrar ainda: sistema, codigo, GitHub ou Figma. A abertura deve ser limpa.
 
-Fala sugerida: "Ola, nos somos o Grupo 4 e este e o video de defesa do Beauty Marketplace. O projeto e um marketplace de produtos de beleza, pensado para conectar consumidores, lojistas e administradores em uma unica plataforma. Neste video vamos apresentar o problema, o impacto social, o modelo de negocio, o protótipo no Figma, a arquitetura, a API, a funcionalidade de IA e o repositório final."
+Fala sugerida: "Ola, somos o Grupo 4, e este e o video de defesa do Beauty Marketplace. Ao longo do semestre, a gente desenvolveu uma plataforma para aproximar consumidores, lojistas e administradores no mercado de beleza. Neste video, vamos mostrar de onde veio a ideia, como pensamos a experiencia, como o sistema foi construido e o que ficou pronto para a entrega final."
 
 Quando trocar de tela: ao terminar a frase "repositório final", trocar para o catálogo do sistema.
 
@@ -299,7 +299,7 @@ Mostrar exatamente: topo do site com a marca `BeautyMarket`, menu `Início`, men
 
 Destacar na fala: o sistema e um marketplace de beleza, não apenas uma loja simples.
 
-Fala nesta tela: "Aqui temos a entrada do Beauty Marketplace. O usuario consegue acessar o catálogo publico e visualizar produtos de beleza de diferentes lojistas."
+Fala nesta tela: "Essa e a entrada do Beauty Marketplace. Logo no inicio, o usuario ja consegue navegar pelo catalogo e conhecer produtos de diferentes lojistas."
 
 **Tela 2 - Filtros do catálogo**
 
@@ -311,7 +311,7 @@ Ação opcional: selecionar `Tipo de pele: Oleosa` e clicar em `Aplicar filtros`
 
 Destacar na fala: filtros de beleza ajudam o consumidor a encontrar produtos mais adequados.
 
-Fala nesta tela: "A navegação foi pensada para o contexto de beleza. Por isso, os filtros não sao apenas por preço ou marca; também aparecem tipo de pele, tipo de cabelo, tom, acabamento e produto vegano."
+Fala nesta tela: "A gente percebeu que, em beleza, a compra depende muito do perfil da pessoa. Por isso, os filtros vao alem de preco e marca: entram tipo de pele, cabelo, tom, acabamento e tambem a opcao de produtos veganos."
 
 **Tela 3 - Um card de produto**
 
@@ -321,7 +321,7 @@ Mostrar exatamente: imagem do produto, categoria, nome, marca, lojista, tags de 
 
 Destacar na fala: o card ja entrega informacao para decisao rapida.
 
-Fala nesta tela: "Cada produto mostra informações importantes antes mesmo de abrir os detalhes, como marca, lojista, preço, estoque e caracteristicas de beleza."
+Fala nesta tela: "Antes mesmo de abrir o produto, o consumidor ja ve informacoes que ajudam na escolha, como marca, lojista, preco, estoque e algumas caracteristicas de beleza."
 
 **Tela 4 - Detalhes de um produto**
 
@@ -331,7 +331,7 @@ Mostrar exatamente: imagem grande, nome, marca, lojista, descrição, tipo de pe
 
 Destacar na fala: o sistema mostra produto, confiança e recomendação no mesmo fluxo.
 
-Fala sugerida de fechamento: "De forma geral, o consumidor navega, filtra, compara e compra. O lojista gerencia produtos e pedidos. O administrador modera a plataforma para manter qualidade e confiança."
+Fala sugerida de fechamento: "No geral, o consumidor consegue pesquisar e comprar com mais seguranca. O lojista tem um espaco para vender e acompanhar seus produtos. E o administrador ajuda a manter a qualidade da plataforma."
 
 Quando trocar de tela: voltar para a área de filtros ou deixar a tela de detalhes aberta para a Gabrielle.
 
@@ -351,7 +351,7 @@ Mostrar exatamente: os filtros `Tipo de pele`, `Tipo de cabelo`, `Tom`, `Acabame
 
 Destacar na fala: consumidores precisam de orientacao para escolher produtos que combinem com seu perfil.
 
-Fala nesta tela: "Um dos problemas e que a compra de produtos de beleza costuma exigir muita pesquisa. O consumidor precisa entender se o produto serve para o tipo de pele, cabelo, tom, objetivo e preferencia de uso."
+Fala nesta tela: "O ponto de partida foi uma dificuldade bem comum: comprar produto de beleza exige pesquisa. A pessoa precisa entender se aquilo combina com sua pele, cabelo, tom, objetivo e preferencia de uso."
 
 **Tela 2 - Resultado filtrado**
 
@@ -361,7 +361,7 @@ Mostrar exatamente: texto de filtros ativos, quantidade de produtos encontrados 
 
 Destacar na fala: a plataforma reduz a busca manual.
 
-Fala nesta tela: "Com os filtros, o sistema transforma uma busca generica em uma selecao mais direcionada. Isso diminui a dificuldade de procurar em varios sites diferentes."
+Fala nesta tela: "Com os filtros, a busca deixa de ser generica e fica mais proxima do que a pessoa realmente precisa. Isso evita aquela sensacao de ter que abrir varios sites ate encontrar algo que faca sentido."
 
 **Tela 3 - Detalhes do produto**
 
@@ -371,7 +371,7 @@ Mostrar exatamente: `Composicao`, `Tipo de pele`, `Tipo de cabelo`, `Estoque`, `
 
 Destacar na fala: informacao e prova social aumentam confiança.
 
-Fala nesta tela: "Na página do produto, a pessoa consegue ver informações de uso, composicao, estoque, avaliacoes e produtos relacionados. Isso ajuda na decisao de compra."
+Fala nesta tela: "Na pagina do produto, a pessoa encontra as informacoes principais em um lugar so: uso, composicao, estoque, avaliacoes e produtos relacionados. Isso torna a decisao menos confusa."
 
 **Tela 4 - Evidencia do lojista no produto**
 
@@ -381,7 +381,7 @@ Mostrar exatamente: o nome do lojista no detalhe do produto.
 
 Destacar na fala: o problema também envolve pequenos lojistas que precisam de visibilidade.
 
-Fala sugerida de fechamento: "Ao mesmo tempo, pequenos lojistas precisam de uma vitrine digital organizada. O marketplace resolve os dois lados: melhora a descoberta para o consumidor e aumenta a exposicao do vendedor."
+Fala sugerida de fechamento: "Do outro lado, muitos lojistas pequenos precisam de uma vitrine digital mais organizada. A proposta do marketplace e ajudar os dois lados: o consumidor encontra melhor, e o vendedor ganha mais exposicao."
 
 Quando trocar de tela: ir para uma tela de administrador ou painel do lojista.
 
@@ -401,7 +401,7 @@ Mostrar exatamente: cards `Produtos cadastrados`, `Itens vendidos`, `Faturamento
 
 Destacar na fala: apoio operacional para pequenos vendedores.
 
-Fala nesta tela: "O impacto social aparece no apoio ao lojista. Em vez de precisar criar um e-commerce completo sozinho, ele tem um painel para acompanhar produtos, vendas, estoque e repasse."
+Fala nesta tela: "O impacto social aparece principalmente no apoio ao pequeno lojista. Em vez de montar um e-commerce do zero, ele encontra um painel pronto para acompanhar produtos, vendas, estoque e repasses."
 
 **Tela 2 - Estoque físico e catálogo**
 
@@ -411,7 +411,7 @@ Mostrar exatamente: tabela com produto, categoria, moderação, estoque, preço,
 
 Destacar na fala: gestão simples ajuda a profissionalizar a operação.
 
-Fala nesta tela: "A tabela de estoque ajuda o lojista a manter os produtos atualizados e evita uma operação desorganizada."
+Fala nesta tela: "Essa parte ajuda na rotina do lojista. Ele consegue ver o que tem em estoque, ajustar valores e manter o catalogo mais confiavel para quem vai comprar."
 
 **Tela 3 - Administração, se preferirem mostrar o lado de confiança**
 
@@ -421,7 +421,7 @@ Mostrar exatamente: `Governança do marketplace`, cards de lojistas/produtos pen
 
 Destacar na fala: moderação aumenta confiança da comunidade.
 
-Fala nesta tela: "Do lado da plataforma, a administração aprova lojistas antes de liberar a operação. Isso contribui para mais confiança no ambiente de compra."
+Fala nesta tela: "Do lado da administracao, existe uma camada de cuidado antes de liberar lojistas e produtos. Isso ajuda a criar um ambiente de compra mais confiavel."
 
 **Tela 4 - Produtos aguardando aprovação**
 
@@ -431,7 +431,7 @@ Mostrar exatamente: tabela com produto, categoria, lojista, preço e botões `Ap
 
 Destacar na fala: produto não entra no catálogo publico sem curadoria.
 
-Fala sugerida de fechamento: "Com isso, o projeto conecta extensao universitaria a uma necessidade real: facilitar a entrada de vendedores no digital e dar ao consumidor uma experiencia mais organizada e confiavel."
+Fala sugerida de fechamento: "Com isso, o projeto conversa com uma necessidade real: facilitar a entrada de vendedores no digital e, ao mesmo tempo, entregar uma experiencia mais clara para o consumidor."
 
 Quando trocar de tela: abrir catálogo ou documento da Entrega 1 para modelo de negocio.
 
@@ -451,7 +451,7 @@ Mostrar exatamente: produtos, filtros e botão de compra/detalhes.
 
 Destacar na fala: descoberta, filtro e compra em um só lugar.
 
-Fala nesta tela: "Para o consumidor, a proposta de valor e encontrar produtos de beleza em um ambiente especializado, com filtros, informações claras e possibilidade de compra unificada."
+Fala nesta tela: "Para o consumidor, o valor esta em encontrar produtos de beleza em um ambiente mais especializado, com filtros uteis, informacoes claras e uma jornada de compra mais simples."
 
 **Tela 2 - Valor para o lojista**
 
@@ -461,7 +461,7 @@ Mostrar exatamente: metricas de faturamento, repasse, pedidos e estoque.
 
 Destacar na fala: vitrine digital e gestão operacional.
 
-Fala nesta tela: "Para o lojista, a proposta e oferecer uma vitrine digital pronta, com controle de produtos, pedidos, estoque e repasse."
+Fala nesta tela: "Para o lojista, a proposta e ter uma vitrine digital pronta, sem precisar resolver sozinho toda a parte de produto, pedido, estoque e repasse."
 
 **Tela 3 - Valor para a plataforma**
 
@@ -471,7 +471,7 @@ Mostrar exatamente: aprovação de lojistas, produtos pendentes e comissões por
 
 Destacar na fala: governança e comissão.
 
-Fala nesta tela: "Para a plataforma, o modelo permite moderar a operação, manter qualidade no catálogo e trabalhar com comissão por categoria."
+Fala nesta tela: "Para a administracao da plataforma, o modelo permite acompanhar a operacao, moderar o catalogo e definir comissoes por categoria."
 
 **Tela 4 - Comissões por categoria**
 
@@ -481,7 +481,7 @@ Mostrar exatamente: cards de categoria, percentual e botão `Salvar comissão`.
 
 Destacar na fala: a receita pode vir de comissão sobre vendas.
 
-Fala sugerida de fechamento: "Assim, o modelo combina marketplace e gestão: o consumidor compra melhor, o lojista vende com mais estrutura e a administração controla qualidade e regras comerciais."
+Fala sugerida de fechamento: "No fim, o modelo junta marketplace e gestao. O consumidor compra com mais clareza, o lojista vende com mais estrutura e a plataforma consegue manter regras e qualidade."
 
 Quando trocar de tela: abrir Figma.
 
@@ -501,7 +501,7 @@ Mostrar exatamente: a primeira tela do protótipo, com identidade visual, estrut
 
 Destacar na fala: o Figma foi usado antes da implementacao para organizar a experiencia.
 
-Fala nesta tela: "Na Entrega 2, usamos o Figma para planejar a experiencia antes de implementar. Aqui aparece a base visual e a estrutura inicial da navegação."
+Fala nesta tela: "Na Entrega 2, o Figma ajudou o grupo a pensar a experiencia antes de partir para o codigo. Aqui da para ver a base visual e como imaginamos a navegacao no comeco."
 
 **Tela 2 - Figma no catálogo ou tela de produtos**
 
@@ -511,7 +511,7 @@ Mostrar exatamente: lista ou cards de produtos, categorias e caminho de navegaç
 
 Destacar na fala: organizacao de descoberta de produtos.
 
-Fala nesta tela: "O protótipo ja previa que a descoberta de produtos seria uma parte central do sistema."
+Fala nesta tela: "Desde o prototipo, a descoberta de produtos ja aparecia como uma parte central do projeto."
 
 **Tela 3 - Sistema implementado no catálogo**
 
@@ -521,7 +521,7 @@ Mostrar exatamente: cards de produtos reais e filtros implementados.
 
 Destacar na fala: a ideia do Figma virou uma tela funcional.
 
-Fala nesta tela: "Na versao implementada, essa ideia evoluiu para um catálogo funcional com produtos reais, filtros de beleza, estoque e informações do lojista."
+Fala nesta tela: "Na versao implementada, essa ideia virou um catalogo funcional, com produtos reais, filtros de beleza, estoque e informacoes do lojista."
 
 **Tela 4 - Figma em fluxo de compra ou detalhe**
 
@@ -531,7 +531,7 @@ Mostrar exatamente: a tela do fluxo escolhido, sem tentar mostrar o sistema ao m
 
 Destacar na fala: o design serviu para pensar a jornada.
 
-Fala nesta tela: "O Figma também ajudou a pensar o caminho do usuario: visualizar produto, comparar informações e seguir para a compra."
+Fala nesta tela: "O Figma tambem ajudou a desenhar o caminho do usuario: ver um produto, comparar informacoes e seguir para a compra."
 
 **Tela 5 - Sistema implementado no detalhe ou carrinho**
 
@@ -541,7 +541,7 @@ Mostrar exatamente: se for detalhe, mostrar imagem, preço, especificações e r
 
 Destacar na fala: a implementacao ficou mais completa que o protótipo.
 
-Fala sugerida de fechamento: "A implementacao final manteve a ideia principal do protótipo, mas acrescentou regras reais do sistema, como filtros, estoque, moderação, carrinho multi-lojista e recomendações."
+Fala sugerida de fechamento: "A implementacao manteve a ideia principal do prototipo, mas ganhou regras reais do sistema: filtros, estoque, moderacao, carrinho multi-lojista e recomendacoes."
 
 Quando trocar de tela: abrir diagrama C1.
 
@@ -561,7 +561,7 @@ Mostrar exatamente: o bloco central `Beauty Marketplace`, os usuarios `Consumido
 
 Destacar na fala: quem usa o sistema e quais integracoes existem ao redor.
 
-Fala nesta tela: "No C1, mostramos o Beauty Marketplace no contexto geral. O sistema se relaciona com consumidor, lojista e administrador. Tambem aparecem integracoes externas planejadas, como pagamento, transportadoras, notificacoes e redes sociais."
+Fala nesta tela: "No C1, a gente mostra o Beauty Marketplace dentro do contexto geral. O sistema conversa com consumidor, lojista e administrador, e tambem considera integracoes externas planejadas, como pagamento, entrega, notificacoes e redes sociais."
 
 **Tela 2 - Zoom no centro do C1**
 
@@ -571,7 +571,7 @@ Mostrar exatamente: as conexoes entre usuarios e sistema.
 
 Destacar na fala: cada perfil tem responsabilidade diferente.
 
-Fala nesta tela: "Essa divisao por perfil e importante porque cada usuario tem um fluxo diferente: o consumidor compra, o lojista vende e o administrador controla a governança."
+Fala nesta tela: "Essa divisao por perfil foi importante desde o comeco, porque cada pessoa usa o sistema de um jeito: o consumidor compra, o lojista vende e o administrador cuida da governanca."
 
 **Tela 3 - Diagrama C2 Container**
 
@@ -581,7 +581,7 @@ Mostrar exatamente: `Navegador / Mobile Web`, `Aplicacao ASP.NET Core MVC`, `MyS
 
 Destacar na fala: containers e tecnologias.
 
-Fala nesta tela: "No C2, detalhamos os containers. A interface web conversa com a aplicacao ASP.NET Core MVC, que concentra controllers, regras de negocio, autenticacao por perfis e acesso a dados."
+Fala nesta tela: "No C2, a gente abre um pouco mais a arquitetura. A interface web conversa com a aplicacao ASP.NET Core MVC, onde ficam os controllers, as regras principais, a autenticacao por perfil e o acesso a dados."
 
 **Tela 4 - Zoom na parte de dados do C2**
 
@@ -591,7 +591,7 @@ Mostrar exatamente: MySQL, SQLite local, MongoDB e Redis.
 
 Destacar na fala: MySQL e o modelo oficial, SQLite ajuda na demonstração, MongoDB e Redis foram modelados para usos especificos.
 
-Fala sugerida de fechamento: "A modelagem oficial da entrega considera MySQL, mas o protótipo roda com SQLite para facilitar a demonstração local. MongoDB e Redis aparecem como modelagens complementares para avaliacoes flexiveis, carrinho, cache e ranking."
+Fala sugerida de fechamento: "Na documentacao, a modelagem oficial considera MySQL. Para a demonstracao local, usamos SQLite porque deixa o projeto mais simples de executar. MongoDB e Redis entram como propostas complementares para avaliacoes flexiveis, carrinho, cache e ranking."
 
 Quando trocar de tela: abrir diagrama C3.
 
@@ -611,7 +611,7 @@ Mostrar exatamente: `ProdutoController`, `CarrinhoController`, `PedidosControlle
 
 Destacar na fala: componentes principais do backend.
 
-Fala nesta tela: "No C3, detalhamos a aplicacao ASP.NET Core MVC. Os controllers organizam os fluxos principais: catálogo, carrinho, pedidos, lojista e administração."
+Fala nesta tela: "No C3, a gente mostra como a aplicacao ASP.NET Core MVC foi organizada por dentro. Os controllers separam os fluxos principais: catalogo, carrinho, pedidos, lojista e administracao."
 
 **Tela 2 - Zoom na parte de autenticacao e dados do C3**
 
@@ -621,7 +621,7 @@ Mostrar exatamente: os nomes desses componentes.
 
 Destacar na fala: login por perfis, acesso a dados, carrinho persistido e dados de demonstração.
 
-Fala nesta tela: "O ASP.NET Identity separa os perfis de consumidor, lojista e administrador. O ApplicationDbContext centraliza o acesso ao banco. O CartService cuida do carrinho e o MarketplaceSeeder cria dados de demonstração."
+Fala nesta tela: "Aqui aparecem algumas pecas importantes do backend. O ASP.NET Identity separa os perfis, o ApplicationDbContext centraliza o acesso ao banco, o CartService cuida do carrinho e o seeder cria os dados usados na demonstracao."
 
 **Tela 3 - Script SQL**
 
@@ -631,7 +631,7 @@ Mostrar exatamente: início do arquivo e depois rolar até as tabelas principais
 
 Destacar na fala: tabelas do dominio.
 
-Fala nesta tela: "O modelo relacional em MySQL representa o nucleo transacional do marketplace, com usuarios, lojistas, categorias, produtos, pedidos, itens de pedido, avaliacoes, lista de desejos e carrinho persistido."
+Fala nesta tela: "O modelo relacional representa a parte transacional do marketplace: usuarios, lojistas, categorias, produtos, pedidos, itens do pedido, avaliacoes, lista de desejos e carrinho persistido."
 
 **Tela 4 - MongoDB**
 
@@ -641,7 +641,7 @@ Mostrar exatamente: estrutura de uma avaliacao com comentario, midias, perfil de
 
 Destacar na fala: avaliacoes podem ter formato mais flexivel.
 
-Fala nesta tela: "O MongoDB foi modelado para avaliacoes mais ricas, porque comentarios, fotos, videos e atributos de beleza podem variar bastante."
+Fala nesta tela: "O MongoDB foi pensado para avaliacoes mais ricas, porque comentario, foto, video e atributos de beleza podem variar bastante de um produto para outro."
 
 **Tela 5 - Redis**
 
@@ -651,7 +651,7 @@ Mostrar exatamente: estruturas `cart:{usuarioId}`, `ranking:produtos:visualizado
 
 Destacar na fala: cache, carrinho temporario e ranking.
 
-Fala sugerida de fechamento: "O Redis foi modelado para dados rapidos e temporarios, como carrinho com TTL, ranking de produtos visualizados e recuperacao de carrinho abandonado."
+Fala sugerida de fechamento: "Ja o Redis foi pensado para dados rapidos e temporarios, como carrinho com tempo de expiracao, ranking de produtos visualizados e recuperacao de carrinho abandonado."
 
 Quando trocar de tela: abrir Swagger.
 
@@ -671,7 +671,7 @@ Mostrar exatamente: titulo da documentacao e lista de endpoints iniciados por `/
 
 Destacar na fala: a documentacao foi filtrada para API, sem misturar telas MVC.
 
-Fala nesta tela: "A API foi documentada com Swagger. Aqui aparecem as rotas `/api`, separadas das telas MVC do sistema."
+Fala nesta tela: "A API foi documentada com Swagger para facilitar teste e entendimento. Aqui aparecem as rotas `/api`, separadas das telas MVC do sistema."
 
 **Tela 2 - Endpoint GET /api/produtos**
 
@@ -683,7 +683,7 @@ Ação opcional: clicar em `Try it out` e `Execute`.
 
 Destacar na fala: endpoint publico para listar produtos.
 
-Fala nesta tela: "Este endpoint lista produtos e permite filtros semelhantes aos do catálogo visual."
+Fala nesta tela: "Esse endpoint lista produtos e permite filtros parecidos com os do catalogo visual, so que retornando os dados em formato de API."
 
 **Tela 3 - Resposta do GET /api/produtos**
 
@@ -693,7 +693,7 @@ Mostrar exatamente: JSON retornado com produtos, nome, marca, categoria, preço 
 
 Destacar na fala: a API retorna dados estruturados para consumo externo.
 
-Fala nesta tela: "A resposta vem em JSON, permitindo que outro cliente ou integracao consuma os dados do catálogo."
+Fala nesta tela: "A resposta vem em JSON, entao outro sistema, aplicativo ou integracao poderia consumir esses dados do catalogo."
 
 **Tela 4 - Endpoint POST /api/checkout**
 
@@ -703,7 +703,7 @@ Mostrar exatamente: metodo POST, corpo de request e códigos de resposta como `2
 
 Destacar na fala: checkout exige autenticacao e representa fluxo transacional.
 
-Fala nesta tela: "O checkout e um endpoint protegido, porque depende de consumidor logado e carrinho valido."
+Fala nesta tela: "O checkout fica protegido porque depende de um consumidor logado e de um carrinho valido. Essa regra evita criar pedido sem contexto."
 
 **Tela 5 - Endpoint POST /api/ia/recomendacoes**
 
@@ -713,7 +713,7 @@ Mostrar exatamente: corpo com `tipoPele`, `tipoCabelo`, `objetivo`, `vegano` e `
 
 Destacar na fala: a mesma funcionalidade de IA pode ser usada pela tela e pela API.
 
-Fala nesta tela: "A recomendação de IA também está exposta por API. Ela recebe o perfil de beleza e retorna sugestões estruturadas."
+Fala nesta tela: "A recomendacao de IA tambem pode ser chamada pela API. Ela recebe o perfil de beleza e devolve sugestoes estruturadas."
 
 **Tela 6 - OpenAPI versionado**
 
@@ -723,7 +723,7 @@ Mostrar exatamente: arquivo JSON versionado no repositório, com caminhos `/api`
 
 Destacar na fala: a documentacao não depende apenas do servidor local.
 
-Fala nesta tela: "Alem do Swagger local, o OpenAPI foi salvo no repositório para manter a documentacao versionada."
+Fala nesta tela: "Alem do Swagger rodando localmente, salvamos o OpenAPI no repositorio para deixar a documentacao versionada."
 
 **Tela 7 - Postman Collection**
 
@@ -733,7 +733,7 @@ Mostrar exatamente: nome da collection e alguns itens/endpoints.
 
 Destacar na fala: permite testar chamadas fora do Swagger.
 
-Fala sugerida de fechamento: "No total, a entrega documenta 12 operações `/api`, acima do minimo exigido, com exemplos, parametros e códigos de resposta."
+Fala sugerida de fechamento: "No total, a entrega documenta 12 operacoes `/api`, acima do minimo exigido, com exemplos, parametros e codigos de resposta."
 
 Quando trocar de tela: abrir sistema logado como consumidor em `Recomendação IA`.
 
@@ -753,7 +753,7 @@ Mostrar exatamente: depois do login, menu com `Minha área`, `Recomendação IA`
 
 Destacar na fala: a funcionalidade aparece para consumidor.
 
-Fala nesta tela: "A recomendação de IA fica disponivel para o perfil consumidor, porque ela ajuda na escolha de produtos."
+Fala nesta tela: "A recomendacao de IA fica disponivel para o consumidor porque ela ajuda justamente no momento de escolher produtos."
 
 **Tela 2 - Tela Recomendação IA vazia**
 
@@ -763,7 +763,7 @@ Mostrar exatamente: titulo `Recomendação IA`, texto explicativo e formulário.
 
 Destacar na fala: o usuario informa seu perfil de beleza.
 
-Fala nesta tela: "Nesta tela, o usuario preenche dados do seu perfil para receber sugestões do catálogo."
+Fala nesta tela: "Nesta tela, o usuario informa um pouco do seu perfil para receber sugestoes do catalogo."
 
 **Tela 3 - Preenchimento do formulário**
 
@@ -785,7 +785,7 @@ Mostrar exatamente: formulário preenchido antes de enviar.
 
 Destacar na fala: os campos viram entrada para a recomendação.
 
-Fala nesta tela: "Essas informações sao usadas para personalizar a recomendação, considerando pele, cabelo, categoria, objetivo, preferencia vegana e faixa de preço."
+Fala nesta tela: "Essas informacoes ajudam a personalizar a recomendacao, considerando pele, cabelo, categoria, objetivo, preferencia vegana e faixa de preco."
 
 **Tela 4 - Botão Gerar recomendação**
 
@@ -795,7 +795,7 @@ Mostrar exatamente: mensagem `Gerando recomendação...`, se aparecer.
 
 Destacar na fala: o sistema chama o endpoint de IA.
 
-Fala nesta tela: "Ao enviar, a tela chama o endpoint `/api/ia/recomendacoes`."
+Fala nesta tela: "Quando a gente envia o formulario, a tela chama o endpoint `/api/ia/recomendacoes`."
 
 **Tela 5 - Resultado da IA**
 
@@ -805,7 +805,7 @@ Mostrar exatamente: bloco `Resultado`, `Resumo`, `Aviso`, cards de produtos, ima
 
 Destacar na fala: não e só lista de produto; existe justificativa.
 
-Fala nesta tela: "O retorno traz um resumo, um aviso de compatibilidade e produtos recomendados com justificativa. Isso ajuda o consumidor a entender por que aqueles produtos fazem sentido para o perfil informado."
+Fala nesta tela: "O retorno traz um resumo, um aviso de compatibilidade e produtos recomendados com justificativa. A ideia e que o consumidor nao receba so uma lista solta, mas entenda por que aqueles itens fazem sentido."
 
 **Tela 6 - Detalhes de um recomendado**
 
@@ -815,7 +815,7 @@ Mostrar exatamente: página do produto recomendado.
 
 Destacar na fala: a IA conecta recomendação com fluxo real de compra.
 
-Fala nesta tela: "A recomendação não fica isolada. O usuario pode abrir os detalhes e seguir normalmente para a compra."
+Fala nesta tela: "A recomendacao nao fica isolada. O usuario pode abrir os detalhes do produto e seguir normalmente para a compra."
 
 **Tela 7 - Explicacao tecnica sem abrir segredo**
 
@@ -825,7 +825,7 @@ Mostrar exatamente: endpoint ou tela de resultado. Nao abrir `appsettings` com c
 
 Destacar na fala: OpenAI quando configurado e fallback local quando não configurado.
 
-Fala sugerida de fechamento: "Tecnicamente, o sistema usa uma fabrica para escolher o provedor. Se houver chave da OpenAI configurada, usa a integracao externa. Se não houver, usa um fallback local demonstrativo, garantindo que a apresentacao continue funcionando."
+Fala sugerida de fechamento: "Na parte tecnica, usamos uma fabrica para escolher o provedor de IA. Se houver chave da OpenAI configurada, o sistema usa a integracao externa. Se nao houver, ele usa um fallback local, entao a demonstracao continua funcionando."
 
 Quando trocar de tela: abrir GitHub.
 
@@ -845,7 +845,7 @@ Mostrar exatamente: nome do repositório, lista de arquivos e `README.md` aparec
 
 Destacar na fala: repositório final centraliza codigo e documentacao.
 
-Fala nesta tela: "O repositório final concentra o codigo do sistema e a documentacao produzida ao longo do semestre."
+Fala nesta tela: "O repositorio final reune o codigo do sistema e a documentacao que o grupo produziu ao longo do semestre."
 
 **Tela 2 - README da raiz**
 
@@ -855,7 +855,7 @@ Mostrar exatamente: descrição do projeto, integrantes, funcionalidades, tecnol
 
 Destacar na fala: o README permite entender e executar o projeto.
 
-Fala nesta tela: "O README foi atualizado com descrição, integrantes, funcionalidades, tecnologias, instrucoes de execucao e contas de demonstração."
+Fala nesta tela: "O README foi organizado para quem abrir o projeto entender rapidamente o que ele faz, quem participou, quais tecnologias foram usadas e como executar localmente."
 
 **Tela 3 - Pasta docs**
 
@@ -865,7 +865,7 @@ Mostrar exatamente: `Entrega 1`, `Entrega 2`, `Entrega 3`, `Entrega 4`, `Entrega
 
 Destacar na fala: todas as entregas estão organizadas.
 
-Fala nesta tela: "A pasta `/docs` organiza as entregas anteriores e a entrega final, mantendo relatorios, checklists, diagramas, API, SQL e roteiro do video."
+Fala nesta tela: "A pasta `/docs` guarda as entregas anteriores e a entrega final. Ali ficam relatorios, checklists, diagramas, API, SQL e o roteiro do video."
 
 **Tela 4 - Entrega 3 dentro de docs**
 
@@ -895,7 +895,7 @@ Mostrar exatamente: quadro Kanban com colunas e cards, se estiver acessivel.
 
 Destacar na fala: acompanhamento do trabalho ao longo do semestre.
 
-Fala nesta tela: "O Kanban foi usado para organizar tarefas e acompanhar a evolucao do grupo durante o semestre."
+Fala nesta tela: "O Kanban ajudou o grupo a organizar tarefas e acompanhar a evolucao do projeto durante o semestre."
 
 **Tela 7 - Encerramento**
 
@@ -903,7 +903,7 @@ Ação: voltar para a capa ou deixar o GitHub aberto.
 
 Mostrar exatamente: capa do video ou repositório final.
 
-Fala sugerida: "Como conclusao, o Beauty Marketplace integrou concepcao, UX, arquitetura, desenvolvimento, API e IA em um sistema funcional. O principal aprendizado foi conectar visao de negocio, experiencia do usuario e arquitetura tecnica em uma entrega coerente. Esse foi o Beauty Marketplace, desenvolvido pelo Grupo 4. Obrigado pela atenção."
+Fala sugerida: "Para concluir, o Beauty Marketplace reuniu concepcao, UX, arquitetura, desenvolvimento, API e IA em um sistema funcional. O maior aprendizado do grupo foi transformar uma ideia de negocio em uma experiencia navegavel, documentada e demonstravel. Esse foi o Beauty Marketplace, desenvolvido pelo Grupo 4. Obrigado pela atencao."
 
 ## Resumo rapido por integrante
 
