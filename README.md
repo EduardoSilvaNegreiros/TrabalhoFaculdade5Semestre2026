@@ -29,13 +29,21 @@ Marketplace web de produtos de beleza com multiplos perfis de acesso, compra uni
 
 ## Tecnologias
 
-- ASP.NET Core MVC
+- ASP.NET Core MVC (.NET 10)
 - Entity Framework Core
 - ASP.NET Identity
 - SQLite para demonstracao local
 - Swagger / OpenAPI
 
 ## Como executar
+
+Pre-requisito: instalar o SDK do `.NET 10`. Antes de rodar, confira a versao ativa:
+
+```powershell
+dotnet --version
+```
+
+O comando deve retornar uma versao `10.x`.
 
 ```powershell
 dotnet restore
