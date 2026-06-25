@@ -1,11 +1,13 @@
-# Checklist de Avaliacao - Entrega Final
+# Checklist de Avaliacao - Entrega Final / Entrega 5
 
-Use esta lista para conferir se a entrega final cobre os pontos obrigatorios do Bloco 5 - Integracao e Entrega Final.
+Use esta lista para conferir se a Entrega Final / Entrega 5 cobre os pontos obrigatorios do Bloco 5 - Integracao & Entrega Final.
+
+Nota: esta entrega foi postergada em funcao da licenca medica do professor entre 16/02 e 18/03/2026.
 
 ## 1. Video de defesa
 
-- [ ] Video gravado com duracao entre 15 e 25 minutos.
-- [ ] Todos os 11 integrantes participam ativamente da gravacao.
+- [x] Video gravado com duracao entre 15 e 25 minutos.
+- [x] Todos os 11 integrantes participam ativamente da gravacao.
 - [x] Link do video publicado no YouTube nao listado ou Google Drive: `https://youtu.be/8xRP4LWxfyA?is=C3TIzKe_77GF9F3Z`.
 - [x] Roteiro de defesa final criado com divisao de falas por integrante.
 - [x] Roteiro cobre apresentacao do grupo e do projeto.
@@ -27,7 +29,7 @@ Use esta lista para conferir se a entrega final cobre os pontos obrigatorios do 
 - [x] Entrega 3 documentada com relatorio, PDF, diagramas C4, SQL, MongoDB e Redis.
 - [x] Entrega 4 documentada com relatorio, PDF, GoF, OpenAPI, Postman e IA.
 - [x] Scripts SQL, diagramas, documentacao de API e materiais de apoio estao versionados.
-- [ ] Conferencia final de commits de todos os integrantes diretamente no GitHub.
+- [x] Conferencia final de commits de todos os integrantes diretamente no GitHub.
 
 ## 3. Checklist de entregas anteriores
 
@@ -41,13 +43,13 @@ Use esta lista para conferir se a entrega final cobre os pontos obrigatorios do 
 ## 4. Criterios de avaliacao da entrega final
 
 - [x] Roteiro organizado para sustentar a qualidade do video de defesa.
-- [ ] Participacao individual de todos os integrantes confirmada no video gravado.
+- [x] Participacao individual de todos os integrantes confirmada no video gravado.
 - [x] Repositorio final completo e organizado.
 - [x] Integracao entre as entregas do semestre evidenciada na pasta `/docs`.
 - [x] Impacto social/comunitario do projeto descrito no roteiro e nas entregas anteriores.
 
-## Pendencias antes da submissao
+## Status final para submissao
 
-- Confirmar que o video final ficou entre 15 e 25 minutos.
-- Confirmar que todos os integrantes aparecem e falam no video.
-- Conferir diretamente no GitHub a evidencia final de commits de todos os membros do grupo.
+- Video final de defesa: `https://youtu.be/8xRP4LWxfyA?is=C3TIzKe_77GF9F3Z`
+- Repositorio GitHub final: `https://github.com/EduardoSilvaNegreiros/TrabalhoFaculdade5Semestre2026`
+- Checklist final completo para submissao no Classroom.

@@ -31,4 +31,4 @@ Use esta lista para conferir se a entrega cobre os pontos esperados no bloco de 
 
 - [x] Link do repositorio publico registrado.
 - [x] README.md raiz criado com nome do projeto, descricao, integrantes e instrucoes de uso.
-- [ ] Conferencia final de commits de todos os integrantes ainda precisa ser validada diretamente no GitHub.
+- [x] Conferencia final de commits de todos os integrantes validada diretamente no GitHub.

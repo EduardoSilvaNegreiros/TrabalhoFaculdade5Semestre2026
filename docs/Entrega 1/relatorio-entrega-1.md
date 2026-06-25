@@ -121,13 +121,13 @@ O Kanban organiza backlog, andamento e entregas do grupo ao longo do semestre, s
 - Repositorio publico: **https://github.com/EduardoSilvaNegreiros/TrabalhoFaculdade5Semestre2026**
 - README da raiz: atualizado com nome do projeto, descricao, integrantes, instrucoes de uso e links principais.
 
-### Conferencia atual de colaboracao
+### Conferencia final de colaboracao
 
-O historico visivel no repositorio/local ja comprova colaboracao de quase todos os integrantes do grupo, seja por nome completo ou por alias de usuario. A evidencia atual ja sustenta a participacao coletiva no desenvolvimento ao longo do semestre.
+O historico visivel no repositorio/local comprova colaboracao dos integrantes do grupo, seja por nome completo ou por alias de usuario. No fechamento da Entrega Final, o shortlog passou a incluir tambem `necxtdigital-crypto <necxtdigital@gmail.com>`, completando a evidencia de participacao coletiva ao longo do semestre.
 
-### Ponto de atencao
+### Status final
 
-Antes da submissao final desta entrega, ainda e recomendavel conferir diretamente no GitHub apenas a confirmacao final de um caso que nao aparece com total clareza no historico visivel atual.
+A conferencia final de commits foi validada diretamente no GitHub antes da submissao da Entrega Final / Entrega 5.
 
 ## 6. Criterios de avaliacao atendidos
 
@@ -137,4 +137,4 @@ Antes da submissao final desta entrega, ainda e recomendavel conferir diretament
 | Completude e qualidade do Business Model Canvas | 20% | O canvas foi consolidado em formato textual cobrindo proposta de valor, segmentos, canais, receita e custos. |
 | Qualidade dos requisitos funcionais e nao funcionais | 20% | O relatorio apresenta 10 RFs e 5 RNFs com justificativa alinhada ao dominio do sistema. |
 | Qualidade das User Stories e organizacao do Kanban | 20% | As 10 user stories foram organizadas e o Kanban do GitHub foi referenciado com a estrutura esperada. |
-| Configuracao e uso do GitHub | 20% | O repositorio publico e o README foram organizados, e o historico ja mostra colaboracao de quase todo o grupo, restando apenas uma confirmacao final no GitHub para fechar o criterio com seguranca. |
+| Configuracao e uso do GitHub | 20% | O repositorio publico e o README foram organizados, e o historico de commits foi conferido no GitHub com evidencia de colaboracao dos integrantes do grupo. |

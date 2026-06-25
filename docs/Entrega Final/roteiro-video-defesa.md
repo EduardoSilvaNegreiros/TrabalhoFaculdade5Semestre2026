@@ -1,4 +1,6 @@
-# Beauty Marketplace - Roteiro passo a passo do Video de Defesa
+# Beauty Marketplace - Entrega Final / Entrega 5 - Roteiro passo a passo do Video de Defesa
+
+Esta e a **Entrega Final / Entrega 5**, correspondente ao **Bloco 5 - Integracao & Entrega Final**. A entrega foi postergada em funcao da licenca medica do professor entre 16/02 e 18/03/2026.
 
 Documento de apoio para gravar a defesa final do **Beauty Marketplace**. Este roteiro foi escrito para funcionar como guia de gravação: cada parte indica **quem fala**, **qual tela deve estar aberta**, **o que clicar**, **o que destacar** e **quando trocar de tela**.
 
@@ -12,10 +14,12 @@ Nao usar tela dividida, comparacao lado a lado ou tres telas ao mesmo tempo. Qua
 
 - Grupo: **4**
 - Projeto: **Beauty Marketplace**
+- Entrega: **Entrega Final / Entrega 5 - Bloco 5: Integracao & Entrega Final**
 - Duracao alvo: **19 a 21 minutos**
 - Duracao permitida pela entrega: **15 a 25 minutos**
 - Formato: video de defesa final com todos os integrantes participando
 - Link final do video: `https://youtu.be/8xRP4LWxfyA?is=C3TIzKe_77GF9F3Z`
+- Forma de entrega: submeter no Classroom o link do video e o link do repositorio GitHub final.
 
 ## Integrantes e ordem sugerida
 
@@ -974,8 +978,8 @@ Fala sugerida: "Como conclusao, o Beauty Marketplace integrou concepcao, UX, arq
 
 ## Checklist final da entrega
 
-- [ ] Video gravado com duracao entre 15 e 25 minutos.
-- [ ] Todos os integrantes aparecem ou participam ativamente na gravação.
+- [x] Video gravado com duracao entre 15 e 25 minutos.
+- [x] Todos os integrantes aparecem ou participam ativamente na gravação.
 - [x] Link do video publicado no YouTube não listado ou Google Drive: `https://youtu.be/8xRP4LWxfyA?is=C3TIzKe_77GF9F3Z`.
 - [x] Repositorio GitHub final revisado.
 - [x] README.md da raiz atualizado.

@@ -60,7 +60,7 @@ Aplicacao local:
 - `docs/Entrega 2`: design, UX, prototipo e validacao de usabilidade
 - `docs/Entrega 3`: arquitetura, C4 e modelagem de dados
 - `docs/Entrega 4`: padroes GoF, APIs e IA
-- `docs/Entrega Final`: roteiro do video de defesa
+- `docs/Entrega Final`: Entrega Final / Entrega 5, com roteiro do video de defesa e checklist de submissao
 
 ## Links principais
 

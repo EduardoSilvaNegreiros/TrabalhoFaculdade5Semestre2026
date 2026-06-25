@@ -226,10 +226,22 @@ Esta seção consolida o estágio atual do sistema e mostra o que já foi entreg
 
 ### Conferência de commits
 
-Conferência realizada em 31/05/2026. O repositório público e o Kanban foram conferidos. O histórico local visível mostra commits associados a:
+Conferência final atualizada no fechamento da Entrega Final / Entrega 5. O repositório público e o Kanban foram conferidos, e o histórico local visível mostra commits associados a:
 
-- `Eduardo <edunegreiross@gmail.com>`
 - `Eduardo Silva de Negreiros <edunegreiross@gmail.com>`
+- `Eduardo Silva de Negreiros <161667645+EduardoSilvaNegreiros@users.noreply.github.com>`
+- `Eduardo S. Negreiros <eduardo.negreiros@bematize.com.br>`
+- `Eduardo <edunegreiross@gmail.com>`
+- `0Souza0 <gabi.divavick@gmail.com>`
+- `Beatrizsonoro <beatrizcerqueirasonoro@gmail.com>`
+- `JULIO GUEDES <julioguedes.oliveira@uni9.edu.br>`
+- `Kauannev-espec <kauanne.v@uni9.edu.br>`
+- `MicaelDantas <micaeldantasdasilva945@gmail.com>`
+- `daianejheniffer-ops <daiane.jheniffer@uni9.edu.br>`
+- `ilbryann12 <bryanwilian17@gmail.com>`
+- `josuepcorrea33-code <josuepcorrea33@gmail.com>`
+- `necxtdigital-crypto <necxtdigital@gmail.com>`
+- `weberw653-alt <weberw653@gmail.com>`
 
 ## 6. Critérios de avaliação atendidos
 
